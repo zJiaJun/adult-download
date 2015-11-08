@@ -258,14 +258,14 @@ public class HttpClientDemo {
                     System.out.println("------下载图片成功------");
                 }
 
+                //必须新建个client设置disableContentCompression并带上httpContxt,否则下载附件错误
+                CloseableHttpClient attachHttpClient = HttpClients.custom().disableContentCompression().build();
                 for (Map.Entry<String,String> attachEntry : attachmentMap.entrySet()) {
                     String attachName = attachEntry.getKey();
                     String attachUrl = attachEntry.getValue();
                     System.out.println("------附件名称: " + attachName + "------");
                     HttpGet httpGet = new HttpGet(attachUrl);
                     httpGet.setHeaders(getHeaders());
-                    //必须新建个client设置disableContentCompression并带上httpContxt,否则下载附件错误
-                    CloseableHttpClient attachHttpClient = HttpClients.custom().disableContentCompression().build();
                     System.out.println("------开始下载附件,目录: " + path + " 请耐心稍等------");
                     httpResponse = attachHttpClient.execute(httpGet,httpContext);
                     HttpEntity entity = httpResponse.getEntity();
