@@ -39,12 +39,14 @@ public class RosiHotMain {
                         for (Element detailElement : detailElements) {
                             String detailImgUrl = detailElement.absUrl("href");
                             String detailImgName = detailImgUrl.substring(detailImgUrl.indexOf("-") + 1, detailImgUrl.length());
-                            URLConnection url = new URL(detailImgUrl).openConnection();
-                            url.connect();
-                            InputStream inputStream = url.getInputStream();
-                            System.out.println("Start download : " + detailImgUrl);
-                            DownloadUtils.download(inputStream, path, detailImgName);
-                            System.out.println("finished download : " + detailImgName);
+                            if (!"http://www.rosihot.com/photo/194/rosimm-194-006.jpg".equals(detailImgUrl)) {
+                                URLConnection url = new URL(detailImgUrl).openConnection();
+                                url.connect();
+                                InputStream inputStream = url.getInputStream();
+                                System.out.println("Start download : " + detailImgUrl);
+                                DownloadUtils.download(inputStream, path, detailImgName);
+                                System.out.println("finished download : " + detailImgName);
+                            }
                         }
                     }
                 }
