@@ -4,6 +4,7 @@ package com.github.zjiajun.adult;
  * Created by zhujiajun
  * 15/5/17 20:03
  */
+@Deprecated
 public interface BrowserUserAgent {
 
 
