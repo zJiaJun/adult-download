@@ -1,14 +1,15 @@
 package com.github.zjiajun.adult.pic;
 
 import com.github.zjiajun.adult.exception.AdultException;
+import com.github.zjiajun.adult.tool.ThreadPoolTool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
 import static com.github.zjiajun.adult.tool.AdultTool.*;
@@ -19,16 +20,19 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public class PicApp {
 
-
     public void handlerRosixz() {
         Map<Integer, String> pageInfo = getRosixzPageInfo();
-        for (String pageUrls: pageInfo.values()) {
-
-
+        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("rosixz-pool", Runtime.getRuntime().availableProcessors() + 1);
+        for (String pageUrl: pageInfo.values()) {
+            executor.execute(new RosixzTask(pageUrl));
         }
 
     }
 
+    public static void main(String[] args) {
+        PicApp picApp = new PicApp();
+        picApp.handlerRosixz();
+    }
 
 
     /**
@@ -36,19 +40,15 @@ public class PicApp {
      * @return Map[page->pageUrl]
      */
     private Map<Integer,String> getRosixzPageInfo() {
-        try {
-            Document indexDoc = Jsoup.connect(rosixzUrl()).userAgent(randomUa()).timeout(5000).get();
-            Elements pageElements = indexDoc.select(".page-navigator li a");
-            Element totalElement = pageElements.get(pageElements.size() - 2);//倒数第2个是总页数
-            String pageUrl = totalElement.absUrl("href");
-            String totalSize = totalElement.html();
-            Map<Integer,String> pageInfo = new HashMap<>();
-            for (int page = Integer.parseInt(totalSize); page > 0; page--) {
-                pageInfo.put(page,pageUrl.replace(totalSize,String.valueOf(page)));
-            }
-            return pageInfo;
-        } catch (IOException e) {
-            throw new AdultException("Handler rosixz exception : " + e.getMessage());
+        Document indexDoc = connectAndParse(rosixzUrl());
+        Elements pageElements = indexDoc.select(".page-navigator li a");
+        Element totalElement = pageElements.get(pageElements.size() - 2);//倒数第2个是总页数
+        String pageUrl = totalElement.absUrl("href");
+        String totalSize = totalElement.html();
+        Map<Integer,String> pageInfo = new HashMap<>();
+        for (int page = Integer.parseInt(totalSize); page > 0; page--) {
+            pageInfo.put(page,pageUrl.replace(totalSize,String.valueOf(page)));
         }
+        return pageInfo;
     }
 }
