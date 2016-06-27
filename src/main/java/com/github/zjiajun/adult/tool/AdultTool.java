@@ -11,6 +11,7 @@ import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
 
@@ -34,6 +35,12 @@ public final class AdultTool {
             return Jsoup.connect(url).userAgent(randomUa()).timeout(5000).get();
         } catch (IOException e) {
             throw new AdultException(LoggerTool.getTrace(e));
+        } finally {
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
