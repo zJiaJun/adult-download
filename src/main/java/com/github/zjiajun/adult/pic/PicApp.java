@@ -20,13 +20,12 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public class PicApp {
 
+    private static final int POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2 + 1;
+
     public void handlerRosixz() {
         Map<Integer, String> pageInfo = getRosixzPageInfo();
-        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("rosixz-pool", Runtime.getRuntime().availableProcessors() + 1);
-        for (String pageUrl: pageInfo.values()) {
-            executor.execute(new RosixzTask(pageUrl));
-        }
-
+        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("rosixz-pool", POOL_SIZE);
+        pageInfo.values().forEach(url -> executor.execute(new RosixzTask(url)));
     }
 
     public static void main(String[] args) {

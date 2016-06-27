@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 public class DownloadUtils {
 
     public static void download(InputStream inputStream,String downloadPath,String fileName) {
+
         FileOutputStream fs = null;
         try {
             fs = new FileOutputStream(downloadPath + fileName);
