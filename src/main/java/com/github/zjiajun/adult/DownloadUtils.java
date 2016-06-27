@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
  * Created by zhujiajun
  * 15/5/15 15:565
  */
+@Deprecated
 public class DownloadUtils {
 
     public static void download(InputStream inputStream,String downloadPath,String fileName) {

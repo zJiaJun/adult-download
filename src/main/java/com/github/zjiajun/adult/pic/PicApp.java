@@ -1,8 +1,6 @@
 package com.github.zjiajun.adult.pic;
 
-import com.github.zjiajun.adult.exception.AdultException;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

@@ -4,6 +4,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by zhujiajun
@@ -33,7 +34,7 @@ public final class AdultConfig {
     }
 
     private static String getStringConf(String key, String defaultValue) {
-        if (key == null) throw new IllegalArgumentException("config key should be not null");
+        Objects.requireNonNull(key,"config key must not be null");
         return config.hasPath(key) ? config.getString(key) : defaultValue;
     }
 

@@ -26,6 +26,10 @@ public class ThreadPoolTool {
         return SingletonHolder.instance;
     }
 
+    public ExecutorService getExecutor(String key) {
+        return getExecutor(key,1);
+    }
+
     public ExecutorService getExecutor(String key,int poolSize) {
         ExecutorService executorService = POOL_CACHE.get(key);
         if (executorService == null) {
