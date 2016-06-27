@@ -18,6 +18,7 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public class PicApp {
 
+    //TODO 多线程访问,评率太高,后续访问报异常返回403。待解决,添加代理? 休眠线程访问?
     private static final int POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2 + 1;
 
     public void handlerRosixz() {

@@ -42,7 +42,7 @@ public final class AdultDownload {
             }
             if (callback != null) callback.call();
         } catch (IOException e) {
-            throw new AdultException("Download exception " + e.getMessage());
+            throw new AdultException(LoggerTool.getTrace(e));
         } finally {
             try {
                 if (fileOutputStream != null) fileOutputStream.close();
