@@ -29,6 +29,34 @@ public final class AdultConfig {
         return config.getStringList("ua");
     }
 
+    public static String sexInSexHost() {
+        return getStringConf("torrent.sexInSex.host");
+    }
+
+    public static String sexInSexUrlPrefix() {
+        return getStringConf("torrent.sexInSex.urlPrefix");
+    }
+
+    public static String sexInSexLoginUrl() {
+        return sexInSexUrlPrefix() + getStringConf("torrent.sexInSex.loginUrl");
+    }
+
+    public static String sexInSexAsiaWuUrl() {
+        return sexInSexUrlPrefix() + getStringConf("torrent.sexInSex.asiaWuUrl");
+    }
+
+    public static String sexInSexAsiaYouUrl() {
+        return sexInSexUrlPrefix() + getStringConf("torrent.sexInSex.asiaYouUrl");
+    }
+
+    public static String sexInSexUserName() {
+        return getStringConf("torrent.sexInSex.username");
+    }
+
+    public static String sexInSexPassword() {
+        return getStringConf("torrent.sexInSex.password");
+    }
+
     private static String getStringConf(String key) {
         return getStringConf(key,"");
     }
