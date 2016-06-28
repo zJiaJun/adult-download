@@ -57,7 +57,4 @@ public final class AdultDownInfo {
         return fileName;
     }
 
-    public String getFilePathName() {
-        return filePath + fileName;
-    }
 }

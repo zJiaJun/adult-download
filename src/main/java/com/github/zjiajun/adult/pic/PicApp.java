@@ -1,5 +1,7 @@
 package com.github.zjiajun.adult.pic;
 
+import com.github.zjiajun.adult.tool.AdultRequestInfo;
+import com.github.zjiajun.adult.tool.ConnectionListener;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,7 +34,10 @@ public class PicApp {
      * @return Map[page->pageUrl]
      */
     private Map<Integer,String> getRosixzPageInfo() {
-        Document indexDoc = connectAndParse(rosixzUrl());
+        AdultRequestInfo requestInfo = new AdultRequestInfo.Builder()
+                .url(rosixzUrl()).userAgent(randomUa())
+                .sleep(true).sleepSeconds(5).build();
+        Document indexDoc = connect(requestInfo);
         Elements pageElements = indexDoc.select(".page-navigator li a");
         Element totalElement = pageElements.get(pageElements.size() - 2);//倒数第2个是总页数
         String pageUrl = totalElement.absUrl("href");

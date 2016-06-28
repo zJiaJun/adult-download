@@ -62,7 +62,7 @@ public final class AdultConfig {
     }
 
     private static String getStringConf(String key, String defaultValue) {
-        Objects.requireNonNull(key,"config key must not be null");
+        Objects.requireNonNull(key,"Config key must not be null");
         return config.hasPath(key) ? config.getString(key) : defaultValue;
     }
 

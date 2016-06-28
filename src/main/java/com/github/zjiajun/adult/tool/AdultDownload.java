@@ -34,7 +34,7 @@ public final class AdultDownload {
             connection.addRequestProperty("User-Agent", randomUa());
             connection.connect();
             InputStream inputStream = connection.getInputStream();
-            fileOutputStream = new FileOutputStream(downInfo.getFilePathName());
+            fileOutputStream = new FileOutputStream(downInfo.getFilePath() + downInfo.getFileName());
             byte[] buffer = new byte[1024];
             int len;
             while ((len = inputStream.read(buffer)) != -1) {
