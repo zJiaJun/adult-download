@@ -29,19 +29,18 @@ public final class AdultDownload {
         FileOutputStream fileOutputStream = null;
         try {
             File path = new File(downInfo.getFilePath());
-            if (!path.exists() && path.mkdirs()) {
-                HttpURLConnection connection = (HttpURLConnection) new URL(downInfo.getUrl()).openConnection();
-                connection.addRequestProperty("User-Agent", randomUa());
-                connection.connect();
-                InputStream inputStream = connection.getInputStream();
-                fileOutputStream = new FileOutputStream(downInfo.getFilePathName());
-                byte[] buffer = new byte[1024];
-                int len;
-                while ((len = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, len);
-                }
-                if (callback != null) callback.call();
+            if (!path.exists()) path.mkdirs();
+            HttpURLConnection connection = (HttpURLConnection) new URL(downInfo.getUrl()).openConnection();
+            connection.addRequestProperty("User-Agent", randomUa());
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            fileOutputStream = new FileOutputStream(downInfo.getFilePathName());
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, len);
             }
+            if (callback != null) callback.call();
         } catch (IOException e) {
             throw new AdultException(LoggerTool.getTrace(e));
         } finally {
