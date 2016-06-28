@@ -5,9 +5,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
 
@@ -30,7 +34,13 @@ public final class AdultTool {
         try {
             return Jsoup.connect(url).userAgent(randomUa()).timeout(5000).get();
         } catch (IOException e) {
-            throw new AdultException("Jsoup connect : " + e.getMessage());
+            throw new AdultException(LoggerTool.getTrace(e));
+        } finally {
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

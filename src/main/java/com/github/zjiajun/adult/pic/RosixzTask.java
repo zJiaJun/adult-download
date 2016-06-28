@@ -54,7 +54,7 @@ public class RosixzTask implements Runnable {
      * @param downloadPath 下载主目录
      */
     private void downloadDetailImg(String detailImgUrl,String downloadPath) {
-        String detailImgName = detailImgUrl.substring(detailImgUrl.indexOf("-") + 1, detailImgUrl.length());
+        String detailImgName = detailImgUrl.substring(detailImgUrl.lastIndexOf("/") + 1, detailImgUrl.length());
         AdultDownInfo downInfo = new AdultDownInfo.Builder().url(detailImgUrl).filePath(downloadPath).fileName(detailImgName).build();
         AdultDownload.down2File(downInfo);
     }

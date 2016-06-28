@@ -18,19 +18,14 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public class PicApp {
 
-    private static final int POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2 + 1;
+    //TODO 多线程访问,评率太高,后续访问报异常返回403。待解决,添加代理? 休眠线程访问?
+    private static final int POOL_SIZE = 6;
 
     public void handlerRosixz() {
         Map<Integer, String> pageInfo = getRosixzPageInfo();
         ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("rosixz-pool", POOL_SIZE);
         pageInfo.values().forEach(url -> executor.execute(new RosixzTask(url)));
     }
-
-    public static void main(String[] args) {
-        PicApp picApp = new PicApp();
-        picApp.handlerRosixz();
-    }
-
 
     /**
      * 获取rosixz的分页信息
@@ -47,5 +42,10 @@ public class PicApp {
             pageInfo.put(page,pageUrl.replace(totalSize,String.valueOf(page)));
         }
         return pageInfo;
+    }
+
+    public static void main(String[] args) {
+        PicApp app = new PicApp();
+        app.handlerRosixz();
     }
 }

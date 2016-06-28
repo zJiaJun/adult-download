@@ -40,6 +40,16 @@ public class PicAppTest {
         Object value = getRosixzPageInfoMethod.invoke(picApp);
         Map<Integer, String> pageInfo = (Map<Integer, String>) value;
         assertEquals(pageInfo.get(1),"http://www.rosixz.com/page-1.html");
-
     }
+
+    @Test
+    public void shouldEqualsDetailImgName() {
+        String normal = "http://www.rosixz.com/photo2/320/rosimm-320-001.jpg";
+        String unnoram = "http:/www.rosixz.com/photo/177/ROSI_177_001.jpg";
+        normal = normal.substring(normal.lastIndexOf("/") + 1,normal.length());
+        unnoram = unnoram.substring(unnoram.lastIndexOf("/") + 1,unnoram.length());
+        assertEquals(normal,"rosimm-320-001.jpg");
+        assertEquals(unnoram,"ROSI_177_001.jpg");
+    }
+
 }

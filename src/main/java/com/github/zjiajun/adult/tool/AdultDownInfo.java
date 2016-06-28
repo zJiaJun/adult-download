@@ -12,7 +12,7 @@ public final class AdultDownInfo {
     private final String filePath;
     private final String fileName;
 
-    public AdultDownInfo(String url, String filePath, String fileName) {
+    private AdultDownInfo(String url, String filePath, String fileName) {
         this.url = url;
         this.filePath = filePath;
         this.fileName = fileName;

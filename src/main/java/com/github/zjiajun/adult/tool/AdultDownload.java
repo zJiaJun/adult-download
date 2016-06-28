@@ -28,21 +28,21 @@ public final class AdultDownload {
         Objects.requireNonNull(downInfo);
         FileOutputStream fileOutputStream = null;
         try {
-            File file = new File(downInfo.getFilePath());
-            if (!file.mkdirs()) return; //文件夹已存在或者创建失败 返回
+            File path = new File(downInfo.getFilePath());
+            if (!path.exists()) path.mkdirs();
             HttpURLConnection connection = (HttpURLConnection) new URL(downInfo.getUrl()).openConnection();
-            connection.addRequestProperty("User-Agent",randomUa());
+            connection.addRequestProperty("User-Agent", randomUa());
             connection.connect();
             InputStream inputStream = connection.getInputStream();
             fileOutputStream = new FileOutputStream(downInfo.getFilePathName());
-            byte [] buffer = new byte[1024];
+            byte[] buffer = new byte[1024];
             int len;
             while ((len = inputStream.read(buffer)) != -1) {
-                fileOutputStream.write(buffer,0,len);
+                fileOutputStream.write(buffer, 0, len);
             }
             if (callback != null) callback.call();
         } catch (IOException e) {
-            throw new AdultException("Download exception " + e.getMessage());
+            throw new AdultException(LoggerTool.getTrace(e));
         } finally {
             try {
                 if (fileOutputStream != null) fileOutputStream.close();
