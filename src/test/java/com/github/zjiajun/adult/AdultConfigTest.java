@@ -16,6 +16,11 @@ public class AdultConfigTest {
     }
 
     @Test
+    public void shouldEqualsTorrentDownloadPath() {
+        assertEquals(AdultConfig.torrentDownloadPath(),"/Users/zhujiajun/Downloads/torrent/");
+    }
+
+    @Test
     public void shouldReadUaList() {
         assertEquals(AdultConfig.uaList().size(),13);
     }
@@ -25,5 +30,29 @@ public class AdultConfigTest {
         assertEquals(AdultConfig.rosixzUrl(),"http://www.rosixz.com/");
     }
 
+    @Test
+    public void shouldEqualsSexInSexHost() {
+        assertEquals(AdultConfig.sexInSexHost(),"67.220.90.4");
+    }
+
+    @Test
+    public void shouldEqualsSexInSexUrlPrefix() {
+        assertEquals(AdultConfig.sexInSexUrlPrefix(),"http://67.220.90.4/forum/");
+    }
+
+    @Test
+    public void shouldEqualsSexInSexLoginUrl() {
+        assertEquals(AdultConfig.sexInSexLoginUrl(),"http://67.220.90.4/forum/logging.php?action=login");
+    }
+
+    @Test
+    public void shouldEqualsSexInSexAsiaWuUrl() {
+        assertEquals(AdultConfig.sexInSexAsiaWuUrl(),"http://67.220.90.4/forum/forum-143-1.html");
+    }
+
+    @Test
+    public void shouldEqualsSexInSexAsiaYouUrl() {
+        assertEquals(AdultConfig.sexInSexAsiaYouUrl(),"http://67.220.90.4/forum/forum-230-1.html");
+    }
 
 }

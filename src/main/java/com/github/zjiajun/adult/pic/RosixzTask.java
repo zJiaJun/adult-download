@@ -2,6 +2,7 @@ package com.github.zjiajun.adult.pic;
 
 import com.github.zjiajun.adult.tool.AdultDownInfo;
 import com.github.zjiajun.adult.tool.AdultDownload;
+import com.github.zjiajun.adult.tool.AdultRequestInfo;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -43,7 +44,10 @@ public class RosixzTask implements Runnable {
      */
     private void getPicInfoByDetailUrl(String detailUrl,String detailContent) {
         String downloadPath = picDownloadPath() + detailContent + File.separator;
-        Document detailDoc = connectAndParse(detailUrl);
+        AdultRequestInfo requestInfo = new AdultRequestInfo.Builder()
+                .url(detailUrl).userAgent(randomUa())
+                .sleep(true).sleepSeconds(5).build();
+        Document detailDoc = connect(requestInfo);
         Elements detailElements = detailDoc.select(".imglist a[href]");
         detailElements.forEach(e -> downloadDetailImg(e.absUrl("href"),downloadPath));
     }
@@ -67,7 +71,10 @@ public class RosixzTask implements Runnable {
      */
     private Map<String,String> getDetailInfoByPageUrl(String pageUrl) {
         Map<String,String> detailMap = new HashMap<>();
-        Document pageDoc = connectAndParse(pageUrl);
+        AdultRequestInfo requestInfo = new AdultRequestInfo.Builder()
+                .url(pageUrl).userAgent(randomUa())
+                .sleep(true).sleepSeconds(5).build();
+        Document pageDoc = connect(requestInfo);
         Elements detailElements = pageDoc.select(".photo a[href]");
         detailElements.forEach(e -> {
             String detailUrl = e.absUrl("href");

@@ -25,8 +25,40 @@ public final class AdultConfig {
         return getStringConf("pic.download.path",System.getProperty("user.home"));
     }
 
+    public static String torrentDownloadPath() {
+        return getStringConf("torrent.download.path",System.getProperty("user.home"));
+    }
+
     public static List<String> uaList() {
         return config.getStringList("ua");
+    }
+
+    public static String sexInSexHost() {
+        return getStringConf("torrent.sexInSex.host");
+    }
+
+    public static String sexInSexUrlPrefix() {
+        return getStringConf("torrent.sexInSex.urlPrefix");
+    }
+
+    public static String sexInSexLoginUrl() {
+        return sexInSexUrlPrefix() + getStringConf("torrent.sexInSex.loginUrl");
+    }
+
+    public static String sexInSexAsiaWuUrl() {
+        return sexInSexUrlPrefix() + getStringConf("torrent.sexInSex.asiaWuUrl");
+    }
+
+    public static String sexInSexAsiaYouUrl() {
+        return sexInSexUrlPrefix() + getStringConf("torrent.sexInSex.asiaYouUrl");
+    }
+
+    public static String sexInSexUserName() {
+        return getStringConf("torrent.sexInSex.username");
+    }
+
+    public static String sexInSexPassword() {
+        return getStringConf("torrent.sexInSex.password");
     }
 
     private static String getStringConf(String key) {
@@ -34,7 +66,7 @@ public final class AdultConfig {
     }
 
     private static String getStringConf(String key, String defaultValue) {
-        Objects.requireNonNull(key,"config key must not be null");
+        Objects.requireNonNull(key,"Config key must not be null");
         return config.hasPath(key) ? config.getString(key) : defaultValue;
     }
 
