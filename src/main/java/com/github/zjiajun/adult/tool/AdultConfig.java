@@ -25,6 +25,10 @@ public final class AdultConfig {
         return getStringConf("pic.download.path",System.getProperty("user.home"));
     }
 
+    public static String torrentDownloadPath() {
+        return getStringConf("torrent.download.path",System.getProperty("user.home"));
+    }
+
     public static List<String> uaList() {
         return config.getStringList("ua");
     }

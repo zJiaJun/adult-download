@@ -1,11 +1,14 @@
 package com.github.zjiajun.adult.torrent;
 
+import com.github.zjiajun.adult.tool.AdultDownInfo;
+import com.github.zjiajun.adult.tool.AdultDownload;
 import com.github.zjiajun.adult.tool.AdultRequestInfo;
 import com.github.zjiajun.adult.tool.ConnectionListener;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -40,7 +43,6 @@ public class TorrentApp {
     public static void main(String[] args) {
         TorrentApp app = new TorrentApp();
         app.handlerSexInSex();
-
     }
 
     private void loginSexInSex() {
@@ -85,9 +87,37 @@ public class TorrentApp {
             String href = e.absUrl("href");//详情url
             String filePath = text.replaceAll("/", "");//替换斜杠，防止新建多层目录
             urlMap.put(filePath,href);
-
         });
         System.out.println(urlMap);
+
+
+        urlMap.forEach((k,v) -> {
+            String path = torrentDownloadPath() + k + File.separator;
+            AdultRequestInfo threadRequest = new AdultRequestInfo.Builder()
+                    .url(v).headers(headers).userAgent(UA)
+                    .cookies(cookiesContext).build();
+            Document detailThreadDoc = connect(threadRequest);
+
+            //TODO 图片第一张是https 访问下载错误 bug
+            Elements imgElements = detailThreadDoc.select("div.t_msgfont img[src^=http]");
+            String imgUrl = imgElements.first().attr("src");
+            String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1, imgUrl.length());
+            AdultDownInfo imgDownInfo = new AdultDownInfo.Builder()
+                    .url(imgUrl).headers(headers).filePath(path).fileName(imgFileName).build();
+            AdultDownload.down2File(imgDownInfo);
+
+
+            Elements attachElements = detailThreadDoc.select("dl.t_attachlist a[href^=attachment]");
+            attachElements.forEach(e -> {
+                String attachName = e.text();
+                String attachUrl = e.absUrl("href");
+
+                AdultDownInfo downInfo = new AdultDownInfo.Builder()
+                        .url(attachUrl).userAgent(UA).cookies(cookiesContext)
+                        .filePath(path).fileName(attachName).build();
+                AdultDownload.down2File(downInfo);
+            });
+        });
         return urlMap;
     }
 

@@ -1,52 +1,57 @@
 package com.github.zjiajun.adult.tool;
 
+import java.util.Map;
+
 /**
  * Created by zhujiajun
  * 16/6/27 15:24
  *
- * 下载相关信息 建造者模式
+ * 下载相关信息
  */
-public final class AdultDownInfo {
+public final class AdultDownInfo extends AdultBasicInfo {
 
-    private final String url;
-    private final String filePath;
-    private final String fileName;
+    private String filePath;
+    private String fileName;
 
-    private AdultDownInfo(String url, String filePath, String fileName) {
-        this.url = url;
-        this.filePath = filePath;
-        this.fileName = fileName;
-    }
+    private AdultDownInfo() {}
 
     public static class Builder {
-
-        private String url;
-        private String filePath;
-        private String fileName;
+        private AdultDownInfo adultDownInfo = new AdultDownInfo();
 
         public Builder url(String url) {
-            this.url = url;
+            adultDownInfo.setUrl(url);
+            return this;
+        }
+
+        public Builder userAgent(String userAgent) {
+            adultDownInfo.setUserAgent(userAgent);
+            return this;
+        }
+
+        public Builder headers(Map<String,String> headers) {
+            adultDownInfo.setHeaders(headers);
+            return this;
+        }
+
+        public Builder cookies(Map<String,String> cookies) {
+            adultDownInfo.setCookies(cookies);
             return this;
         }
 
         public Builder filePath(String filePath) {
-            this.filePath = filePath;
+            adultDownInfo.filePath = filePath;
             return this;
         }
 
         public Builder fileName(String fileName) {
-            this.fileName = fileName;
+            adultDownInfo.fileName = fileName;
             return this;
         }
 
         public AdultDownInfo build() {
-            return new AdultDownInfo(url,filePath,fileName);
+            return adultDownInfo;
         }
 
-    }
-
-    public String getUrl() {
-        return url;
     }
 
     public String getFilePath() {

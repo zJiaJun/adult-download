@@ -16,6 +16,11 @@ public class AdultConfigTest {
     }
 
     @Test
+    public void shouldEqualsTorrentDownloadPath() {
+        assertEquals(AdultConfig.torrentDownloadPath(),"/Users/zhujiajun/Downloads/torrent/");
+    }
+
+    @Test
     public void shouldReadUaList() {
         assertEquals(AdultConfig.uaList().size(),13);
     }
