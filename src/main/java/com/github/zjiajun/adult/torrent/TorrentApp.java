@@ -18,9 +18,9 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public class TorrentApp {
 
-    private final Map<String,String> headers;
-    private final Map<String,String> cookiesContext;
-    private final String UA;//后续访问页面的ua 必须和登陆的ua保持一致,似乎服务端有验证
+    private final Map<String,String> headers;//请求头
+    private final Map<String,String> cookiesContext;//登陆后保存的cookies上下文
+    private final String UA;//访问需要登陆权限的页面,必须和登陆的ua保持一致,似乎服务端有验证
 
     public TorrentApp() {
         headers = new HashMap<>();

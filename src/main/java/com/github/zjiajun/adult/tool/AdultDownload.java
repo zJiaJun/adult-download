@@ -24,7 +24,7 @@ public final class AdultDownload {
         down2File(downInfo,null);
     }
 
-    public static void down2File(AdultDownInfo downInfo, DownloadCallback callback) {
+    public static void down2File(AdultDownInfo downInfo, DownloadListener listener) {
         Objects.requireNonNull(downInfo);
         FileOutputStream fileOutputStream = null;
         try {
@@ -40,8 +40,9 @@ public final class AdultDownload {
             while ((len = inputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, len);
             }
-            if (callback != null) callback.call();
+            if (listener != null) listener.success();
         } catch (IOException e) {
+            if (listener != null) listener.failure(downInfo,e);
             throw new AdultException(LoggerTool.getTrace(e));
         } finally {
             try {
@@ -50,10 +51,6 @@ public final class AdultDownload {
                 e.printStackTrace();
             }
         }
-    }
-
-    public interface DownloadCallback {
-        void call();
     }
 
 }

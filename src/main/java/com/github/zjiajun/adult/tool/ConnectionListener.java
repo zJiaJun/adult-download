@@ -14,8 +14,9 @@ public interface ConnectionListener {
         //nothing
     }
 
-    default void failure(AdultRequestInfo requestInfo,Connection.Response response) {
-        //nothing
+    default void failure(AdultRequestInfo requestInfo,Connection.Response response,Exception e) {
+        System.err.println("Connect url wrong : " + requestInfo.getUrl());
+        //可以把失败的url保存到集合里,后续继续处理
     }
 
 }

@@ -63,7 +63,7 @@ public final class AdultTool {
             if (listener != null) listener.success(response);
             return response.parse();
         } catch (IOException e) {
-            if(listener != null) listener.failure(requestInfo,response);
+            if(listener != null) listener.failure(requestInfo,response,e);
             throw new AdultException(LoggerTool.getTrace(e));
         } finally {
             if (requestInfo.isSleep()) {
