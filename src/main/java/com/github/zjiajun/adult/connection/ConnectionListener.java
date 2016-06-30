@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.tool;
+package com.github.zjiajun.adult.connection;
 
 import org.jsoup.Connection;
 
@@ -14,8 +14,8 @@ public interface ConnectionListener {
         //nothing
     }
 
-    default void failure(AdultRequestInfo requestInfo,Connection.Response response,Exception e) {
-        System.err.println("Connect url wrong : " + requestInfo.getUrl());
+    default void failure(ConnectionRequest request, Connection.Response response, Exception e) {
+        System.err.println("Connect url wrong : " + request.getUrl());
         //可以把失败的url保存到集合里,后续继续处理
     }
 

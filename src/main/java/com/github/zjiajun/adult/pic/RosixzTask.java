@@ -1,8 +1,8 @@
 package com.github.zjiajun.adult.pic;
 
-import com.github.zjiajun.adult.tool.AdultDownInfo;
-import com.github.zjiajun.adult.tool.AdultDownload;
-import com.github.zjiajun.adult.tool.AdultRequestInfo;
+import com.github.zjiajun.adult.connection.ConnectionRequest;
+import com.github.zjiajun.adult.download.DownloadRequest;
+import com.github.zjiajun.adult.download.AdultDownload;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.github.zjiajun.adult.tool.AdultTool.*;
+import static com.github.zjiajun.adult.connection.AdultConnection.*;
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
 /**
  * Created by zhujiajun
@@ -44,10 +44,10 @@ public class RosixzTask implements Runnable {
      */
     private void getPicInfoByDetailUrl(String detailUrl,String detailContent) {
         String downloadPath = picDownloadPath() + detailContent + File.separator;
-        AdultRequestInfo requestInfo = new AdultRequestInfo.Builder()
-                .url(detailUrl).userAgent(randomUa())
+        ConnectionRequest request = new ConnectionRequest.Builder()
+                .url(detailUrl).userAgent(randomUA())
                 .sleep(true).sleepSeconds(5).build();
-        Document detailDoc = connect(requestInfo);
+        Document detailDoc = connect(request);
         Elements detailElements = detailDoc.select(".imglist a[href]");
         detailElements.forEach(e -> downloadDetailImg(e.absUrl("href"),downloadPath));
     }
@@ -59,8 +59,8 @@ public class RosixzTask implements Runnable {
      */
     private void downloadDetailImg(String detailImgUrl,String downloadPath) {
         String detailImgName = detailImgUrl.substring(detailImgUrl.lastIndexOf("/") + 1, detailImgUrl.length());
-        AdultDownInfo downInfo = new AdultDownInfo.Builder().url(detailImgUrl).filePath(downloadPath).fileName(detailImgName).build();
-        AdultDownload.down2File(downInfo);
+        DownloadRequest downloadRequest = new DownloadRequest.Builder().url(detailImgUrl).filePath(downloadPath).fileName(detailImgName).build();
+        AdultDownload.down2File(downloadRequest);
     }
 
 
@@ -71,10 +71,10 @@ public class RosixzTask implements Runnable {
      */
     private Map<String,String> getDetailInfoByPageUrl(String pageUrl) {
         Map<String,String> detailMap = new HashMap<>();
-        AdultRequestInfo requestInfo = new AdultRequestInfo.Builder()
-                .url(pageUrl).userAgent(randomUa())
+        ConnectionRequest request = new ConnectionRequest.Builder()
+                .url(pageUrl).userAgent(randomUA())
                 .sleep(true).sleepSeconds(5).build();
-        Document pageDoc = connect(requestInfo);
+        Document pageDoc = connect(request);
         Elements detailElements = pageDoc.select(".photo a[href]");
         detailElements.forEach(e -> {
             String detailUrl = e.absUrl("href");

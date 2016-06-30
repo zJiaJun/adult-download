@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.tool;
+package com.github.zjiajun.adult;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * 请求基类
  */
-public class AdultBasicInfo {
+public class BasicRequest {
 
     private String url;
     private int timeout = 5000;

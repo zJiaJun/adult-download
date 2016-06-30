@@ -1,6 +1,7 @@
-package com.github.zjiajun.adult.tool;
+package com.github.zjiajun.adult.download;
 
 import com.github.zjiajun.adult.exception.AdultException;
+import com.github.zjiajun.adult.tool.LoggerTool;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,8 +12,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.github.zjiajun.adult.tool.AdultTool.*;
-
 /**
  * Created by zhujiajun
  * 16/6/27 14:38
@@ -21,8 +20,11 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public final class AdultDownload {
 
-    public static void down2File(AdultDownInfo downInfo) {
-        down2File(downInfo,null);
+
+    private AdultDownload() {}
+
+    public static void down2File(DownloadRequest request) {
+        down2File(request,null);
     }
 
     private static String getRequestCookieString(Map<String,String> cookies) {
@@ -38,23 +40,23 @@ public final class AdultDownload {
         return sb.toString();
     }
 
-    public static void down2File(AdultDownInfo downInfo, DownloadListener listener) {
-        Objects.requireNonNull(downInfo);
+    public static void down2File(DownloadRequest request, DownloadListener listener) {
+        Objects.requireNonNull(request);
         FileOutputStream fileOutputStream = null;
         try {
-            File path = new File(downInfo.getFilePath());
+            File path = new File(request.getFilePath());
             if (!path.exists()) path.mkdirs();
-            HttpURLConnection connection = (HttpURLConnection) new URL(downInfo.getUrl()).openConnection();
-            connection.addRequestProperty("User-Agent", downInfo.getUserAgent());
-            if (downInfo.getHeaders() != null && downInfo.getHeaders().size() > 0)
-                downInfo.getHeaders().forEach(connection::addRequestProperty);
+            HttpURLConnection connection = (HttpURLConnection) new URL(request.getUrl()).openConnection();
+            connection.addRequestProperty("User-Agent", request.getUserAgent());
+            if (request.getHeaders() != null && request.getHeaders().size() > 0)
+                request.getHeaders().forEach(connection::addRequestProperty);
 
-            if (downInfo.getCookies() != null && downInfo.getCookies().size() > 0)
-                connection.addRequestProperty("Cookie",getRequestCookieString(downInfo.getCookies()));
+            if (request.getCookies() != null && request.getCookies().size() > 0)
+                connection.addRequestProperty("Cookie",getRequestCookieString(request.getCookies()));
 
             connection.connect();
             InputStream inputStream = connection.getInputStream();
-            fileOutputStream = new FileOutputStream(downInfo.getFilePath() + downInfo.getFileName());
+            fileOutputStream = new FileOutputStream(request.getFilePath() + request.getFileName());
             byte[] buffer = new byte[1024];
             int len;
             while ((len = inputStream.read(buffer)) != -1) {
@@ -62,7 +64,7 @@ public final class AdultDownload {
             }
             if (listener != null) listener.success();
         } catch (IOException e) {
-            if (listener != null) listener.failure(downInfo,e);
+            if (listener != null) listener.failure(request,e);
             throw new AdultException(LoggerTool.getTrace(e));
         } finally {
             try {

@@ -1,7 +1,6 @@
 package com.github.zjiajun.adult.pic;
 
-import com.github.zjiajun.adult.tool.AdultRequestInfo;
-import com.github.zjiajun.adult.tool.ConnectionListener;
+import com.github.zjiajun.adult.connection.ConnectionRequest;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,7 +11,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
-import static com.github.zjiajun.adult.tool.AdultTool.*;
+import static com.github.zjiajun.adult.connection.AdultConnection.*;
+
 
 /**
  * Created by zhujiajun
@@ -20,12 +20,11 @@ import static com.github.zjiajun.adult.tool.AdultTool.*;
  */
 public class PicApp {
 
-    //TODO 多线程访问,评率太高,后续访问报异常返回403。待解决,添加代理? 休眠线程访问?
     private static final int POOL_SIZE = 6;
 
     public void handlerRosixz() {
         Map<Integer, String> pageInfo = getRosixzPageInfo();
-        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("rosixz-pool", POOL_SIZE);
+        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("pic-rosixz-pool", POOL_SIZE);
         pageInfo.values().forEach(url -> executor.execute(new RosixzTask(url)));
     }
 
@@ -34,10 +33,10 @@ public class PicApp {
      * @return Map[page->pageUrl]
      */
     private Map<Integer,String> getRosixzPageInfo() {
-        AdultRequestInfo requestInfo = new AdultRequestInfo.Builder()
-                .url(rosixzUrl()).userAgent(randomUa())
+        ConnectionRequest request = new ConnectionRequest.Builder()
+                .url(rosixzUrl()).userAgent(randomUA())
                 .sleep(true).sleepSeconds(5).build();
-        Document indexDoc = connect(requestInfo);
+        Document indexDoc = connect(request);
         Elements pageElements = indexDoc.select(".page-navigator li a");
         Element totalElement = pageElements.get(pageElements.size() - 2);//倒数第2个是总页数
         String pageUrl = totalElement.absUrl("href");
@@ -49,8 +48,4 @@ public class PicApp {
         return pageInfo;
     }
 
-    public static void main(String[] args) {
-        PicApp app = new PicApp();
-        app.handlerRosixz();
-    }
 }

@@ -9,7 +9,9 @@ import java.io.StringWriter;
  *
  * 日志工具类
  */
-public class LoggerTool {
+public final class LoggerTool {
+
+    private LoggerTool() {}
 
     public static String getTrace(Throwable t) {
         StringWriter stringWriter = new StringWriter();

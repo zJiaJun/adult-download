@@ -1,4 +1,6 @@
-package com.github.zjiajun.adult.tool;
+package com.github.zjiajun.adult.connection;
+
+import com.github.zjiajun.adult.BasicRequest;
 
 import java.util.Map;
 
@@ -8,68 +10,68 @@ import java.util.Map;
  *
  * 请求相关信息
  */
-public final class AdultRequestInfo extends AdultBasicInfo {
+public final class ConnectionRequest extends BasicRequest {
 
     private String postDataCharset = "UTF-8";
     private Map<String,String> data;
 
-    private AdultRequestInfo() {}
+    private ConnectionRequest() {}
 
     public static class Builder {
-        private AdultRequestInfo adultRequestInfo = new AdultRequestInfo();
+        private ConnectionRequest connectionRequest = new ConnectionRequest();
 
         public Builder url(String url) {
-            adultRequestInfo.setUrl(url);
+            connectionRequest.setUrl(url);
             return this;
         }
 
         public Builder timeout(int timeout) {
-            adultRequestInfo.setTimeout(timeout);
+            connectionRequest.setTimeout(timeout);
             return this;
         }
 
         public Builder method(String method) {
-            adultRequestInfo.setMethod(method);
+            connectionRequest.setMethod(method);
             return this;
         }
 
         public Builder userAgent(String userAgent) {
-            adultRequestInfo.setUserAgent(userAgent);
+            connectionRequest.setUserAgent(userAgent);
             return this;
         }
 
         public Builder headers(Map<String,String> headers) {
-            adultRequestInfo.setHeaders(headers);
+            connectionRequest.setHeaders(headers);
             return this;
         }
 
         public Builder cookies(Map<String,String> cookies) {
-            adultRequestInfo.setCookies(cookies);
+            connectionRequest.setCookies(cookies);
             return this;
         }
 
         public Builder sleep(boolean sleep) {
-            adultRequestInfo.setSleep(sleep);
+            connectionRequest.setSleep(sleep);
             return this;
         }
 
         public Builder sleepSeconds(int sleepSeconds) {
-            adultRequestInfo.setSleepSeconds(sleepSeconds);
+            connectionRequest.setSleepSeconds(sleepSeconds);
             return this;
         }
 
         public Builder postDataCharset(String postDataCharset) {
-            adultRequestInfo.postDataCharset = postDataCharset;
+            connectionRequest.postDataCharset = postDataCharset;
             return this;
         }
 
         public Builder data(Map<String,String> data) {
-            adultRequestInfo.data = data;
+            connectionRequest.data = data;
             return this;
         }
 
-        public AdultRequestInfo build() {
-            return adultRequestInfo;
+        public ConnectionRequest build() {
+            return connectionRequest;
         }
     }
 

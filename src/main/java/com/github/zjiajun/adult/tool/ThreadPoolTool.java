@@ -15,8 +15,7 @@ public class ThreadPoolTool {
 
     private static final Map<String,ExecutorService> POOL_CACHE = new HashMap<>();
 
-    private ThreadPoolTool(){
-    }
+    private ThreadPoolTool() {}
 
     private static class SingletonHolder {
         private static ThreadPoolTool instance = new ThreadPoolTool();
