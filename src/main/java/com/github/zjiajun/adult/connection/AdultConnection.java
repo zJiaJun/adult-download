@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * Created by zhujiajun
  * 16/6/26 12:25
  *
- * 工具类
+ * 请求工具类
  */
 public final class AdultConnection {
 
@@ -61,6 +61,7 @@ public final class AdultConnection {
             if(listener != null) listener.failure(request,response,e);
             throw new AdultException(LoggerTool.getTrace(e));
         } finally {
+            //一次请求结束后,不管成功还是失败,休眠几秒,以解决多线程大量访问网站,导致ip被封问题
             if (request.isSleep()) {
                 try {
                     TimeUnit.SECONDS.sleep(request.getSleepSeconds());

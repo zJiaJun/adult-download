@@ -20,7 +20,6 @@ import static com.github.zjiajun.adult.connection.AdultConnection.*;
  */
 public class PicApp {
 
-    //TODO 多线程访问,评率太高,后续访问报异常返回403。待解决,添加代理? 休眠线程访问?
     private static final int POOL_SIZE = 6;
 
     public void handlerRosixz() {
@@ -49,8 +48,4 @@ public class PicApp {
         return pageInfo;
     }
 
-    public static void main(String[] args) {
-        PicApp app = new PicApp();
-        app.handlerRosixz();
-    }
 }

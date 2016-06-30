@@ -33,11 +33,6 @@ public class TorrentApp {
         threadList.forEach((k,v)-> executor.execute(new TorrentTask(k,v)));
     }
 
-    public static void main(String[] args) {
-        TorrentApp app = new TorrentApp();
-        app.handlerSexInSex();
-    }
-
     /**
      * 登录回写cookies
      */
