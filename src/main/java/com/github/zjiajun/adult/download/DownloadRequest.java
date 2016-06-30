@@ -1,4 +1,6 @@
-package com.github.zjiajun.adult.tool;
+package com.github.zjiajun.adult.download;
+
+import com.github.zjiajun.adult.BasicRequest;
 
 import java.util.Map;
 
@@ -8,48 +10,48 @@ import java.util.Map;
  *
  * 下载相关信息
  */
-public final class AdultDownInfo extends AdultBasicInfo {
+public final class DownloadRequest extends BasicRequest {
 
     private String filePath;
     private String fileName;
 
-    private AdultDownInfo() {}
+    private DownloadRequest() {}
 
     public static class Builder {
-        private AdultDownInfo adultDownInfo = new AdultDownInfo();
+        private DownloadRequest downloadRequest = new DownloadRequest();
 
         public Builder url(String url) {
-            adultDownInfo.setUrl(url);
+            downloadRequest.setUrl(url);
             return this;
         }
 
         public Builder userAgent(String userAgent) {
-            adultDownInfo.setUserAgent(userAgent);
+            downloadRequest.setUserAgent(userAgent);
             return this;
         }
 
         public Builder headers(Map<String,String> headers) {
-            adultDownInfo.setHeaders(headers);
+            downloadRequest.setHeaders(headers);
             return this;
         }
 
         public Builder cookies(Map<String,String> cookies) {
-            adultDownInfo.setCookies(cookies);
+            downloadRequest.setCookies(cookies);
             return this;
         }
 
         public Builder filePath(String filePath) {
-            adultDownInfo.filePath = filePath;
+            downloadRequest.filePath = filePath;
             return this;
         }
 
         public Builder fileName(String fileName) {
-            adultDownInfo.fileName = fileName;
+            downloadRequest.fileName = fileName;
             return this;
         }
 
-        public AdultDownInfo build() {
-            return adultDownInfo;
+        public DownloadRequest build() {
+            return downloadRequest;
         }
 
     }

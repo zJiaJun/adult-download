@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.tool;
+package com.github.zjiajun.adult.download;
 
 /**
  * Created by zhujiajun
@@ -12,8 +12,8 @@ public interface DownloadListener {
         //nothing
     }
 
-    default void failure(AdultDownInfo downInfo,Exception e) {
-        System.err.println("Download url wrong : " + downInfo.getUrl());
+    default void failure(DownloadRequest request, Exception e) {
+        System.err.println("Download url wrong : " + request.getUrl());
         //可以把失败的url保存到集合里,后续继续处理
     }
 }
