@@ -26,6 +26,7 @@ public class PicApp {
         Map<Integer, String> pageInfo = getRosixzPageInfo();
         ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("pic-rosixz-pool", POOL_SIZE);
         pageInfo.values().forEach(url -> executor.execute(new RosixzTask(url)));
+        ThreadPoolTool.getInstance().shutDown("pic-rosixz-pool");
     }
 
     /**

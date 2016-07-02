@@ -31,6 +31,7 @@ public class TorrentApp {
         Map<String, String> threadList = getThreadList();
         ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("torrent-sexinsex-pool", 6);
         threadList.forEach((k,v)-> executor.execute(new TorrentTask(k,v)));
+        ThreadPoolTool.getInstance().shutDown("torrent-sexinsex-pool");
     }
 
     /**

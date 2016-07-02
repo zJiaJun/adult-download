@@ -2,8 +2,10 @@ package com.github.zjiajun.adult.tool;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zhujiajun
@@ -36,7 +38,19 @@ public class ThreadPoolTool {
             POOL_CACHE.put(key,executorService);
         }
         return executorService;
+    }
 
+    public void shutDown(String key) {
+        ExecutorService executorService = POOL_CACHE.get(key);
+        Objects.requireNonNull(executorService);
+        executorService.shutdown();
+        try {
+            while (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
