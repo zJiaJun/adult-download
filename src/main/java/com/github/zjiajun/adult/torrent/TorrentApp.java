@@ -54,12 +54,7 @@ public class TorrentApp {
                 .url(sexInSexLoginUrl()).headers(getHeaders()).userAgent(getUA()).data(loginReqData)
                 .method("POST").build();
 
-         connect(loginRequest, new ConnectionListener() {
-            @Override
-            public void success(Connection.Response response) {
-                SiteContext.setCookies(response.cookies());
-            }
-        });
+         connect(loginRequest, response -> SiteContext.setCookies(response.cookies()));
 
     }
 

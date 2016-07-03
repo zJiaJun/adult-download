@@ -8,14 +8,18 @@ import org.jsoup.Connection;
  *
  * 连接回调
  */
+@FunctionalInterface
 public interface ConnectionListener {
 
+    void handlerResponse(Connection.Response response);
+
     default void success(Connection.Response response) {
-        //nothing
+        handlerResponse(response);
     }
 
     default void failure(ConnectionRequest request, Connection.Response response, Exception e) {
         System.err.println("Connect url wrong : " + request.getUrl());
+        handlerResponse(response);
         //可以把失败的url保存到集合里,后续继续处理
     }
 
