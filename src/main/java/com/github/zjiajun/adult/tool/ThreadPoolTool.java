@@ -3,9 +3,7 @@ package com.github.zjiajun.adult.tool;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by zhujiajun
@@ -28,13 +26,13 @@ public class ThreadPoolTool {
     }
 
     public ExecutorService getExecutor(String key) {
-        return getExecutor(key,1);
+        return getExecutor(key,1,100);
     }
 
-    public ExecutorService getExecutor(String key,int poolSize) {
+    public ExecutorService getExecutor(String key,int poolSize,int queueSize) {
         ExecutorService executorService = POOL_CACHE.get(key);
         if (executorService == null) {
-            executorService = Executors.newFixedThreadPool(poolSize);
+            executorService = new ThreadPoolExecutor(poolSize,poolSize,0,TimeUnit.SECONDS,new ArrayBlockingQueue<>(queueSize));
             POOL_CACHE.put(key,executorService);
         }
         return executorService;

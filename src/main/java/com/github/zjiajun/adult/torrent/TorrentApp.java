@@ -1,10 +1,8 @@
 package com.github.zjiajun.adult.torrent;
 
 import com.github.zjiajun.adult.SiteContext;
-import com.github.zjiajun.adult.connection.ConnectionListener;
 import com.github.zjiajun.adult.connection.ConnectionRequest;
 import com.github.zjiajun.adult.tool.*;
-import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -29,7 +27,7 @@ public class TorrentApp {
     public void handlerSexInSex() {
         loginSexInSex();
         Map<String, String> threadList = getThreadList();
-        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("torrent-sexinsex-pool", 6);
+        ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("torrent-sexinsex-pool", 6, threadList.size());
         threadList.forEach((k,v)-> executor.execute(new TorrentTask(k,v)));
         ThreadPoolTool.getInstance().shutDown("torrent-sexinsex-pool");
     }
