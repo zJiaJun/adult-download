@@ -32,7 +32,8 @@ public class ThreadPoolTool {
     public ExecutorService getExecutor(String key,int poolSize,int queueSize) {
         ExecutorService executorService = POOL_CACHE.get(key);
         if (executorService == null) {
-            executorService = new ThreadPoolExecutor(poolSize,poolSize,0,TimeUnit.SECONDS,new ArrayBlockingQueue<>(queueSize));
+            executorService = new ThreadPoolExecutor(poolSize,poolSize,
+                    0,TimeUnit.SECONDS,new ArrayBlockingQueue<>(queueSize),new ThreadPoolExecutor.CallerRunsPolicy());
             POOL_CACHE.put(key,executorService);
         }
         return executorService;
