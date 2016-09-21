@@ -11,7 +11,7 @@ import java.util.Map;
 public class BasicRequest {
 
     private String url;
-    private int timeout = 5000;
+    private int timeout = 10000;
     private String method = "GET";
     private String userAgent;
     private Map<String,String> headers;

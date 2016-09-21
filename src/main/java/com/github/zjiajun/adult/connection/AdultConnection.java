@@ -47,6 +47,9 @@ public final class AdultConnection {
             /*
                 jsoup竟然没有headers批量设置header方法
                 已经向jsoup提交PR,应该会被merge
+
+                已被merged https://github.com/jhy/jsoup/pull/725
+
              */
             if (request.getHeaders() != null)
                 request.getHeaders().forEach(connect::header);
