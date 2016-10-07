@@ -36,6 +36,7 @@ public class TorrentApp {
      * 登录回写cookies
      */
     private void loginSexInSex() {
+        LoggerTool.LOGGER.info("---开始登陆网站---");
         Map<String,String> loginReqData = new HashMap<>();
         loginReqData.put("referer","index.php");
         loginReqData.put("loginfield","username");
@@ -53,6 +54,7 @@ public class TorrentApp {
                 .method("POST").build();
 
          connect(loginRequest, response -> SiteContext.setCookies(response.cookies()));
+        LoggerTool.LOGGER.info("---登陆成功---");
 
     }
 
