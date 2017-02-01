@@ -5,10 +5,15 @@ import com.github.zjiajun.adult.Request;
 
 /**
  * @author zhujiajun
- * @since 2017/1/31
+ * @since 2017/2/1
  */
-public interface Input {
+public class AbstractInput implements Input {
 
-    Page input(Request request);
+    @Override
+    public Page input(Request request) {
+
+        return null;
+    }
+
 
 }
