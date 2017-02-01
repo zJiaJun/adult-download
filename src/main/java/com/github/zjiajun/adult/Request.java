@@ -1,5 +1,7 @@
 package com.github.zjiajun.adult;
 
+import java.util.Objects;
+
 /**
  * @author zhujiajun
  * @since 2017/1/31
@@ -38,6 +40,7 @@ public final class Request {
         }
 
         public Request build() {
+            Objects.requireNonNull(request.url, "Request url should not be empty");
             return request;
         }
 
