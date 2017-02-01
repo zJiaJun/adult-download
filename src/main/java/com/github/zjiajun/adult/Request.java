@@ -24,8 +24,13 @@ public final class Request {
             return this;
         }
 
-        public Builder method(String method) {
-            request.method = method;
+        public Builder get() {
+            request.method = "GET";
+            return this;
+        }
+
+        public Builder post() {
+            request.method = "POST";
             return this;
         }
 
