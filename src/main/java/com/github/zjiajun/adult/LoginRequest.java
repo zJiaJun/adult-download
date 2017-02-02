@@ -6,13 +6,11 @@ import java.util.Map;
  * @author zhujiajun
  * @since 2017/2/2
  */
-public class LoginRequest extends Request {
+public class LoginRequest {
 
+    private LoginRequest() {}
 
-    private LoginRequest() {
-        super();
-    }
-
+    private String url;
     private String name;
     private String password;
     private Map<String,String> data;
@@ -21,6 +19,11 @@ public class LoginRequest extends Request {
     public static class Builder {
 
         LoginRequest loginRequest = new LoginRequest();
+
+        public Builder url(String url) {
+            loginRequest.url = url;
+            return this;
+        }
 
         public Builder name(String name) {
             loginRequest.name = name;
@@ -41,6 +44,10 @@ public class LoginRequest extends Request {
             return loginRequest;
         }
 
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public String getName() {

@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class Request {
 
-    protected Request() {}
+    private Request() {}
 
     private String url;
     private String method;
