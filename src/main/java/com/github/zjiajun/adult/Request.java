@@ -6,14 +6,12 @@ import java.util.Objects;
  * @author zhujiajun
  * @since 2017/1/31
  */
-public final class Request {
+public class Request {
 
-    private Request() {}
+    protected Request() {}
 
     private String url;
     private String method;
-    private String loginName;
-    private String loginPassword;
 
     public static class Builder {
 
@@ -34,16 +32,6 @@ public final class Request {
             return this;
         }
 
-        public Builder loginName(String loginName) {
-            request.loginName = loginName;
-            return this;
-        }
-
-        public Builder loginPassword(String loginPassword) {
-            request.loginPassword = loginPassword;
-            return this;
-        }
-
         public Request build() {
             Objects.requireNonNull(request.url, "Request url should not be empty");
             return request;
@@ -59,11 +47,4 @@ public final class Request {
         return method;
     }
 
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public String getLoginPassword() {
-        return loginPassword;
-    }
 }
