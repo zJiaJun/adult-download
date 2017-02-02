@@ -7,7 +7,7 @@ import com.github.zjiajun.adult.Request;
  * @author zhujiajun
  * @since 2017/2/1
  */
-public class AbstractInput implements Input {
+public abstract class AbstractInput implements Input {
 
     @Override
     public Page input(Request request) {
