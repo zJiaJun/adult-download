@@ -1,20 +1,28 @@
 package com.github.zjiajun.adult.login;
 
 import com.github.zjiajun.adult.Request;
-import com.github.zjiajun.adult.connection.RetrofitClient;
+import com.github.zjiajun.adult.connection.AbstractConnection;
 
 
 /**
  * @author zhujiajun
  * @since 2017/2/2
  */
-public abstract class AbstractLogin implements Login {
+public abstract class AbstractLogin extends AbstractConnection implements Login {
+
+    @Override
+    protected void beforeConnect(Request request) {
+
+    }
 
     @Override
     public void login(Request request) {
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        retrofitClient.post(request.getUrl(), request.getData());
+        super.connect(request);
     }
 
-    protected abstract Request buildLoginRequestData();
+
+    @Override
+    protected void afterConnect() {
+
+    }
 }

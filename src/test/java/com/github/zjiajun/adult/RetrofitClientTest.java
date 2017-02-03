@@ -1,8 +1,6 @@
 package com.github.zjiajun.adult;
 
-import com.github.zjiajun.adult.connection.RetrofitClient;
 import org.junit.Test;
-import retrofit2.Retrofit;
 
 /**
  * @author zhujiajun
@@ -12,6 +10,5 @@ public class RetrofitClientTest {
 
     @Test
     public void buildRetrofitClientTest() {
-        Retrofit retrofit = RetrofitClient.getInstance().getRetrofit("http://www.github.com");
     }
 }

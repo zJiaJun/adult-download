@@ -25,13 +25,14 @@ public final class RetrofitClient {
     private RetrofitClient() {
         okHttpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                .addInterceptor(new HeaderInterceptor())
                 .connectTimeout(180, TimeUnit.SECONDS)
                 .cookieJar(new DefaultCookieJar())
                 .build();
 
-        //不设置baseUrl来处理多站点请求，先暂定这样
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
+                .baseUrl("http://example.org/")
                 .build();
 
         api = retrofit.create(Api.class);
@@ -72,7 +73,6 @@ public final class RetrofitClient {
     public Retrofit getRetrofit() {
         return retrofit;
     }
-
 
     private interface Api {
 
