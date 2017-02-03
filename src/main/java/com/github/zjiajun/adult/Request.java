@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -8,10 +9,18 @@ import java.util.Objects;
  */
 public class Request {
 
+    public enum Method {
+        GET,
+        POST;
+
+        Method() {}
+    }
+
     private Request() {}
 
     private String url;
-    private String method;
+    private Method method;
+    private Map<String,String> data;
 
     public static class Builder {
 
@@ -23,12 +32,17 @@ public class Request {
         }
 
         public Builder get() {
-            request.method = "GET";
+            request.method = Method.GET;
             return this;
         }
 
         public Builder post() {
-            request.method = "POST";
+            request.method = Method.POST;
+            return this;
+        }
+
+        public Builder data(Map<String,String> data) {
+            request.data = data;
             return this;
         }
 
@@ -43,8 +57,11 @@ public class Request {
         return url;
     }
 
-    public String getMethod() {
+    public Method getMethod() {
         return method;
     }
 
+    public Map<String, String> getData() {
+        return data;
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.login;
 
-import com.github.zjiajun.adult.LoginRequest;
+import com.github.zjiajun.adult.Request;
+import com.github.zjiajun.adult.connection.RetrofitClient;
 
 
 /**
@@ -10,10 +11,10 @@ import com.github.zjiajun.adult.LoginRequest;
 public abstract class AbstractLogin implements Login {
 
     @Override
-    public void login() {
-        LoginRequest loginRequest = initLoginRequestData();
-
+    public void login(Request request) {
+        RetrofitClient retrofitClient = RetrofitClient.getInstance();
+        retrofitClient.post(request.getUrl(), request.getData());
     }
 
-    protected abstract LoginRequest initLoginRequestData();
+    protected abstract Request buildLoginRequestData();
 }

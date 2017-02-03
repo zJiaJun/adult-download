@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DefaultCookieJar implements CookieJar {
 
-    private CookieStore cookieStore;
+    private final CookieStore cookieStore;
 
     public DefaultCookieJar() {
         this.cookieStore = new DefaultCookieStore();
@@ -20,7 +20,7 @@ public class DefaultCookieJar implements CookieJar {
 
     @Override
     public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
-        cookieStore.store(httpUrl,list);
+        cookieStore.store(httpUrl, list);
     }
 
     @Override
