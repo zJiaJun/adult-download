@@ -1,11 +1,9 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.input.AdultInput;
 import com.github.zjiajun.adult.login.AdultLogin;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhujiajun
@@ -42,6 +40,8 @@ public class Adult {
             AdultLogin adultLogin = new AdultLogin();
             adultLogin.login(request.get(0));
         }
+        AdultInput adultInput = new AdultInput();
+        adultInput.input(request.get(1));
 
     }
 
@@ -63,8 +63,13 @@ public class Adult {
                 .data(loginReqData)
                 .post()
                 .build();
-        new Adult.Builder().login().request(Collections.singletonList(loginRequest)).build().run();
 
+        Request pageRequest = new Request.Builder()
+                .url("http://67.220.90.4/forum/forum-230-1.html")
+                .get().build();
+
+        List<Request> requests = Arrays.asList(loginRequest, pageRequest);
+        new Adult.Builder().login().request(requests).build().run();
 
     }
 

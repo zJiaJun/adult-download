@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.connection;
+package com.github.zjiajun.adult.connection.cookie;
 
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;

@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.connection;
+package com.github.zjiajun.adult.connection.cookie;
 
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
@@ -44,7 +44,6 @@ public class DefaultCookieStore implements CookieStore {
                     List<String> lines = Files.readAllLines(COOKIE_FILE);
                     lines.forEach(cookie -> {
                         Cookie parse = Cookie.parse(httpUrl, cookie);
-                        System.out.println(parse);
                         fileCookie.add(parse);
                     });
                 } else {
