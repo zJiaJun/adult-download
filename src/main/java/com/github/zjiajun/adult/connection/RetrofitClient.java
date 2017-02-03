@@ -1,6 +1,5 @@
 package com.github.zjiajun.adult.connection;
 
-import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,8 +24,8 @@ public class RetrofitClient {
 
     private OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .cookieJar(CookieJar.NO_COOKIES)//FIXME
+            .connectTimeout(180, TimeUnit.SECONDS)
+            .cookieJar(new DefaultCookieJar(DefaultCookieJar.StorePolicy.MEMORY))
             .build();
 
 
