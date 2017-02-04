@@ -47,12 +47,14 @@ public final class RetrofitClient {
         return SingletonHolder.retrofitClient;
     }
 
+    //TODO 不直接返回第三方的ResponseBody对象，再封装下
     public ResponseBody post(String url, Map<String,String> fieldMap) throws IOException {
         Call<ResponseBody> responseBodyCall = api.post(url, fieldMap);
         Response<ResponseBody> response = responseBodyCall.execute();
         return response.body();
     }
 
+    //TODO 不直接返回第三方的ResponseBody对象，再封装下
     public ResponseBody get(String url, Map<String,String> queryMap) throws IOException {
         Call<ResponseBody> responseBodyCall = queryMap == null ? api.get(url) : api.get(url, queryMap);
         Response<ResponseBody> response = responseBodyCall.execute();

@@ -18,7 +18,6 @@ public class Adult {
 
     private boolean needLogin;
     private List<Request> request;
-    private Page page;
 
     public static class Builder {
 
@@ -39,16 +38,13 @@ public class Adult {
         }
     }
 
-    public void setPage(Page page) {
-        this.page = page;
-    }
 
     public void run() {
         if (needLogin) {
-            LoginService loginService = new LoginService(this);
+            LoginService loginService = new LoginService();
             loginService.login(request.get(0));
         }
-        InputService inputService = new InputService(this);
+        InputService inputService = new InputService();
 
     }
 

@@ -1,21 +1,16 @@
 package com.github.zjiajun.adult.login;
 
-import com.github.zjiajun.adult.Adult;
 import com.github.zjiajun.adult.Request;
 import com.github.zjiajun.adult.connection.AbstractConnection;
 import okhttp3.ResponseBody;
+
+import java.io.IOException;
 
 /**
  * @author zhujiajun
  * @since 2017/2/3
  */
 public class LoginService extends AbstractConnection implements Login {
-
-    private final Adult adult;
-
-    public LoginService(Adult adult) {
-        this.adult = adult;
-    }
 
     @Override
     protected void beforeConnection(Request request) {
@@ -27,7 +22,7 @@ public class LoginService extends AbstractConnection implements Login {
     }
 
     @Override
-    protected void afterConnection(ResponseBody responseBody) {
+    protected void afterConnection(Request request, ResponseBody responseBody) throws IOException {
 
     }
 }

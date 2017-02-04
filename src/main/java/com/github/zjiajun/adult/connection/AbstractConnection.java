@@ -11,8 +11,12 @@ import java.io.IOException;
  */
 public abstract class AbstractConnection {
 
-    private RetrofitClient retrofitClient = RetrofitClient.getInstance();
+    private final RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
+    /**
+     * 请求之前的回掉操作
+     * @param request 请求对象
+     */
     protected abstract void beforeConnection(Request request);
 
     protected void connect(Request request) {
@@ -29,11 +33,18 @@ public abstract class AbstractConnection {
                 default:
                     throw new RuntimeException();
             }
+            afterConnection(request, responseBody);
         } catch (IOException e) {
-            e.printStackTrace();//FIXME
+            e.printStackTrace();//TODO 异常处理
         }
-        afterConnection(responseBody);
+
     }
 
-    protected abstract void afterConnection(ResponseBody responseBody);
+    /**
+     * 请求完成后的回掉操作
+     * @param request       请求对象
+     * @param responseBody  返回对象
+     * @throws IOException
+     */
+    protected abstract void afterConnection(Request request, ResponseBody responseBody) throws IOException;
 }
