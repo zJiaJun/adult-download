@@ -106,7 +106,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.github.zjiajun.adult.App</mainClass>
+                            <mainClass>com.github.zjiajun.adult.Adult</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
