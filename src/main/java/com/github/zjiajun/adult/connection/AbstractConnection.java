@@ -16,7 +16,7 @@ public abstract class AbstractConnection {
         beforeConnect(request);
         switch (request.getMethod()) {
             case GET:
-                retrofitClient.get(request.getUrl(), request.getData());
+                String pageHtml = retrofitClient.get(request.getUrl(), request.getData());
                 break;
             case POST:
                 retrofitClient.post(request.getUrl(), request.getData());

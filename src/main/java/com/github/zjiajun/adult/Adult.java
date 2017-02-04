@@ -1,9 +1,11 @@
 package com.github.zjiajun.adult;
 
-import com.github.zjiajun.adult.input.AdultInput;
 import com.github.zjiajun.adult.login.AdultLogin;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhujiajun
@@ -40,8 +42,8 @@ public class Adult {
             AdultLogin adultLogin = new AdultLogin();
             adultLogin.login(request.get(0));
         }
-        AdultInput adultInput = new AdultInput();
-        adultInput.input(request.get(1));
+//        AdultInput adultInput = new AdultInput();
+//        adultInput.input(request.get(1));
 
     }
 
