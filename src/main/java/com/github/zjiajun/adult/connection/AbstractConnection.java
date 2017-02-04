@@ -14,14 +14,14 @@ public abstract class AbstractConnection {
     private final RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
     /**
-     * 请求之前的回掉操作
+     * 请求之前的回调操作
      * @param request 请求对象
      */
     protected abstract void beforeConnection(Request request);
 
     protected void connect(Request request) {
         beforeConnection(request);
-        ResponseBody responseBody = null;
+        ResponseBody responseBody;
         try {
             switch (request.getMethod()) {
                 case GET:
@@ -41,7 +41,7 @@ public abstract class AbstractConnection {
     }
 
     /**
-     * 请求完成后的回掉操作
+     * 请求完成后的回调操作
      * @param request       请求对象
      * @param responseBody  返回对象
      * @throws IOException
