@@ -10,7 +10,6 @@ import retrofit2.Retrofit;
 import retrofit2.http.*;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -19,11 +18,6 @@ import java.util.concurrent.TimeUnit;
  * @since 2017/2/3
  */
 public final class RetrofitClient {
-
-    public static void main(String[] args) {
-        RetrofitClient instance = RetrofitClient.getInstance();
-        instance.get("http://67.220.90.4/forum/index.php",null);
-    }
 
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
@@ -53,29 +47,16 @@ public final class RetrofitClient {
         return SingletonHolder.retrofitClient;
     }
 
-    public void post(String url, Map<String,String> fieldMap) {
+    public ResponseBody post(String url, Map<String,String> fieldMap) throws IOException {
         Call<ResponseBody> responseBodyCall = api.post(url, fieldMap);
-        try {
-            responseBodyCall.execute();
-        } catch (IOException e) {
-            e.printStackTrace();//FIXME
-        }
+        Response<ResponseBody> response = responseBodyCall.execute();
+        return response.body();
     }
 
-    public String get(String url, Map<String,String> queryMap) {
-        Call<ResponseBody> responseBodyCall;
-        if (queryMap == null)
-            responseBodyCall = api.get(url);
-        else
-            responseBodyCall = api.get(url, queryMap);
-        try {
-            Response<ResponseBody> response = responseBodyCall.execute();
-            ResponseBody body = response.body();
-            return new String(body.bytes(), Charset.forName("GBK"));
-        } catch (IOException e) {
-            e.printStackTrace();//FIXME
-            return null;
-        }
+    public ResponseBody get(String url, Map<String,String> queryMap) throws IOException {
+        Call<ResponseBody> responseBodyCall = queryMap == null ? api.get(url) : api.get(url, queryMap);
+        Response<ResponseBody> response = responseBodyCall.execute();
+        return response.body();
     }
 
     public OkHttpClient getOkHttpClient() {

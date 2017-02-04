@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult;
 
-import com.github.zjiajun.adult.login.AdultLogin;
+import com.github.zjiajun.adult.input.InputService;
+import com.github.zjiajun.adult.login.LoginService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class Adult {
 
     private boolean needLogin;
     private List<Request> request;
+    private Page page;
 
     public static class Builder {
 
@@ -37,13 +39,16 @@ public class Adult {
         }
     }
 
+    public void setPage(Page page) {
+        this.page = page;
+    }
+
     public void run() {
         if (needLogin) {
-            AdultLogin adultLogin = new AdultLogin();
-            adultLogin.login(request.get(0));
+            LoginService loginService = new LoginService(this);
+            loginService.login(request.get(0));
         }
-//        AdultInput adultInput = new AdultInput();
-//        adultInput.input(request.get(1));
+        InputService inputService = new InputService(this);
 
     }
 
@@ -71,7 +76,7 @@ public class Adult {
                 .get().build();
 
         List<Request> requests = Arrays.asList(loginRequest, pageRequest);
-        new Adult.Builder().login().request(requests).build().run();
+        Adult adult = new Builder().login().request(requests).build();
 
     }
 
