@@ -27,13 +27,14 @@ public class DefaultCookieStore implements CookieStore {
     @Override
     public void store(HttpUrl httpUrl, List<Cookie> list) {
         memoryStore.put(httpUrl,list);
-        list.forEach(cookie -> {
-            try {
-                Files.write(COOKIE_FILE, (cookie.toString()+"\n").getBytes(), StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            for (Cookie ck : list) {
+                String content = ck.toString() + '\n';
+                Files.write(COOKIE_FILE, content.getBytes(),StandardOpenOption.APPEND);
             }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
