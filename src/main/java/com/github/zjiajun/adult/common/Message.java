@@ -6,8 +6,7 @@ package com.github.zjiajun.adult.common;
  */
 public final class Message<T> {
 
-    //TODO 改为枚举，表示消息类型
-    private int type;
+    private MessageType type;
 
     /**
      * 消息内容
