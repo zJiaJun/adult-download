@@ -2,6 +2,10 @@ package com.github.zjiajun.adult.input;
 
 import com.github.zjiajun.adult.Page;
 import com.github.zjiajun.adult.Request;
+import com.github.zjiajun.adult.common.DefaultProducer;
+import com.github.zjiajun.adult.common.Message;
+import com.github.zjiajun.adult.common.MessageType;
+import com.github.zjiajun.adult.common.Producer;
 import com.github.zjiajun.adult.connection.AbstractConnection;
 import okhttp3.ResponseBody;
 
@@ -35,6 +39,10 @@ public class InputService extends AbstractConnection implements Input {
         Page page = new Page();
         page.setHtml(html);
         page.setRequest(request);
+        //TODO 需优化
+        Message<Page> message = new Message<>(MessageType.PAGE_LIST,page);
+        Producer producer =  new DefaultProducer();
+        producer.send(message);
 
     }
 }

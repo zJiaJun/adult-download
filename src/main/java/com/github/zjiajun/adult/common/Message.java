@@ -12,4 +12,12 @@ public final class Message<T> {
      * 消息内容
      */
     private T data;
+
+
+    public Message(MessageType type, T data) {
+        this.type = type;
+        this.data = data;
+    }
+
+
 }
