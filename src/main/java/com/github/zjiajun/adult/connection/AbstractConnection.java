@@ -35,10 +35,19 @@ public abstract class AbstractConnection {
             }
             afterConnection(request, responseBody);
         } catch (IOException e) {
-            e.printStackTrace();//TODO 异常处理
+            e.printStackTrace();
+            exceptionCaught(request, e);
         }
 
     }
+
+
+    /**
+     * 发生异常时回调操作
+     * @param request   请求对象
+     * @param exception 异常信息
+     */
+    protected abstract void exceptionCaught(Request request, Exception exception);
 
     /**
      * 请求完成后的回调操作
