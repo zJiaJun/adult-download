@@ -17,6 +17,11 @@ public class LoginService extends AbstractConnection implements Login {
     }
 
     @Override
+    protected void exceptionCaught(Request request, Exception exception) {
+
+    }
+
+    @Override
     public void login(Request request) {
         super.connect(request);
     }

@@ -24,6 +24,11 @@ public class InputService extends AbstractConnection implements Input {
     }
 
     @Override
+    protected void exceptionCaught(Request request, Exception exception) {
+
+    }
+
+    @Override
     public void input(Request request) {
         super.connect(request);
     }
