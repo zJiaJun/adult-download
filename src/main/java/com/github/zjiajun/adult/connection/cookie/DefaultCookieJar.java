@@ -18,6 +18,10 @@ public class DefaultCookieJar implements CookieJar {
         this.cookieStore = new DefaultCookieStore();
     }
 
+    public DefaultCookieJar(CookieStore cookieStore) {
+        this.cookieStore = cookieStore;
+    }
+
     @Override
     public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
         cookieStore.store(httpUrl, list);
