@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.process;
 
 import com.github.zjiajun.adult.Page;
+import com.github.zjiajun.adult.Request;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -26,6 +27,7 @@ public class ListPageProcess implements Process {
             String href = e.absUrl("href");//详情url
             String filePath = text.replaceAll("/", "");//替换斜杠，防止新建多层目录
             urlMap.put(filePath, href);
+            new Request.Builder().url(href);//循环构建？
         });
 
     }
