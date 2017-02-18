@@ -1,8 +1,5 @@
 package com.github.zjiajun.adult;
 
-import com.github.zjiajun.adult.input.InputService;
-import com.github.zjiajun.adult.login.LoginService;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +37,7 @@ public class Adult {
 
 
     public void run() {
-        if (needLogin) {
-            LoginService loginService = new LoginService();
-            loginService.login(request.get(0));
-        }
-        InputService inputService = new InputService();
+
 
     }
 
