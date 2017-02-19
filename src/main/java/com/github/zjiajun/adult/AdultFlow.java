@@ -21,7 +21,7 @@ public class AdultFlow {
             if (MessageType.PAGE_LIST == (message.getType())) {
                 Object data = message.getData();
                 Input input = new InputService();
-                input.input((Request) data);
+                Page page = input.input((Request) data);
             }
         }
 
