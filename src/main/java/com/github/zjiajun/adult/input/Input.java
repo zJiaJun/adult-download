@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult.input;
 
+import com.github.zjiajun.adult.Page;
 import com.github.zjiajun.adult.Request;
 
 /**
@@ -8,6 +9,6 @@ import com.github.zjiajun.adult.Request;
  */
 public interface Input {
 
-    void input(Request request);
+    Page input(Request request);
 
 }
