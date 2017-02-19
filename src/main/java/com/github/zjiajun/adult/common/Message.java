@@ -32,4 +32,16 @@ public final class Message<T> {
         this.data = data;
         this.timestamp = timestamp;
     }
+
+    public MessageType getType() {
+        return type;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
 }
