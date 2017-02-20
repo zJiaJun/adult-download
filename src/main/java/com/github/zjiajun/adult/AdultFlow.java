@@ -6,6 +6,9 @@ import com.github.zjiajun.adult.common.MessageType;
 import com.github.zjiajun.adult.input.Input;
 import com.github.zjiajun.adult.input.InputService;
 import com.github.zjiajun.adult.tool.AdultConfig;
+import com.github.zjiajun.adult.tool.ThreadPoolTool;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author zhujiajun
@@ -13,6 +16,8 @@ import com.github.zjiajun.adult.tool.AdultConfig;
  */
 public class AdultFlow {
 
+
+    private final ExecutorService executor = ThreadPoolTool.getInstance().getExecutor("test", 4, 100);
 
     public void flow(AdultConfig adultConfig) {
         //main thread
