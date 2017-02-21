@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.process;
 
 import com.github.zjiajun.adult.Page;
+import com.github.zjiajun.adult.PageResult;
 import com.github.zjiajun.adult.Request;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +19,7 @@ import java.util.Map;
 public class ListPageProcess implements Process {
 
     @Override
-    public void process(Page page) {
+    public PageResult process(Page page) {
         Document listPageDoc = Jsoup.parse(page.getHtml());
         Elements elements = listPageDoc.select("table[id^=forum]:contains(推荐主题) span a");
         Map<String, String> urlMap = new LinkedHashMap<>();
@@ -29,7 +30,8 @@ public class ListPageProcess implements Process {
             urlMap.put(filePath, href);
             new Request.Builder().url(href);//循环构建？
         });
-
+        PageResult pageResult = new PageResult();
+        return pageResult;
     }
 
 

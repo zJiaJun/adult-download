@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.process;
 
 import com.github.zjiajun.adult.Page;
+import com.github.zjiajun.adult.PageResult;
 
 /**
  * @author zhujiajun
@@ -8,6 +9,6 @@ import com.github.zjiajun.adult.Page;
  */
 public interface Process {
 
-    void process(Page page);
+    PageResult process(Page page);
 
 }

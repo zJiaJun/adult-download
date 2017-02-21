@@ -30,7 +30,9 @@ public class AdultFlow {
                 Input input = new InputService();
                 Page page = input.input((Request) data);
                 Process process = new ListPageProcess();
-                process.process(page);
+                PageResult pageResult = process.process(page);
+
+
             }
         }
 
