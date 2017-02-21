@@ -5,6 +5,8 @@ import com.github.zjiajun.adult.common.MessageQueue;
 import com.github.zjiajun.adult.common.MessageType;
 import com.github.zjiajun.adult.input.Input;
 import com.github.zjiajun.adult.input.InputService;
+import com.github.zjiajun.adult.process.ListPageProcess;
+import com.github.zjiajun.adult.process.Process;
 import com.github.zjiajun.adult.tool.AdultConfig;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 
@@ -27,6 +29,8 @@ public class AdultFlow {
                 Object data = message.getData();
                 Input input = new InputService();
                 Page page = input.input((Request) data);
+                Process process = new ListPageProcess();
+                process.process(page);
             }
         }
 
