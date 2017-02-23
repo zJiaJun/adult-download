@@ -1,9 +1,12 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.tool.ThreadPoolTool;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author zhujiajun
@@ -35,6 +38,7 @@ public class Adult {
         }
     }
 
+    private final ExecutorService inputExecutor = ThreadPoolTool.getInstance().getExecutor("input-pool", 4, 100);
 
     public void run() {
 
