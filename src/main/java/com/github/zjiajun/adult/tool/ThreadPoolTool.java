@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by zhujiajun
@@ -13,7 +14,7 @@ import java.util.concurrent.*;
  */
 public class ThreadPoolTool {
 
-    private static final Map<String,ExecutorService> POOL_CACHE = new HashMap<>();
+    private static final Map<String, ExecutorService> POOL_CACHE = new HashMap<>();
 
     private ThreadPoolTool() {}
 
@@ -25,13 +26,28 @@ public class ThreadPoolTool {
         return SingletonHolder.instance;
     }
 
-    public ExecutorService getExecutor(String key) {
-        return getExecutor(key,1,100);
+    public ExecutorService getSingleExecutor(String key) {
+        return getExecutor(key,1, new LinkedBlockingDeque<>());
     }
 
-    public ExecutorService getExecutor(String key,int poolSize,int queueSize) {
+    public ExecutorService getExecutor(String key, int poolSize, BlockingQueue<Runnable> blockingQueue) {
         return POOL_CACHE.computeIfAbsent(key, k -> new ThreadPoolExecutor(poolSize, poolSize,
-                0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(queueSize), new ThreadPoolExecutor.CallerRunsPolicy()));
+                0L, TimeUnit.SECONDS, blockingQueue, new ThreadFactory() {
+
+            private final AtomicInteger cnt = new AtomicInteger(1);
+            private final String threadName = "pool-adult-[%s]-%d";
+
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r, String.format(threadName, key, cnt.getAndIncrement()));
+                thread.setPriority(Thread.NORM_PRIORITY);
+                return thread;
+            }
+        }, new ThreadPoolExecutor.CallerRunsPolicy()));
+    }
+
+    public ExecutorService getExecutor(String key, int poolSize, int queueSize) {
+        return getExecutor(key, poolSize, new ArrayBlockingQueue<>(queueSize));
     }
 
     public void shutDown(String key) {

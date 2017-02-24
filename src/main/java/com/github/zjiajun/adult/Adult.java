@@ -1,5 +1,10 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.common.Message;
+import com.github.zjiajun.adult.common.MessageEnum;
+import com.github.zjiajun.adult.common.MessageQueue;
+import com.github.zjiajun.adult.input.Input;
+import com.github.zjiajun.adult.input.InputService;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 
 import java.util.Arrays;
@@ -40,15 +45,20 @@ public class Adult {
         }
     }
 
-    private final ExecutorService inputExecutor = ThreadPoolTool.getInstance().getExecutor("input-pool", 4, 100);
+
+    public Adult init() {
+        MessageQueue.put(new Message<>(MessageEnum.REQUEST, pageRequest));
+        return this;
+    }
+
+    private final ExecutorService inputExecutor = ThreadPoolTool.getInstance().getExecutor("input", 4, 100);
 
     public void run() {
-        if (loginRequest != null) {
+        if (null != loginRequest) {
             //do login
-
+            Input input = new InputService();
+            input.input(loginRequest);
         }
-
-
 
 
 
@@ -56,7 +66,7 @@ public class Adult {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String [] args) {
         Map<String,String> loginReqData = new HashMap<>();
         loginReqData.put("referer","index.php");
         loginReqData.put("loginfield","username");
