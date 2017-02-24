@@ -9,7 +9,7 @@ public final class Message<T> {
     /**
      * 消息类型
      */
-    private MessageType type;
+    private MessageEnum type;
 
     /**
      * 消息内容
@@ -21,19 +21,19 @@ public final class Message<T> {
      */
     private long timestamp;
 
-    public Message(MessageType type, T data) {
+    public Message(MessageEnum type, T data) {
         this.type = type;
         this.data = data;
         this.timestamp = System.currentTimeMillis();
     }
 
-    public Message(MessageType type, T data, long timestamp) {
+    public Message(MessageEnum type, T data, long timestamp) {
         this.type = type;
         this.data = data;
         this.timestamp = timestamp;
     }
 
-    public MessageType getType() {
+    public MessageEnum getType() {
         return type;
     }
 

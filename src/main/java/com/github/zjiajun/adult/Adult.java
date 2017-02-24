@@ -16,20 +16,22 @@ import java.util.concurrent.ExecutorService;
  */
 public class Adult {
 
-    private boolean needLogin;
-    private List<Request> request;
+    private Adult () {}
+
+    private Request loginRequest;
+    private Request pageRequest;
 
     public static class Builder {
 
         private Adult adult = new Adult();
 
-        public Builder login() {
-            adult.needLogin = true;
+        public Builder login(Request loginRequest) {
+            adult.loginRequest = loginRequest;
             return this;
         }
 
-        public Builder request(List<Request> request) {
-            adult.request = request;
+        public Builder page(Request pageRequest) {
+            adult.pageRequest = pageRequest;
             return this;
         }
 
@@ -41,6 +43,14 @@ public class Adult {
     private final ExecutorService inputExecutor = ThreadPoolTool.getInstance().getExecutor("input-pool", 4, 100);
 
     public void run() {
+        if (loginRequest != null) {
+            //do login
+
+        }
+
+
+
+
 
 
     }
@@ -60,6 +70,7 @@ public class Adult {
         loginReqData.put("loginsubmit","true");
         Request loginRequest = new Request.Builder()
                 .url("http://67.220.90.4/forum/logging.php?action=login")
+                .login()
                 .data(loginReqData)
                 .post()
                 .build();
@@ -69,7 +80,7 @@ public class Adult {
                 .get().build();
 
         List<Request> requests = Arrays.asList(loginRequest, pageRequest);
-        Adult adult = new Builder().login().request(requests).build();
+        Adult adult = new Adult.Builder().login(loginRequest).page(pageRequest).build();
 
     }
 

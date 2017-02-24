@@ -38,15 +38,9 @@ public class ThreadPoolTool {
         ExecutorService executorService = POOL_CACHE.get(key);
         Objects.requireNonNull(executorService);
         executorService.shutdown();
-        try {
-            while (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+        while (!executorService.isTerminated()) {
 
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
-
-
 
 }

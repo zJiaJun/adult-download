@@ -20,6 +20,7 @@ public class Request {
 
     private String url;
     private Method method;
+    private boolean isLogin;
     private Map<String,String> data;
 
     public static class Builder {
@@ -41,6 +42,11 @@ public class Request {
             return this;
         }
 
+        public Builder login() {
+            request.isLogin = true;
+            return this;
+        }
+
         public Builder data(Map<String,String> data) {
             request.data = data;
             return this;
@@ -59,6 +65,10 @@ public class Request {
 
     public Method getMethod() {
         return method;
+    }
+
+    public boolean isLogin() {
+        return isLogin;
     }
 
     public Map<String, String> getData() {
