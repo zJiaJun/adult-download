@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * @author zhujiajun
@@ -25,6 +26,8 @@ public class Adult {
 
     private Request loginRequest;
     private Request pageRequest;
+
+    private final Input input = new InputService();
 
     public static class Builder {
 
@@ -56,12 +59,18 @@ public class Adult {
     public void run() {
         if (null != loginRequest) {
             //do login
-            Input input = new InputService();
             input.input(loginRequest);
         }
 
 
+        while (true) {
+            Message message = MessageQueue.take();
+            if (message.getType() == MessageEnum.REQUEST) {
+                Request request = (Request) message.getData();
+                Future<Page> pageFuture = inputExecutor.submit(() -> input.input(pageRequest));
 
+            }
+        }
 
     }
 
