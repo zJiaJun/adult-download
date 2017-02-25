@@ -9,17 +9,17 @@ public enum MessageEnum {
     /**
      * 请求
      */
-    REQUEST,
+    INPUT,
 
     /**
      *  帖子列表
      */
-    PAGE_LIST,
+    PROCESS,
 
     /**
      *  帖子详情
      */
-    PAGE_DETAIL,
+    OUTPUT,
 
     /**
      *  结果

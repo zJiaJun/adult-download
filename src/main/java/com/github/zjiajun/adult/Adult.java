@@ -1,10 +1,9 @@
 package com.github.zjiajun.adult;
 
-import com.github.zjiajun.adult.common.Message;
-import com.github.zjiajun.adult.common.MessageEnum;
-import com.github.zjiajun.adult.common.MessageQueue;
 import com.github.zjiajun.adult.input.Input;
 import com.github.zjiajun.adult.input.InputService;
+import com.github.zjiajun.adult.process.ListPageProcess;
+import com.github.zjiajun.adult.process.Process;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 
 import java.util.Arrays;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * @author zhujiajun
@@ -28,6 +26,7 @@ public class Adult {
     private Request pageRequest;
 
     private final Input input = new InputService();
+    private final Process process = new ListPageProcess();
 
     public static class Builder {
 
@@ -49,12 +48,9 @@ public class Adult {
     }
 
 
-    public Adult init() {
-        MessageQueue.put(new Message<>(MessageEnum.REQUEST, pageRequest));
-        return this;
-    }
-
     private final ExecutorService inputExecutor = ThreadPoolTool.getInstance().getExecutor("input", 4, 100);
+    private final ExecutorService processExecutor = ThreadPoolTool.getInstance().getExecutor("process",8,500);
+
 
     public void run() {
         if (null != loginRequest) {
@@ -62,15 +58,9 @@ public class Adult {
             input.input(loginRequest);
         }
 
+        Page page = this.input.input(pageRequest);
+        PageResult pageResult = this.process.process(page);
 
-        while (true) {
-            Message message = MessageQueue.take();
-            if (message.getType() == MessageEnum.REQUEST) {
-                Request request = (Request) message.getData();
-                Future<Page> pageFuture = inputExecutor.submit(() -> input.input(pageRequest));
-
-            }
-        }
 
     }
 
