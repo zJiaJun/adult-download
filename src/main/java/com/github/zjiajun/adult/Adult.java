@@ -6,9 +6,7 @@ import com.github.zjiajun.adult.process.ListPageProcess;
 import com.github.zjiajun.adult.process.Process;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
