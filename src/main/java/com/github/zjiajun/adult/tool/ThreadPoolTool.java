@@ -55,7 +55,10 @@ public class ThreadPoolTool {
         Objects.requireNonNull(executorService);
         executorService.shutdown();
         while (!executorService.isTerminated()) {
-
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+            }
         }
     }
 

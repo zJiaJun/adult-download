@@ -88,7 +88,6 @@ public class Adult {
                 .url("http://67.220.90.4/forum/forum-230-1.html")
                 .get().build();
 
-        List<Request> requests = Arrays.asList(loginRequest, pageRequest);
         Adult adult = new Adult.Builder().login(loginRequest).page(pageRequest).build();
 
     }
