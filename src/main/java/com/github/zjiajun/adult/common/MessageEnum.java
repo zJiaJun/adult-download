@@ -6,23 +6,14 @@ package com.github.zjiajun.adult.common;
  */
 public enum MessageEnum {
 
-    /**
-     * 请求
-     */
-    INPUT,
 
     /**
      *  帖子列表
      */
-    PROCESS,
+    SIS_LIST,
 
     /**
      *  帖子详情
      */
-    OUTPUT,
-
-    /**
-     *  结果
-     */
-    PAGE_RESULT;
+    SIS_DETAIL;
 }

@@ -25,8 +25,8 @@ public class InputService extends AbstractConnection implements Input {
     }
 
     @Override
-    public Page input(Request request) {
-        return super.connect(request);
+    public void input(Request request) {
+        super.connect(request);
     }
 
     @Override

@@ -56,8 +56,6 @@ public class Adult {
             input.input(loginRequest);
         }
 
-        Page page = this.input.input(pageRequest);
-        PageResult pageResult = this.process.process(page);
 
 
     }
