@@ -2,6 +2,8 @@ package com.github.zjiajun.adult.connection;
 
 import com.github.zjiajun.adult.Page;
 import com.github.zjiajun.adult.Request;
+import com.github.zjiajun.adult.common.MessageQueue;
+import com.github.zjiajun.adult.common.MessageRecord;
 import okhttp3.ResponseBody;
 
 import java.io.IOException;
@@ -20,7 +22,7 @@ public abstract class AbstractConnection {
      */
     protected abstract void beforeConnection(Request request);
 
-    protected Page connect(Request request) {
+    protected void connect(Request request) {
         beforeConnection(request);
         ResponseBody responseBody;
         Page page = new Page();
@@ -35,12 +37,12 @@ public abstract class AbstractConnection {
                 default:
                     throw new RuntimeException();
             }
-            afterConnection(request, responseBody, page);
+            String originalHtml = afterConnection(responseBody);
+            page.setHtml(originalHtml);
+            page.setRequest(request);
         } catch (IOException e) {
-            e.printStackTrace();
             exceptionCaught(request, e);
         }
-        return page;
     }
 
 
@@ -53,9 +55,10 @@ public abstract class AbstractConnection {
 
     /**
      * 请求完成后的回调操作
-     * @param request       请求对象
      * @param responseBody  返回对象
      * @throws IOException
      */
-    protected abstract void afterConnection(Request request, ResponseBody responseBody, Page page) throws IOException;
+    protected String afterConnection(ResponseBody responseBody) throws IOException {
+        return responseBody.string();
+    }
 }

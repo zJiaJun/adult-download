@@ -4,7 +4,7 @@ package com.github.zjiajun.adult.common;
  * @author zhujiajun
  * @since 2017/2/6
  */
-public final class Message<T> {
+public final class MessageRecord<T> {
 
     /**
      * 消息类型
@@ -21,13 +21,13 @@ public final class Message<T> {
      */
     private long timestamp;
 
-    public Message(MessageEnum type, T data) {
+    public MessageRecord(MessageEnum type, T data) {
         this.type = type;
         this.data = data;
         this.timestamp = System.currentTimeMillis();
     }
 
-    public Message(MessageEnum type, T data, long timestamp) {
+    public MessageRecord(MessageEnum type, T data, long timestamp) {
         this.type = type;
         this.data = data;
         this.timestamp = timestamp;
