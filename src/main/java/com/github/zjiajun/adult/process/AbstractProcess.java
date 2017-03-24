@@ -4,7 +4,10 @@ import com.github.zjiajun.adult.Page;
 import com.github.zjiajun.adult.PageResult;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.function.Consumer;
 
 /**
  * @author zhujiajun
@@ -18,9 +21,11 @@ public abstract class AbstractProcess implements Process {
         Document document = Jsoup.parse(originalHtml);
         String cssQuery = buildCssQuery();
         Elements elements = document.select(cssQuery);
-
+        elements.forEach(this::action);
         return null;
     }
 
     protected abstract String buildCssQuery();
+
+    protected abstract Consumer action(Element element);
 }
