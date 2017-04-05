@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.download;
+package com.github.zjiajun.adult.downloader;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;

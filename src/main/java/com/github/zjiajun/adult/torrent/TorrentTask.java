@@ -1,6 +1,6 @@
 package com.github.zjiajun.adult.torrent;
 
-import com.github.zjiajun.adult.download.ConnectionRequest;
+import com.github.zjiajun.adult.downloader.ConnectionRequest;
 import com.github.zjiajun.adult.downloadNouse.AdultDownload;
 import com.github.zjiajun.adult.downloadNouse.DownloadRequest;
 import org.jsoup.nodes.Document;
@@ -9,7 +9,7 @@ import org.jsoup.select.Elements;
 import java.io.File;
 
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
-import static com.github.zjiajun.adult.download.AdultConnection.*;
+import static com.github.zjiajun.adult.downloader.AdultConnection.*;
 import static com.github.zjiajun.adult.SiteContext.*;
 
 /**

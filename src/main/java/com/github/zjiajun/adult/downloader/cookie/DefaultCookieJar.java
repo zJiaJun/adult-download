@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.download.cookie;
+package com.github.zjiajun.adult.downloader.cookie;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
