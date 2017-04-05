@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.connection;
+package com.github.zjiajun.adult.download;
 
 import org.jsoup.Connection;
 

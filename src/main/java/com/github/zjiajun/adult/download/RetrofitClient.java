@@ -1,6 +1,6 @@
-package com.github.zjiajun.adult.connection;
+package com.github.zjiajun.adult.download;
 
-import com.github.zjiajun.adult.connection.cookie.DefaultCookieJar;
+import com.github.zjiajun.adult.download.cookie.DefaultCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;

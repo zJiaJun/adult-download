@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.download;
+package com.github.zjiajun.adult.downloadNouse;
 
 import com.github.zjiajun.adult.BasicRequest;
 

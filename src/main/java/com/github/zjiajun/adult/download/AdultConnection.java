@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.connection;
+package com.github.zjiajun.adult.download;
 
 import com.github.zjiajun.adult.exception.AdultException;
 import com.github.zjiajun.adult.tool.LoggerTool;

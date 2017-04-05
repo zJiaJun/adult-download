@@ -1,7 +1,7 @@
 package com.github.zjiajun.adult.torrent;
 
 import com.github.zjiajun.adult.SiteContext;
-import com.github.zjiajun.adult.connection.ConnectionRequest;
+import com.github.zjiajun.adult.download.ConnectionRequest;
 import com.github.zjiajun.adult.tool.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import static com.github.zjiajun.adult.tool.AdultConfig.*;
-import static com.github.zjiajun.adult.connection.AdultConnection.*;
+import static com.github.zjiajun.adult.download.AdultConnection.*;
 import static com.github.zjiajun.adult.SiteContext.*;
 /**
  * Created by zhujiajun

@@ -1,9 +1,7 @@
-package com.github.zjiajun.adult.connection;
+package com.github.zjiajun.adult.download;
 
 import com.github.zjiajun.adult.Page;
 import com.github.zjiajun.adult.Request;
-import com.github.zjiajun.adult.common.MessageQueue;
-import com.github.zjiajun.adult.common.MessageRecord;
 import okhttp3.ResponseBody;
 
 import java.io.IOException;
