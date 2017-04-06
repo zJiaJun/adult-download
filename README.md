@@ -9,9 +9,9 @@ Adult Download是个垂直爬虫，对特定的网站分析，下载图片和种
 
 分为以下组件
 
-* scheduler     URL地址管理
+* manager       URL地址管理
 
-* manager       负责调度，根据策略从scheduler中获取URL并生成请求信息
+* scheduler     负责调度，根据策略从manager中获取URL并生成请求信息
 
 * downloader    多个下载，负责发送请求信息
 
