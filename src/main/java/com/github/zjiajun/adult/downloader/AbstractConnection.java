@@ -1,7 +1,7 @@
 package com.github.zjiajun.adult.downloader;
 
 import com.github.zjiajun.adult.Page;
-import com.github.zjiajun.adult.Request;
+import com.github.zjiajun.adult.request.Request;
 import okhttp3.ResponseBody;
 
 import java.io.IOException;

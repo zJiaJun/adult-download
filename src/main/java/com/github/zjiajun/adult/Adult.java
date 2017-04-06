@@ -4,6 +4,7 @@ import com.github.zjiajun.adult.input.Input;
 import com.github.zjiajun.adult.input.InputService;
 import com.github.zjiajun.adult.process.ListPageProcess;
 import com.github.zjiajun.adult.process.Process;
+import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.tool.ThreadPoolTool;
 
 import java.util.HashMap;
@@ -51,10 +52,6 @@ public class Adult {
 
 
     public void run() {
-        if (null != loginRequest) {
-            //do login
-            input.input(loginRequest);
-        }
 
 
 
@@ -77,12 +74,11 @@ public class Adult {
                 .url("http://67.220.90.4/forum/logging.php?action=login")
                 .login()
                 .data(loginReqData)
-                .post()
                 .build();
 
         Request pageRequest = new Request.Builder()
                 .url("http://67.220.90.4/forum/forum-230-1.html")
-                .get().build();
+                .build();
 
         Adult adult = new Adult.Builder().login(loginRequest).page(pageRequest).build();
 

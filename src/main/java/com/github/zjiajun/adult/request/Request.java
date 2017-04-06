@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult;
+package com.github.zjiajun.adult.request;
 
 import java.util.Map;
 import java.util.Objects;
@@ -9,17 +9,10 @@ import java.util.Objects;
  */
 public class Request {
 
-    public enum Method {
-        GET,
-        POST;
-
-        Method() {}
-    }
-
     private Request() {}
 
     private String url;
-    private Method method;
+    private RequestMethod requestMethod;
     private boolean isLogin;
     private Map<String,String> data;
 
@@ -32,15 +25,6 @@ public class Request {
             return this;
         }
 
-        public Builder get() {
-            request.method = Method.GET;
-            return this;
-        }
-
-        public Builder post() {
-            request.method = Method.POST;
-            return this;
-        }
 
         public Builder login() {
             request.isLogin = true;
@@ -63,8 +47,8 @@ public class Request {
         return url;
     }
 
-    public Method getMethod() {
-        return method;
+    public RequestMethod getMethod() {
+        return requestMethod;
     }
 
     public boolean isLogin() {

@@ -1,5 +1,7 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.request.Request;
+
 /**
  * @author zhujiajun
  * @since 2017/1/31
