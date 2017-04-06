@@ -1,7 +1,5 @@
 package com.github.zjiajun.adult.scheduler;
 
-import com.github.zjiajun.adult.request.Request;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,16 +9,16 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DefaultScheduler implements Scheduler {
 
-    private final BlockingQueue<Request> blockingQueue;
+    private final BlockingQueue<String> blockingQueue;
 
     public DefaultScheduler() {
         this.blockingQueue = new LinkedBlockingQueue<>();
     }
 
     @Override
-    public void put(Request request) {
+    public void put(String url) {
         try {
-            blockingQueue.put(request);
+            blockingQueue.put(url);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -28,13 +26,13 @@ public class DefaultScheduler implements Scheduler {
     }
 
     @Override
-    public Request take() {
-        Request request = null;
+    public String take() {
+        String url = null;
         try {
-            request = blockingQueue.take();
+            url = blockingQueue.take();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return request;
+        return url;
     }
 }
