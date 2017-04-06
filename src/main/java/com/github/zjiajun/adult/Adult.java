@@ -1,15 +1,9 @@
 package com.github.zjiajun.adult;
 
-import com.github.zjiajun.adult.input.Input;
-import com.github.zjiajun.adult.input.InputService;
-import com.github.zjiajun.adult.process.ListPageProcess;
-import com.github.zjiajun.adult.process.Process;
 import com.github.zjiajun.adult.request.Request;
-import com.github.zjiajun.adult.tool.ThreadPoolTool;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author zhujiajun
@@ -21,41 +15,6 @@ public class Adult {
 
     private Adult () {}
 
-    private Request loginRequest;
-    private Request pageRequest;
-
-    private final Input input = new InputService();
-    private final Process process = new ListPageProcess();
-
-    public static class Builder {
-
-        private Adult adult = new Adult();
-
-        public Builder login(Request loginRequest) {
-            adult.loginRequest = loginRequest;
-            return this;
-        }
-
-        public Builder page(Request pageRequest) {
-            adult.pageRequest = pageRequest;
-            return this;
-        }
-
-        public Adult build() {
-            return adult;
-        }
-    }
-
-
-    private final ExecutorService inputExecutor = ThreadPoolTool.getInstance().getExecutor("input", 4, 100);
-    private final ExecutorService processExecutor = ThreadPoolTool.getInstance().getExecutor("process",8,500);
-
-
-    public void run() {
-
-
-
-    }
 
 
     public static void main(String [] args) {
@@ -80,7 +39,6 @@ public class Adult {
                 .url("http://67.220.90.4/forum/forum-230-1.html")
                 .build();
 
-        Adult adult = new Adult.Builder().login(loginRequest).page(pageRequest).build();
 
     }
 
