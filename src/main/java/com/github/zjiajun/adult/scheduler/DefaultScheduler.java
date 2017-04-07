@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.scheduler;
 
 import com.github.zjiajun.adult.manager.Manager;
+import com.github.zjiajun.adult.request.Request;
 
 /**
  * @author zhujiajun
@@ -16,7 +17,9 @@ public class DefaultScheduler implements Scheduler {
 
     @Override
     public void schedule() {
-        manager.take();
+        Request url = manager.take();
+
+
     }
 
 }

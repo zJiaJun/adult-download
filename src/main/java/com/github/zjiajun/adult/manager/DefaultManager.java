@@ -1,5 +1,7 @@
 package com.github.zjiajun.adult.manager;
 
+import com.github.zjiajun.adult.request.Request;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -9,16 +11,16 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DefaultManager implements Manager {
 
-    private final BlockingQueue<String> blockingQueue;
+    private final BlockingQueue<Request> blockingQueue;
 
     public DefaultManager() {
         this.blockingQueue = new LinkedBlockingQueue<>();
     }
 
     @Override
-    public void put(String url) {
+    public void put(Request request) {
         try {
-            blockingQueue.put(url);
+            blockingQueue.put(request);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -26,13 +28,13 @@ public class DefaultManager implements Manager {
     }
 
     @Override
-    public String take() {
-        String url = null;
+    public Request take() {
+        Request request = null;
         try {
-            url = blockingQueue.take();
+            request = blockingQueue.take();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return url;
+        return request;
     }
 }
