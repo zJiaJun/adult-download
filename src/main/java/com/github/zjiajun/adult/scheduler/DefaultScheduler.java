@@ -17,7 +17,12 @@ public class DefaultScheduler implements Scheduler {
 
     @Override
     public void schedule() {
-        Request url = manager.take();
+
+        new Thread(() -> {
+            Request url = manager.take();
+
+        }).start();
+
 
 
     }
