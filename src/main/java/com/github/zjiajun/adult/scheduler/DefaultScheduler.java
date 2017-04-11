@@ -20,6 +20,8 @@ public class DefaultScheduler implements Scheduler {
 
         new Thread(() -> {
             Request url = manager.take();
+            //如何把Request优雅的发送给Downloader
+
 
         }).start();
 
