@@ -1,6 +1,5 @@
 package com.github.zjiajun.adult.downloader;
 
-import com.github.zjiajun.adult.Page;
 import com.github.zjiajun.adult.request.Request;
 import okhttp3.ResponseBody;
 
@@ -22,7 +21,6 @@ public abstract class AbstractDownloader implements Downloader {
     @Override
     public void download(Request request) {
         ResponseBody responseBody;
-        Page page = new Page();
         try {
             switch (request.getMethod()) {
                 case GET:
@@ -35,8 +33,6 @@ public abstract class AbstractDownloader implements Downloader {
                     throw new RuntimeException();
             }
             String originalHtml = new String(responseBody.bytes(), Charset.forName("GBK"));
-            page.setHtml(originalHtml);
-            page.setRequest(request);
         } catch (IOException e) {
             e.printStackTrace();
         }
