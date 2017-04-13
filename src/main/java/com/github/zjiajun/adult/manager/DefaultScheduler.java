@@ -9,11 +9,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author zhujiajun
  * @since 2017/4/5
  */
-public class DefaultManager implements Manager {
+public class DefaultScheduler implements Scheduler {
 
     private final BlockingQueue<Request> blockingQueue;
 
-    public DefaultManager() {
+    public DefaultScheduler() {
         this.blockingQueue = new LinkedBlockingQueue<>();
     }
 

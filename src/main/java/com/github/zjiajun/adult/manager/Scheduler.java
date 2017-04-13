@@ -6,7 +6,7 @@ import com.github.zjiajun.adult.request.Request;
  * @author zhujiajun
  * @since 2017/4/5
  */
-public interface Manager {
+public interface Scheduler {
 
     void put(Request request);
 
