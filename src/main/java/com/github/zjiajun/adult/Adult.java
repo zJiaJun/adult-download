@@ -1,14 +1,36 @@
 package com.github.zjiajun.adult;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author zhujiajun
  * @since 2017/1/31
  *
  * 主类
  */
-public class Adult {
+public class Adult extends Thread {
 
     private Adult () {}
+
+    private List<String> urls = new ArrayList<>();
+
+    public Adult url(String url) {
+       urls.add(url);
+       return this;
+    }
+
+
+    @Override
+    public synchronized void start() {
+        super.start();
+    }
+
+    @Override
+    public void run() {
+
+
+    }
 
 
 
