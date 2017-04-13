@@ -1,5 +1,8 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.manager.DefaultScheduler;
+import com.github.zjiajun.adult.manager.Scheduler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ public class Adult extends Thread {
     private Adult () {}
 
     private List<String> urls = new ArrayList<>();
+    private Scheduler scheduler;
 
     public Adult url(String url) {
        urls.add(url);
@@ -28,6 +32,15 @@ public class Adult extends Thread {
 
     @Override
     public void run() {
+        if (urls.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        if (null == scheduler) {
+            scheduler = new DefaultScheduler();
+
+        }
+
 
 
     }
