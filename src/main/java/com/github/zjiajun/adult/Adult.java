@@ -1,10 +1,14 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.downloader.Downloader;
 import com.github.zjiajun.adult.manager.DefaultScheduler;
 import com.github.zjiajun.adult.manager.Scheduler;
 import com.github.zjiajun.adult.request.LoginParamBuild;
+import com.github.zjiajun.adult.request.Method;
+import com.github.zjiajun.adult.request.Request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,23 +22,24 @@ public class Adult extends Thread {
 
     private Adult () {}
 
-    private String loginUrl;
-    private Map<String,String> loginParam;
-    private List<String> urls = new ArrayList<>();
+    private Request loginRequest;
+    private List<Request> requests = new ArrayList<>();
     private Scheduler scheduler;
+    private Downloader downloader;
 
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
-        this.loginUrl = loginUrl;
-        loginParamBuild.param(loginParam);
+        Map<String,String> param = new HashMap<>(50);
+        loginParamBuild.param(param);
+        this.loginRequest = new Request.Builder().url(loginUrl).login().data(param).method(Method.POST).build();
         return this;
     }
 
 
-
     public Adult url(String url) {
-       urls.add(url);
-       return this;
+        requests.add(new Request.Builder().url(url).build());
+        return this;
     }
+
 
 
     @Override
@@ -44,13 +49,16 @@ public class Adult extends Thread {
 
     @Override
     public void run() {
-        if (urls.isEmpty()) {
+        if (requests.isEmpty()) {
             throw new RuntimeException();
         }
 
         if (null == scheduler) {
             scheduler = new DefaultScheduler();
+        }
 
+        if (null != loginRequest) {
+            //do login
         }
 
     }

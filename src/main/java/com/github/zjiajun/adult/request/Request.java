@@ -12,8 +12,8 @@ public class Request {
     private Request() {}
 
     private String url;
-    private RequestMethod requestMethod;
-    private boolean isLogin;
+    private Method method = Method.GET;
+    private boolean isLogin = false;
     private Map<String,String> data;
 
     public static class Builder {
@@ -25,6 +25,10 @@ public class Request {
             return this;
         }
 
+        public Builder method(Method method) {
+            request.method = method;
+            return this;
+        }
 
         public Builder login() {
             request.isLogin = true;
@@ -47,8 +51,8 @@ public class Request {
         return url;
     }
 
-    public RequestMethod getMethod() {
-        return requestMethod;
+    public Method getMethod() {
+        return method;
     }
 
     public boolean isLogin() {
