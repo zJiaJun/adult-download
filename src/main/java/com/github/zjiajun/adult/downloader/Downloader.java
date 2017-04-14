@@ -1,7 +1,5 @@
 package com.github.zjiajun.adult.downloader;
 
-import com.github.zjiajun.adult.request.Request;
-
 /**
  * @author zhujiajun
  * @since 2017/4/10
@@ -9,6 +7,6 @@ import com.github.zjiajun.adult.request.Request;
 public interface Downloader {
 
 
-    void download(Request request);
+    void download();
 
 }

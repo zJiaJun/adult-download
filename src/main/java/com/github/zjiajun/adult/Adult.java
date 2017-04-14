@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.downloader.DefaultDownloader;
 import com.github.zjiajun.adult.downloader.Downloader;
 import com.github.zjiajun.adult.manager.DefaultScheduler;
 import com.github.zjiajun.adult.manager.Scheduler;
@@ -53,16 +54,23 @@ public class Adult extends Thread {
             throw new RuntimeException();
         }
 
-        if (null == scheduler) {
-            scheduler = new DefaultScheduler();
-        }
+        init();
 
         if (null != loginRequest) {
-            //do login
+            scheduler.put(loginRequest);
         }
 
     }
 
+
+    private void init() {
+        if (null == scheduler) {
+            scheduler = new DefaultScheduler();
+        }
+        if (null == downloader) {
+            downloader = new DefaultDownloader(scheduler);
+        }
+    }
 
 
     public static void main(String [] args) {
