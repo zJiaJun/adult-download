@@ -9,8 +9,21 @@ import com.github.zjiajun.adult.request.Request;
  */
 public class DefaultDownloader extends AbstractDownloader {
 
+    private final int threadCount;
+    private final Thread [] downloadThread;
+
+
     public DefaultDownloader(Scheduler scheduler) {
+        this(scheduler,1);
+    }
+
+    public DefaultDownloader(Scheduler scheduler, int threadCount) {
         super(scheduler);
+        this.threadCount = threadCount;
+        downloadThread = new Thread[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            downloadThread[i] = new Thread(DefaultDownloader.super::download);
+        }
     }
 
     @Override
