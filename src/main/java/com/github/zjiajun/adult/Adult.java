@@ -27,6 +27,7 @@ public class Adult extends Thread {
     private List<Request> requests = new ArrayList<>();
     private Scheduler scheduler;
     private Downloader downloader;
+    private int downloadThreadCount;
 
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
         Map<String,String> param = new HashMap<>(50);
@@ -41,6 +42,10 @@ public class Adult extends Thread {
         return this;
     }
 
+    public Adult downloadThreadCount(int downloadThreadCount) {
+        this.downloadThreadCount = downloadThreadCount;
+        return this;
+    }
 
 
     @Override
