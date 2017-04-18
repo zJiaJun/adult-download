@@ -23,6 +23,7 @@ public class DefaultDownloader extends AbstractDownloader {
         downloadThread = new Thread[threadCount];
         for (int i = 0; i < threadCount; i++) {
             downloadThread[i] = new Thread(DefaultDownloader.super::download);
+            downloadThread[i].start();
         }
     }
 
