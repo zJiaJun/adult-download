@@ -2,10 +2,9 @@ package com.github.zjiajun.adult.downloader;
 
 import com.github.zjiajun.adult.manager.Scheduler;
 import com.github.zjiajun.adult.request.Request;
-import okhttp3.ResponseBody;
+import com.github.zjiajun.adult.response.Response;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,20 +23,18 @@ public abstract class AbstractDownloader implements Downloader {
 
     protected abstract void beforeDownload(Request request);
 
-    protected abstract void afterDownload(Object response);
-
-    protected abstract boolean isNextUrl(Request request);
+    protected abstract void afterDownload(Response response);
 
     @Override
     public void download() {
         while (true) {
             Request request = scheduler.take();
             beforeDownload(request);
-            ResponseBody responseBody;
             try {
+                Response response = retrofitClient.execute(request);
 
-                String originalHtml = new String(responseBody.bytes(), Charset.forName("GBK"));
-                afterDownload(originalHtml);
+                afterDownload(response);
+
                 TimeUnit.SECONDS.sleep(3);
             } catch (IOException e) {
                 e.printStackTrace();

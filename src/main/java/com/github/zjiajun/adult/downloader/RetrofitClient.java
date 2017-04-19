@@ -11,6 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.http.*;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -50,33 +51,33 @@ public final class RetrofitClient {
 
 
     public com.github.zjiajun.adult.response.Response execute(Request request) throws IOException {
-        com.github.zjiajun.adult.response.Response response;
+        Response<ResponseBody> retrofitResponse;
         switch (request.getMethod()) {
             case GET:
-                response = get(request.getUrl(), request.getData());
+                retrofitResponse = get(request.getUrl(), request.getData());
                 break;
             case POST:
-                response = post(request.getUrl(),request.getData());
+                retrofitResponse = post(request.getUrl(),request.getData());
                 break;
             default:
                 throw new RuntimeException();
         }
+        int code = retrofitResponse.code();
+        ResponseBody responseBody = retrofitResponse.body();
+        String originalHtml = new String(responseBody.bytes(), Charset.forName(request.getCharset()));
+        com.github.zjiajun.adult.response.Response response = new com.github.zjiajun.adult.response.Response(originalHtml, code);
         return response;
     }
 
 
-    private com.github.zjiajun.adult.response.Response post(String url, Map<String,String> fieldMap) throws IOException {
+    private Response<ResponseBody> post(String url, Map<String,String> fieldMap) throws IOException {
         Call<ResponseBody> responseBodyCall = api.post(url, fieldMap);
-        Response<ResponseBody> response = responseBodyCall.execute();
-        ResponseBody body = response.body();
-        return null;
+        return responseBodyCall.execute();
     }
 
-    private com.github.zjiajun.adult.response.Response get(String url, Map<String,String> queryMap) throws IOException {
+    private Response<ResponseBody> get(String url, Map<String,String> queryMap) throws IOException {
         Call<ResponseBody> responseBodyCall = queryMap == null ? api.get(url) : api.get(url, queryMap);
-        Response<ResponseBody> response = responseBodyCall.execute();
-        ResponseBody body = response.body();
-        return null;
+        return responseBodyCall.execute();
     }
 
     public OkHttpClient getOkHttpClient() {
