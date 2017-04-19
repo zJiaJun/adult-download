@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.downloader;
 
 import com.github.zjiajun.adult.downloader.cookie.DefaultCookieJar;
+import com.github.zjiajun.adult.request.Request;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -47,16 +48,35 @@ public final class RetrofitClient {
         return SingletonHolder.retrofitClient;
     }
 
-    public ResponseBody post(String url, Map<String,String> fieldMap) throws IOException {
-        Call<ResponseBody> responseBodyCall = api.post(url, fieldMap);
-        Response<ResponseBody> response = responseBodyCall.execute();
-        return response.body();
+
+    public com.github.zjiajun.adult.response.Response execute(Request request) throws IOException {
+        com.github.zjiajun.adult.response.Response response;
+        switch (request.getMethod()) {
+            case GET:
+                response = get(request.getUrl(), request.getData());
+                break;
+            case POST:
+                response = post(request.getUrl(),request.getData());
+                break;
+            default:
+                throw new RuntimeException();
+        }
+        return response;
     }
 
-    public ResponseBody get(String url, Map<String,String> queryMap) throws IOException {
+
+    private com.github.zjiajun.adult.response.Response post(String url, Map<String,String> fieldMap) throws IOException {
+        Call<ResponseBody> responseBodyCall = api.post(url, fieldMap);
+        Response<ResponseBody> response = responseBodyCall.execute();
+        ResponseBody body = response.body();
+        return null;
+    }
+
+    private com.github.zjiajun.adult.response.Response get(String url, Map<String,String> queryMap) throws IOException {
         Call<ResponseBody> responseBodyCall = queryMap == null ? api.get(url) : api.get(url, queryMap);
         Response<ResponseBody> response = responseBodyCall.execute();
-        return response.body();
+        ResponseBody body = response.body();
+        return null;
     }
 
     public OkHttpClient getOkHttpClient() {

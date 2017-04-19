@@ -6,6 +6,7 @@ import okhttp3.ResponseBody;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhujiajun
@@ -25,6 +26,8 @@ public abstract class AbstractDownloader implements Downloader {
 
     protected abstract void afterDownload(Object response);
 
+    protected abstract boolean isNextUrl(Request request);
+
     @Override
     public void download() {
         while (true) {
@@ -32,19 +35,13 @@ public abstract class AbstractDownloader implements Downloader {
             beforeDownload(request);
             ResponseBody responseBody;
             try {
-                switch (request.getMethod()) {
-                    case GET:
-                        responseBody = retrofitClient.get(request.getUrl(), request.getData());
-                        break;
-                    case POST:
-                        responseBody = retrofitClient.post(request.getUrl(), request.getData());
-                        break;
-                    default:
-                        throw new RuntimeException();
-                }
+
                 String originalHtml = new String(responseBody.bytes(), Charset.forName("GBK"));
                 afterDownload(originalHtml);
+                TimeUnit.SECONDS.sleep(3);
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

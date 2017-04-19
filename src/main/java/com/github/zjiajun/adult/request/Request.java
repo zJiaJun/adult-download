@@ -13,6 +13,7 @@ public class Request {
 
     private String url;
     private Method method = Method.GET;
+    private String charset = "UTF-8";
     private boolean isLogin = false;
     private Map<String,String> data;
 
@@ -27,6 +28,11 @@ public class Request {
 
         public Builder method(Method method) {
             request.method = method;
+            return this;
+        }
+
+        public Builder charset(String charset) {
+            request.charset = charset;
             return this;
         }
 
@@ -53,6 +59,10 @@ public class Request {
 
     public Method getMethod() {
         return method;
+    }
+
+    public String getCharset() {
+        return charset;
     }
 
     public boolean isLogin() {

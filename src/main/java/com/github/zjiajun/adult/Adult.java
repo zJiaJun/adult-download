@@ -32,13 +32,13 @@ public class Adult extends Thread {
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
         Map<String,String> param = new HashMap<>(50);
         loginParamBuild.param(param);
-        this.loginRequest = new Request.Builder().url(loginUrl).login().data(param).method(Method.POST).build();
+        this.loginRequest = new Request.Builder().url(loginUrl).charset("GBK").login().data(param).method(Method.POST).build();
         return this;
     }
 
 
     public Adult url(String url) {
-        requests.add(new Request.Builder().url(url).build());
+        requests.add(new Request.Builder().url(url).charset("GBK").build());
         return this;
     }
 
