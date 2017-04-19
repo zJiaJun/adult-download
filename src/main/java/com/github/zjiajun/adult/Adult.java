@@ -2,8 +2,8 @@ package com.github.zjiajun.adult;
 
 import com.github.zjiajun.adult.downloader.DefaultDownloader;
 import com.github.zjiajun.adult.downloader.Downloader;
-import com.github.zjiajun.adult.manager.DefaultScheduler;
-import com.github.zjiajun.adult.manager.Scheduler;
+import com.github.zjiajun.adult.scheduler.DefaultScheduler;
+import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.request.LoginParamBuild;
 import com.github.zjiajun.adult.request.Method;
 import com.github.zjiajun.adult.request.Request;

@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.manager;
+package com.github.zjiajun.adult.scheduler;
 
 import com.github.zjiajun.adult.request.Request;
 

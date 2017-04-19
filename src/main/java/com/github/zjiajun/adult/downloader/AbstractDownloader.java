@@ -1,6 +1,6 @@
 package com.github.zjiajun.adult.downloader;
 
-import com.github.zjiajun.adult.manager.Scheduler;
+import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
 
