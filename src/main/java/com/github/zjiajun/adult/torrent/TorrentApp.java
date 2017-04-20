@@ -38,16 +38,16 @@
 //    private void loginSexInSex() {
 //        LoggerTool.LOGGER.info("---开始登陆网站---");
 //        Map<String,String> loginReqData = new HashMap<>();
-//        loginReqData.put("referer","index.php");
-//        loginReqData.put("loginfield","username");
-//        loginReqData.put("username",sexInSexUserName());
-//        loginReqData.put("password",sexInSexPassword());
-//        loginReqData.put("questionid","0");
-//        loginReqData.put("answer","");
-//        loginReqData.put("cookietime","2592000");
-//        loginReqData.put("loginmode","");
-//        loginReqData.put("styleid","");
-//        loginReqData.put("loginsubmit","true");
+//        loginReqData.putRequest("referer","index.php");
+//        loginReqData.putRequest("loginfield","username");
+//        loginReqData.putRequest("username",sexInSexUserName());
+//        loginReqData.putRequest("password",sexInSexPassword());
+//        loginReqData.putRequest("questionid","0");
+//        loginReqData.putRequest("answer","");
+//        loginReqData.putRequest("cookietime","2592000");
+//        loginReqData.putRequest("loginmode","");
+//        loginReqData.putRequest("styleid","");
+//        loginReqData.putRequest("loginsubmit","true");
 //
 //        ConnectionRequest loginRequest = new ConnectionRequest.Builder()
 //                .url(sexInSexLoginUrl()).headers(getHeaders()).userAgent(getUA()).data(loginReqData)
@@ -74,7 +74,7 @@
 //            String text = e.text();//a标签内容,即title
 //            String href = e.absUrl("href");//详情url
 //            String filePath = text.replaceAll("/", "");//替换斜杠，防止新建多层目录
-//            urlMap.put(filePath, href);
+//            urlMap.putRequest(filePath, href);
 //        });
 //        return urlMap;
 //    }

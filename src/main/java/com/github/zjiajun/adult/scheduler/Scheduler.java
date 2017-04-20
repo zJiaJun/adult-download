@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.scheduler;
 
 import com.github.zjiajun.adult.request.Request;
+import com.github.zjiajun.adult.response.Response;
 
 /**
  * @author zhujiajun
@@ -8,8 +9,12 @@ import com.github.zjiajun.adult.request.Request;
  */
 public interface Scheduler {
 
-    void put(Request request);
+    void putRequest(Request request);
 
-    Request take();
+    Request takeRequest();
+
+    void putResponse(Response response);
+
+    Response takeResponse();
 
 }

@@ -28,12 +28,14 @@ public abstract class AbstractDownloader implements Downloader {
     @Override
     public void download() {
         while (true) {
-            Request request = scheduler.take();
+            Request request = scheduler.takeRequest();
             beforeDownload(request);
             try {
                 Response response = retrofitClient.execute(request);
 
                 afterDownload(response);
+
+                scheduler.putResponse(response);
 
                 TimeUnit.SECONDS.sleep(3);
             } catch (IOException e) {

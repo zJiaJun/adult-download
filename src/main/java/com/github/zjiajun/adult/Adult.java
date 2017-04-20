@@ -2,6 +2,8 @@ package com.github.zjiajun.adult;
 
 import com.github.zjiajun.adult.downloader.DefaultDownloader;
 import com.github.zjiajun.adult.downloader.Downloader;
+import com.github.zjiajun.adult.processor.DefaultProcessor;
+import com.github.zjiajun.adult.processor.Processor;
 import com.github.zjiajun.adult.scheduler.DefaultScheduler;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.request.LoginParamBuild;
@@ -27,6 +29,7 @@ public class Adult extends Thread {
     private List<Request> requests = new ArrayList<>();
     private Scheduler scheduler;
     private Downloader downloader;
+    private Processor processor;
     private int downloadThreadCount;
 
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
@@ -62,7 +65,7 @@ public class Adult extends Thread {
         init();
 
         if (null != loginRequest) {
-            scheduler.put(loginRequest);
+            scheduler.putRequest(loginRequest);
         }
 
     }
@@ -74,6 +77,9 @@ public class Adult extends Thread {
         }
         if (null == downloader) {
             downloader = new DefaultDownloader(scheduler);
+        }
+        if (null == processor) {
+            processor = new DefaultProcessor(scheduler);
         }
     }
 

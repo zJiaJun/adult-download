@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.scheduler;
 
 import com.github.zjiajun.adult.request.Request;
+import com.github.zjiajun.adult.response.Response;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,16 +12,18 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DefaultScheduler implements Scheduler {
 
-    private final BlockingQueue<Request> blockingQueue;
+    private final BlockingQueue<Request> requestBlockingQueue;
+    private final BlockingQueue<Response> responseBlockingQueue;
 
     public DefaultScheduler() {
-        this.blockingQueue = new LinkedBlockingQueue<>();
+        this.requestBlockingQueue = new LinkedBlockingQueue<>();
+        this.responseBlockingQueue = new LinkedBlockingQueue<>();
     }
 
     @Override
-    public void put(Request request) {
+    public void putRequest(Request request) {
         try {
-            blockingQueue.put(request);
+            requestBlockingQueue.put(request);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -28,13 +31,34 @@ public class DefaultScheduler implements Scheduler {
     }
 
     @Override
-    public Request take() {
+    public Request takeRequest() {
         Request request = null;
         try {
-            request = blockingQueue.take();
+            request = requestBlockingQueue.take();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return request;
+    }
+
+    @Override
+    public void putResponse(Response response) {
+        try {
+            responseBlockingQueue.put(response);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public Response takeResponse() {
+        Response response = null;
+        try {
+            response = responseBlockingQueue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 }
