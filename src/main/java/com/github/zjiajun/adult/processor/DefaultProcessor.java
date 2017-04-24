@@ -2,6 +2,8 @@ package com.github.zjiajun.adult.processor;
 
 import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.scheduler.Scheduler;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +25,8 @@ public class DefaultProcessor implements Processor {
             Response response = scheduler.takeResponse();
 
             String content = response.getContent();
+
+            Document document = Jsoup.parse(content);
 
 
             try {
