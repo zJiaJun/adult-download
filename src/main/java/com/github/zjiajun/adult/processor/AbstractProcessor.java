@@ -28,6 +28,8 @@ public abstract class AbstractProcessor implements Processor {
 
             Document document = Jsoup.parse(content);
 
+            handler(document);
+
 
 
             try {
@@ -38,4 +40,6 @@ public abstract class AbstractProcessor implements Processor {
 
         }
     }
+
+    protected abstract void handler(Document document);
 }
