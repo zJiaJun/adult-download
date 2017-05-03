@@ -6,6 +6,7 @@ package com.github.zjiajun.adult.downloadNouse;
  *
  * 下载回调
  */
+@Deprecated
 public interface DownloadListener {
 
     default void success() {

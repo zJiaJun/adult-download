@@ -10,6 +10,7 @@ import java.util.Map;
  *
  * 下载相关信息
  */
+@Deprecated
 public final class DownloadRequest extends BasicRequest {
 
     private String filePath;

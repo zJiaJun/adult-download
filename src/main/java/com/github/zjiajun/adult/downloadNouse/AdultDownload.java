@@ -18,6 +18,7 @@ import java.util.Objects;
  *
  * 下载工具类
  */
+@Deprecated
 public final class AdultDownload {
 
 
