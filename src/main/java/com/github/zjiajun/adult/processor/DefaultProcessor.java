@@ -16,7 +16,7 @@ public class DefaultProcessor extends AbstractProcessor {
 
     @Override
     protected void handler(Document document) {
-        Elements elements = document.select("");
+        Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
 
     }
 
