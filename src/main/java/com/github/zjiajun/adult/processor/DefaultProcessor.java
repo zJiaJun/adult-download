@@ -19,6 +19,8 @@ public class DefaultProcessor extends AbstractProcessor {
         Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
 
         elements.forEach(e -> {
+            String text = e.text();
+            String href = e.absUrl("href");
 
         });
 
