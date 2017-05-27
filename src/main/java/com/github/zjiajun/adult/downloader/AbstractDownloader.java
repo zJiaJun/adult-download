@@ -27,7 +27,7 @@ public abstract class AbstractDownloader implements Downloader {
 
     @Override
     public void download() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             Request request = scheduler.takeRequest();
             beforeDownload(request);
             try {

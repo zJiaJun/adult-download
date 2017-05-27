@@ -16,6 +16,9 @@ public class DefaultProcessor extends AbstractProcessor {
 
     @Override
     protected void handler(Document document) {
+
+        //如何区分帖子列表页面 和 帖子详情页
+
         Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
 
         elements.forEach(e -> {

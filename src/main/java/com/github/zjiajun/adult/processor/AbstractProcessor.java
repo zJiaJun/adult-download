@@ -21,7 +21,7 @@ public abstract class AbstractProcessor implements Processor {
 
     @Override
     public void process() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             Response response = scheduler.takeResponse();
 
             String content = response.getContent();
