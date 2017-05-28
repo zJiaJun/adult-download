@@ -1,10 +1,12 @@
 package com.github.zjiajun.adult.processor;
 
+import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,9 +30,9 @@ public abstract class AbstractProcessor implements Processor {
 
             Document document = Jsoup.parse(content);
 
-            handler(document);
+            List<Request> requestList = handler(document);
 
-
+            requestList.forEach(scheduler::putRequest);
 
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -41,5 +43,5 @@ public abstract class AbstractProcessor implements Processor {
         }
     }
 
-    protected abstract void handler(Document document);
+    protected abstract List<Request> handler(Document document);
 }

@@ -1,8 +1,13 @@
 package com.github.zjiajun.adult.processor;
 
+import com.github.zjiajun.adult.request.Method;
+import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhujiajun
@@ -15,17 +20,19 @@ public class DefaultProcessor extends AbstractProcessor {
     }
 
     @Override
-    protected void handler(Document document) {
+    protected List<Request> handler(Document document) {
 
         //如何区分帖子列表页面 和 帖子详情页
 
         Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
 
+        List<Request> requestList = new ArrayList<>(elements.size());
         elements.forEach(e -> {
-            String text = e.text();
-            String href = e.absUrl("href");
-
+            String detailUrl = e.absUrl("href");
+            Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
+            requestList.add(request);
         });
+        return requestList;
 
     }
 
