@@ -32,6 +32,13 @@ public class DefaultProcessor extends AbstractProcessor {
             Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
             requestList.add(request);
         });
+
+
+        Elements imgElements = document.select("div.t_msgfont img[src^=http]");
+        if (imgElements.size() <= 0) return requestList;
+        String imgUrl = imgElements.first().attr("src");
+        String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1, imgUrl.length());
+        //download
         return requestList;
 
     }
