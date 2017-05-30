@@ -39,7 +39,16 @@ public class DefaultProcessor extends AbstractProcessor {
         String imgUrl = imgElements.first().attr("src");
         String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1, imgUrl.length());
         //download
+
+        Elements attachElements = document.select("dl.t_attachlist a[href^=attachment]");
+        if (attachElements.size() <= 0) return requestList;
+        String attachUrl = attachElements.first().absUrl("href");
+        String attachName = attachElements.first().text();
+//        download
+
         return requestList;
+
+
 
     }
 
