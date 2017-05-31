@@ -21,30 +21,33 @@ public class DefaultProcessor extends AbstractProcessor {
 
     @Override
     protected List<Request> handler(Document document) {
+        List<Request> requestList = new ArrayList<>();
 
         //如何区分帖子列表页面 和 帖子详情页
+        String baseUri = document.baseUri();
+        if (baseUri.lastIndexOf(".html") > 0) {
+            Elements imgElements = document.select("div.t_msgfont img[src^=http]");
+            if (imgElements.size() <= 0) return requestList;
+            String imgUrl = imgElements.first().attr("src");
+            String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1, imgUrl.length());
+            //download
 
-        Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
-
-        List<Request> requestList = new ArrayList<>(elements.size());
-        elements.forEach(e -> {
-            String detailUrl = e.absUrl("href");
-            Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
-            requestList.add(request);
-        });
-
-
-        Elements imgElements = document.select("div.t_msgfont img[src^=http]");
-        if (imgElements.size() <= 0) return requestList;
-        String imgUrl = imgElements.first().attr("src");
-        String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1, imgUrl.length());
-        //download
-
-        Elements attachElements = document.select("dl.t_attachlist a[href^=attachment]");
-        if (attachElements.size() <= 0) return requestList;
-        String attachUrl = attachElements.first().absUrl("href");
-        String attachName = attachElements.first().text();
+            Elements attachElements = document.select("dl.t_attachlist a[href^=attachment]");
+            if (attachElements.size() <= 0) return requestList;
+            String attachUrl = attachElements.first().absUrl("href");
+            String attachName = attachElements.first().text();
 //        download
+        } else {
+            Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
+            elements.forEach(e -> {
+                String detailUrl = e.absUrl("href");
+                Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
+                requestList.add(request);
+            });
+
+        }
+
+
 
         return requestList;
 
