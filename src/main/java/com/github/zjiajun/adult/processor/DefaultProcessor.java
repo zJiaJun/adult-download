@@ -20,6 +20,16 @@ public class DefaultProcessor extends AbstractProcessor {
     }
 
     @Override
+    protected String urlCssQuery() {
+        return "table[id^=forum]:contains(推荐主题) span a";
+    }
+
+
+    @Override
+    protected boolean isExistsUrl(String url) {
+        return url.lastIndexOf(".html") > 0;
+    }
+
     protected List<Request> handler(Document document) {
         List<Request> requestList = new ArrayList<>();
 

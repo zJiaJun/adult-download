@@ -1,12 +1,12 @@
 package com.github.zjiajun.adult.processor;
 
+import com.github.zjiajun.adult.request.Method;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,9 +30,16 @@ public abstract class AbstractProcessor implements Processor {
 
             Document document = Jsoup.parse(content);
 
-            List<Request> requestList = handler(document);
+            //是否存在子Url
+            if (!isExistsUrl(document.baseUri())) {
+                document.select(urlCssQuery()).forEach(e -> {
+                    String detailUrl = e.absUrl("href");
+                    Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
+                    scheduler.putRequest(request);
+                });
+            } else {
 
-            requestList.forEach(scheduler::putRequest);
+            }
 
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -43,5 +50,8 @@ public abstract class AbstractProcessor implements Processor {
         }
     }
 
-    protected abstract List<Request> handler(Document document);
+    protected abstract String urlCssQuery();
+
+    protected abstract boolean isExistsUrl(String url);
+
 }
