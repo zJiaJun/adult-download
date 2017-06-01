@@ -25,6 +25,7 @@ public class DefaultProcessor extends AbstractProcessor {
 
         //如何区分帖子列表页面 和 帖子详情页
         String baseUri = document.baseUri();
+        //详情页
         if (baseUri.lastIndexOf(".html") > 0) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
             if (imgElements.size() <= 0) return requestList;
