@@ -32,7 +32,7 @@ public abstract class AbstractProcessor implements Processor {
 
             //是否存在子Url
             if (!isExistsUrl(document.baseUri())) {
-                document.select(urlCssQuery()).forEach(e -> {
+                document.select("").forEach(e -> {
                     String detailUrl = e.absUrl("href");
                     Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
                     scheduler.putRequest(request);
@@ -50,7 +50,6 @@ public abstract class AbstractProcessor implements Processor {
         }
     }
 
-    protected abstract String urlCssQuery();
 
     protected abstract boolean isExistsUrl(String url);
 
