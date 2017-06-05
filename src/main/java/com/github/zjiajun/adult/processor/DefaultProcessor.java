@@ -24,19 +24,20 @@ public class DefaultProcessor extends AbstractProcessor {
     protected List<Request> handler(Document document) {
         List<Request> requestList = new ArrayList<>();
 
-        //如何区分帖子列表页面 和 帖子详情页
         String baseUri = document.baseUri();
         //详情页
         if (baseUri.lastIndexOf(".html") > 0) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
-            if (imgElements.size() <= 0) return null;
-            String imgUrl = imgElements.first().attr("src");
-            String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1, imgUrl.length());
+            if (!imgElements.isEmpty()) {
+                String imgUrl = imgElements.first().attr("src");
+                String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/") + 1, imgUrl.length());
+            }
 
             Elements attachElements = document.select("dl.t_attachlist a[href^=attachment]");
-            if (attachElements.size() <= 0) return null;
-            String attachUrl = attachElements.first().absUrl("href");
-            String attachName = attachElements.first().text();
+            if (!attachElements.isEmpty()) {
+                String attachUrl = attachElements.first().absUrl("href");
+                String attachName = attachElements.first().text();
+            }
         } else {
             Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
             elements.forEach(e -> {
