@@ -4,6 +4,7 @@ import com.github.zjiajun.adult.request.Method;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -35,8 +36,11 @@ public class DefaultProcessor extends AbstractProcessor {
 
             Elements attachElements = document.select("dl.t_attachlist a[href^=attachment]");
             if (!attachElements.isEmpty()) {
-                String attachUrl = attachElements.first().absUrl("href");
-                String attachName = attachElements.first().text();
+                Element element = attachElements.first();
+                if (null != element) {
+                    String attachName = element.text();
+                    String attachUrl = element.absUrl("href");
+                }
             }
         } else {
             Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
