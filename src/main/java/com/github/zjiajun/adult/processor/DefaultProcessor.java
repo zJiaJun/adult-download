@@ -29,7 +29,7 @@ public class DefaultProcessor extends AbstractProcessor {
         //详情页
         if (baseUri.lastIndexOf(".html") > 0) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
-            if (!imgElements.isEmpty()) {
+            if (!imgElements.isEmpty() && null != imgElements.first()) {
                 String imgUrl = imgElements.first().attr("src");
                 String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/") + 1, imgUrl.length());
             }
