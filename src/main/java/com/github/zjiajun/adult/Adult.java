@@ -21,9 +21,9 @@ import java.util.Map;
  *
  * 主类
  */
-public class Adult extends Thread {
+public class Adult {
 
-    private Adult () {}
+    public Adult () {}
 
     private Request loginRequest;
     private List<Request> requests = new ArrayList<>();
@@ -51,17 +51,8 @@ public class Adult extends Thread {
     }
 
 
-    @Override
-    public synchronized void start() {
-        super.start();
-    }
 
-    @Override
-    public void run() {
-        if (requests.isEmpty()) {
-            throw new RuntimeException();
-        }
-
+    public void start() {
         init();
 
         if (null != loginRequest) {
@@ -84,34 +75,6 @@ public class Adult extends Thread {
     }
 
 
-    public static void main(String [] args) {
-
-        new Adult().login("http://67.220.90.4/forum/logging.php?action=login", param -> {
-            param.put("referer","index.php");
-            param.put("loginfield","username");
-            param.put("username","leoneye");
-            param.put("password","wqcez136");
-            param.put("questionid","0");
-            param.put("answer","");
-            param.put("cookietime","315360000");
-            param.put("loginmode","");
-            param.put("styleid","");
-            param.put("loginsubmit","true");
-        });
-
-        /*
-        Request loginRequest = new Request.Builder()
-                .url("http://67.220.90.4/forum/logging.php?action=login")
-                .login()
-                .data(loginReqData)
-                .build();
-
-        Request pageRequest = new Request.Builder()
-                .url("http://67.220.90.4/forum/forum-230-1.html").build();
-        */
-
-
-    }
 
 
 }
