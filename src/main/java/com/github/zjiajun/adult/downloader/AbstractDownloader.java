@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author zhujiajun
  * @since 2017/2/3
+ *
+ * 抽象公用下载器
  */
 public abstract class AbstractDownloader implements Downloader {
 
