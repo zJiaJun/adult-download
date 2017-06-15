@@ -40,9 +40,7 @@ public abstract class AbstractDownloader implements Downloader {
                 scheduler.putResponse(response);
 
                 TimeUnit.SECONDS.sleep(3);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
