@@ -22,4 +22,12 @@ public class Response {
     public int getStatusCode() {
         return statusCode;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "content='" + content + '\'' +
+                ", statusCode=" + statusCode +
+                '}';
+    }
 }

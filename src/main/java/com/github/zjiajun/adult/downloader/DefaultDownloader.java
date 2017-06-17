@@ -30,12 +30,12 @@ public class DefaultDownloader extends AbstractDownloader {
 
     @Override
     protected void beforeDownload(Request request) {
-
+        System.out.println(request);
     }
 
     @Override
     protected void afterDownload(Response response) {
-
+        System.out.println(response);
     }
 
 

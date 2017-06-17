@@ -17,7 +17,12 @@ import java.util.List;
 public class DefaultProcessor extends AbstractProcessor {
 
     public DefaultProcessor(Scheduler scheduler) {
+        this(scheduler, 1);
+    }
+
+    public DefaultProcessor(Scheduler scheduler, int processThreadCount) {
         super(scheduler);
+        new Thread(DefaultProcessor.super::process, "adult-process-thread").start();
     }
 
 

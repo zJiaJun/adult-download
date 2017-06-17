@@ -72,4 +72,15 @@ public class Request {
     public Map<String, String> getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "url='" + url + '\'' +
+                ", method=" + method +
+                ", charset='" + charset + '\'' +
+                ", isLogin=" + isLogin +
+                ", data=" + data +
+                '}';
+    }
 }
