@@ -37,7 +37,9 @@ public abstract class AbstractDownloader implements Downloader {
 
                 afterDownload(response);
 
-                scheduler.putResponse(response);
+                if (!request.isLogin()) {
+                    scheduler.putResponse(response);
+                }
 
                 TimeUnit.SECONDS.sleep(3);
             } catch (IOException | InterruptedException e) {

@@ -25,7 +25,6 @@ public abstract class AbstractProcessor implements Processor {
     public void process() {
         while (!Thread.currentThread().isInterrupted()) {
             Response response = scheduler.takeResponse();
-            System.out.println("process : " + response);
 
             String content = response.getContent();
 
