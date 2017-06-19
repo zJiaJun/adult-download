@@ -58,6 +58,9 @@ public class Adult {
         if (null != loginRequest) {
             scheduler.putRequest(loginRequest);
         }
+        if (null != requests && !requests.isEmpty()) {
+            requests.forEach(scheduler::putRequest);
+        }
 
     }
 
