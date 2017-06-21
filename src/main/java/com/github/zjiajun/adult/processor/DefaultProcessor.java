@@ -4,6 +4,7 @@ import com.github.zjiajun.adult.request.Method;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.store.Store;
+import com.github.zjiajun.adult.store.StoreResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -28,7 +29,8 @@ public class DefaultProcessor extends AbstractProcessor {
 
 
     @Override
-    protected List<Request> handler(Document document) {
+    protected StoreResult handler(Document document) {
+        StoreResult storeResult = new StoreResult.Builder().build();
         List<Request> requestList = new ArrayList<>();
 
         String baseUri = document.baseUri();
@@ -57,7 +59,7 @@ public class DefaultProcessor extends AbstractProcessor {
             });
 
         }
-        return requestList;
+        return storeResult;
 
     }
 
