@@ -1,5 +1,10 @@
 package com.github.zjiajun.adult.store;
 
+import com.github.zjiajun.adult.request.Request;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author zhujiajun
  * @since 2017/6/21
@@ -10,6 +15,7 @@ public class StoreResult {
     private StoreResult() {}
 
     private boolean isSubUrl = false;
+    private List<Request> subRequestList = new ArrayList<>();
 
     public static class Builder {
 
@@ -19,6 +25,8 @@ public class StoreResult {
             storeResult.isSubUrl = true;
             return this;
         }
+
+
 
         public StoreResult build() {
             return storeResult;
