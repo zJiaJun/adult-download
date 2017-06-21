@@ -3,6 +3,7 @@ package com.github.zjiajun.adult.processor;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.scheduler.Scheduler;
+import com.github.zjiajun.adult.store.Store;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -16,9 +17,11 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractProcessor implements Processor {
 
     private final Scheduler scheduler;
+    private final Store store;
 
-    public AbstractProcessor(Scheduler scheduler) {
+    public AbstractProcessor(Scheduler scheduler, Store store) {
         this.scheduler = scheduler;
+        this.store = store;
     }
 
     @Override

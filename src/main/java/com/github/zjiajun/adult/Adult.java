@@ -9,6 +9,8 @@ import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.request.LoginParamBuild;
 import com.github.zjiajun.adult.request.Method;
 import com.github.zjiajun.adult.request.Request;
+import com.github.zjiajun.adult.store.DefaultStore;
+import com.github.zjiajun.adult.store.Store;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class Adult {
     private Scheduler scheduler;
     private Downloader downloader;
     private Processor processor;
+    private Store store;
     private int downloadThreadCount;
 
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
@@ -72,8 +75,11 @@ public class Adult {
         if (null == downloader) {
             downloader = new DefaultDownloader(scheduler);
         }
+        if (null == store) {
+            store = new DefaultStore();
+        }
         if (null == processor) {
-            processor = new DefaultProcessor(scheduler);
+            processor = new DefaultProcessor(scheduler, store);
         }
     }
 

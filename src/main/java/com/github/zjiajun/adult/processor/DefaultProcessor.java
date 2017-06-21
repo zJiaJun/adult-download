@@ -3,6 +3,7 @@ package com.github.zjiajun.adult.processor;
 import com.github.zjiajun.adult.request.Method;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.scheduler.Scheduler;
+import com.github.zjiajun.adult.store.Store;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -16,12 +17,12 @@ import java.util.List;
  */
 public class DefaultProcessor extends AbstractProcessor {
 
-    public DefaultProcessor(Scheduler scheduler) {
-        this(scheduler, 1);
+    public DefaultProcessor(Scheduler scheduler, Store store) {
+        this(scheduler, 1,store);
     }
 
-    public DefaultProcessor(Scheduler scheduler, int processThreadCount) {
-        super(scheduler);
+    public DefaultProcessor(Scheduler scheduler, int processThreadCount,Store store) {
+        super(scheduler,store);
         new Thread(DefaultProcessor.super::process, "adult-process-thread").start();
     }
 
