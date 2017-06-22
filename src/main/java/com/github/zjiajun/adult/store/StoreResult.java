@@ -21,11 +21,11 @@ public class StoreResult {
 
         private StoreResult storeResult = new StoreResult();
 
-        public Builder subUrl() {
+        public Builder subUrl(Request subRequest) {
             storeResult.isSubUrl = true;
+            storeResult.subRequestList.add(subRequest);
             return this;
         }
-
 
 
         public StoreResult build() {

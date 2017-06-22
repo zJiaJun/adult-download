@@ -9,9 +9,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author zhujiajun
  * @since 2017/4/19
@@ -30,8 +27,7 @@ public class DefaultProcessor extends AbstractProcessor {
 
     @Override
     protected StoreResult handler(Document document) {
-        StoreResult storeResult = new StoreResult.Builder().build();
-        List<Request> requestList = new ArrayList<>();
+        StoreResult.Builder storeBuilder = new StoreResult.Builder();
 
         String baseUri = document.baseUri();
         //详情页
@@ -54,12 +50,11 @@ public class DefaultProcessor extends AbstractProcessor {
             Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
             elements.forEach(e -> {
                 String detailUrl = e.absUrl("href");
-                Request request = new Request.Builder().url(detailUrl).method(Method.GET).build();
-                requestList.add(request);
+                Request subRequest = new Request.Builder().url(detailUrl).method(Method.GET).build();
+                storeBuilder.subUrl(subRequest);
             });
-
         }
-        return storeResult;
+        return storeBuilder.build();
 
     }
 
