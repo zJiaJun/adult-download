@@ -36,4 +36,8 @@ public class StoreResult {
     public boolean isSubUrl() {
         return isSubUrl;
     }
+
+    public List<Request> getSubRequestList() {
+        return subRequestList;
+    }
 }

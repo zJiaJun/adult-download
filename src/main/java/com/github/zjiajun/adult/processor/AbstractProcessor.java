@@ -34,6 +34,9 @@ public abstract class AbstractProcessor implements Processor {
 
             StoreResult storeResult = handler(document);
 
+            if (storeResult.isSubUrl()) {
+                storeResult.getSubRequestList().forEach(scheduler::putRequest);
+            }
 
 
             try {
