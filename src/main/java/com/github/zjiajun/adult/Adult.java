@@ -33,7 +33,6 @@ public class Adult {
     private Downloader downloader;
     private Processor processor;
     private Store store;
-    private int downloadThreadCount;
 
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
         Map<String,String> param = new HashMap<>(50);
@@ -47,12 +46,6 @@ public class Adult {
         requests.add(new Request.Builder().url(url).charset("GBK").build());
         return this;
     }
-
-    public Adult downloadThreadCount(int downloadThreadCount) {
-        this.downloadThreadCount = downloadThreadCount;
-        return this;
-    }
-
 
 
     public void start() {
