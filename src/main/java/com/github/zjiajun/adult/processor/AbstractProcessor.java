@@ -36,8 +36,9 @@ public abstract class AbstractProcessor implements Processor {
 
             if (storeResult.isSubUrl()) {
                 storeResult.getSubRequestList().forEach(scheduler::putRequest);
+            } else {
+                store.store(storeResult);
             }
-
 
             try {
                 TimeUnit.SECONDS.sleep(3);

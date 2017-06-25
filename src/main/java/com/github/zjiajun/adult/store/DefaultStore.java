@@ -7,7 +7,7 @@ package com.github.zjiajun.adult.store;
 public class DefaultStore implements Store {
 
     @Override
-    public void store(Object obj) {
+    public void store(StoreResult storeResult) {
 
     }
 

@@ -6,5 +6,5 @@ package com.github.zjiajun.adult.store;
  */
 public interface Store {
 
-    void store(Object obj);
+    void store(StoreResult storeResult);
 }
