@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhujiajun
@@ -53,6 +54,11 @@ public class Adult {
 
         if (null != loginRequest) {
             scheduler.putRequest(loginRequest);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         if (null != requests && !requests.isEmpty()) {
             requests.forEach(scheduler::putRequest);
