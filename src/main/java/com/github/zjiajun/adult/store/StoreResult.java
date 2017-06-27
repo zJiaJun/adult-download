@@ -4,6 +4,8 @@ import com.github.zjiajun.adult.request.Request;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author zhujiajun
@@ -16,6 +18,7 @@ public class StoreResult {
 
     private boolean isSubUrl = false;
     private List<Request> subRequestList = new ArrayList<>();
+    private Map<String,String> map = new ConcurrentHashMap<>();
 
     public static class Builder {
 
@@ -24,6 +27,11 @@ public class StoreResult {
         public Builder subUrl(Request subRequest) {
             storeResult.isSubUrl = true;
             storeResult.subRequestList.add(subRequest);
+            return this;
+        }
+
+        public Builder result(String name, String url) {
+            storeResult.map.put(name, url);
             return this;
         }
 

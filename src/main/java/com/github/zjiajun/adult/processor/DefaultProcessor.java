@@ -36,6 +36,7 @@ public class DefaultProcessor extends AbstractProcessor {
             if (!imgElements.isEmpty() && null != imgElements.first()) {
                 String imgUrl = imgElements.first().attr("src");
                 String imgFileName = imgUrl.substring(imgUrl.lastIndexOf("/") + 1, imgUrl.length());
+                storeBuilder.result(imgFileName, imgUrl);
             }
 
             Elements attachElements = document.select("dl.t_attachlist a[href^=attachment]");
@@ -44,6 +45,7 @@ public class DefaultProcessor extends AbstractProcessor {
                 if (null != element) {
                     String attachName = element.text();
                     String attachUrl = element.absUrl("href");
+                    storeBuilder.result(attachName, attachUrl);
                 }
             }
         } else {

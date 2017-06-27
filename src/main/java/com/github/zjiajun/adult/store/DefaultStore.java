@@ -8,7 +8,7 @@ public class DefaultStore implements Store {
 
     @Override
     public void store(StoreResult storeResult) {
-
+        System.out.println(storeResult);
     }
 
 
