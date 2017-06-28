@@ -18,7 +18,7 @@ public class StoreResult {
 
     private boolean isSubUrl = false;
     private List<Request> subRequestList = new ArrayList<>();
-    private Map<String,String> map = new ConcurrentHashMap<>();
+    private Map<String,String> resultMap = new ConcurrentHashMap<>();
 
     public static class Builder {
 
@@ -31,7 +31,7 @@ public class StoreResult {
         }
 
         public Builder result(String name, String url) {
-            storeResult.map.put(name, url);
+            storeResult.resultMap.put(name, url);
             return this;
         }
 
@@ -47,5 +47,9 @@ public class StoreResult {
 
     public List<Request> getSubRequestList() {
         return subRequestList;
+    }
+
+    public Map<String, String> getResultMap() {
+        return resultMap;
     }
 }
