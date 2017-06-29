@@ -30,7 +30,6 @@ public class DefaultProcessor extends AbstractProcessor {
         StoreResult.Builder storeBuilder = new StoreResult.Builder();
 
         String baseUri = document.baseUri();
-
         if (baseUri.lastIndexOf(".html") > 0) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
             if (!imgElements.isEmpty() && null != imgElements.first()) {
@@ -44,14 +43,17 @@ public class DefaultProcessor extends AbstractProcessor {
                 Element element = attachElements.first();
                 if (null != element) {
                     String attachName = element.text();
-                    String attachUrl = element.absUrl("href");
+//                    String attachUrl = element.absUrl("href");
+                    //http://67.220.90.4/forum/attachment.php?aid=3105998
+                    String attachUrl = "http://67.220.90.4/forum/" + element.attr("href");
                     storeBuilder.result(attachName, attachUrl);
                 }
             }
         } else {
             Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
             elements.forEach(e -> {
-                String detailUrl = e.absUrl("href");
+//                String detailUrl = e.absUrl("href");
+                String detailUrl = "http://67.220.90.4/forum/" + e.attr("href");
                 Request subRequest = new Request.Builder().url(detailUrl).method(Method.GET).build();
                 storeBuilder.subUrl(subRequest);
             });
