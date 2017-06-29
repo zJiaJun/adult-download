@@ -65,11 +65,12 @@ public class Adult {
             }
         }
 
-        Request build = new Request.Builder().url("http://67.220.90.4/forum/attachment.php?aid=3105998").build();
+//        Request build = new Request.Builder().url("http://67.220.90.4/forum/attachment.php?aid=3105998").build();
+        Request build = new Request.Builder().url("http://img588.net/images/2017/06/29/javcc.net_bcdp087pld7e1f.jpg").build();
         try {
             Response execute = RetrofitClient.getInstance().execute(build);
             byte[] bytes = execute.getBytes();
-            FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhujiajun/Work/123.torrent");
+            FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhujiajun/Work/123.jpg");
             fileOutputStream.write(bytes);
             fileOutputStream.flush();
         } catch (IOException e) {
