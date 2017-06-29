@@ -29,7 +29,7 @@ public class DefaultProcessor extends AbstractProcessor {
     protected StoreResult handler(Document document) {
         StoreResult.Builder storeBuilder = new StoreResult.Builder();
 
-        String baseUri = document.baseUri();
+        String baseUri = document.baseUri();//FIXME empty string
         if (baseUri.lastIndexOf(".html") > 0) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
             if (!imgElements.isEmpty() && null != imgElements.first()) {
@@ -44,7 +44,6 @@ public class DefaultProcessor extends AbstractProcessor {
                 if (null != element) {
                     String attachName = element.text();
 //                    String attachUrl = element.absUrl("href");
-                    //http://67.220.90.4/forum/attachment.php?aid=3105998
                     String attachUrl = "http://67.220.90.4/forum/" + element.attr("href");
                     storeBuilder.result(attachName, attachUrl);
                 }
