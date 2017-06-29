@@ -64,9 +64,9 @@ public final class RetrofitClient {
         }
         int code = retrofitResponse.code();
         ResponseBody responseBody = retrofitResponse.body();
-        String originalHtml = new String(responseBody.bytes(), Charset.forName(request.getCharset()));
-        com.github.zjiajun.adult.response.Response response = new com.github.zjiajun.adult.response.Response(originalHtml, code);
-        return response;
+        byte[] bytes = responseBody.bytes();
+        String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
+        return new com.github.zjiajun.adult.response.Response(originalHtml, bytes, code);
     }
 
 

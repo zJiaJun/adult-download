@@ -2,8 +2,10 @@ package com.github.zjiajun.adult;
 
 import com.github.zjiajun.adult.downloader.DefaultDownloader;
 import com.github.zjiajun.adult.downloader.Downloader;
+import com.github.zjiajun.adult.downloader.RetrofitClient;
 import com.github.zjiajun.adult.processor.DefaultProcessor;
 import com.github.zjiajun.adult.processor.Processor;
+import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.scheduler.DefaultScheduler;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.request.LoginParamBuild;
@@ -12,6 +14,8 @@ import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.store.DefaultStore;
 import com.github.zjiajun.adult.store.Store;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +63,17 @@ public class Adult {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        Request build = new Request.Builder().url("http://67.220.90.4/forum/attachment.php?aid=3105998").build();
+        try {
+            Response execute = RetrofitClient.getInstance().execute(build);
+            byte[] bytes = execute.getBytes();
+            FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhujiajun/Work/123.torrent");
+            fileOutputStream.write(bytes);
+            fileOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         if (null != requests && !requests.isEmpty()) {
             requests.forEach(scheduler::putRequest);

@@ -8,15 +8,23 @@ public class Response {
 
     private String content;
 
+    private byte [] bytes;
+
     private int statusCode;
 
-    public Response(String content, int statusCode) {
+    public Response(String content, byte [] bytes, int statusCode) {
         this.content = content;
+        this.bytes = bytes;
         this.statusCode = statusCode;
     }
 
     public String getContent() {
         return content;
+    }
+
+
+    public byte[] getBytes() {
+        return bytes;
     }
 
     public int getStatusCode() {
