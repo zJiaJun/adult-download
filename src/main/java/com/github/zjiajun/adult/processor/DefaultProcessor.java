@@ -30,7 +30,7 @@ public class DefaultProcessor extends AbstractProcessor {
         StoreResult.Builder storeBuilder = new StoreResult.Builder();
 
         String baseUri = document.baseUri();
-        //详情页
+
         if (baseUri.lastIndexOf(".html") > 0) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
             if (!imgElements.isEmpty() && null != imgElements.first()) {

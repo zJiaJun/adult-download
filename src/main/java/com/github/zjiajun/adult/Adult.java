@@ -55,7 +55,7 @@ public class Adult {
         if (null != loginRequest) {
             scheduler.putRequest(loginRequest);
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -68,18 +68,10 @@ public class Adult {
 
 
     private void init() {
-        if (null == scheduler) {
-            scheduler = new DefaultScheduler();
-        }
-        if (null == downloader) {
-            downloader = new DefaultDownloader(scheduler);
-        }
-        if (null == store) {
-            store = new DefaultStore();
-        }
-        if (null == processor) {
-            processor = new DefaultProcessor(scheduler, store);
-        }
+        scheduler = new DefaultScheduler();
+        downloader = new DefaultDownloader(scheduler);
+        store = new DefaultStore();
+        processor = new DefaultProcessor(scheduler, store);
     }
 
 

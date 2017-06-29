@@ -23,7 +23,7 @@ public class AdultTest {
             param.put("loginmode","");
             param.put("styleid","");
             param.put("loginsubmit","true");
-        }).start();
+        }).url("http://67.220.90.4/forum/forumdisplay.php?fid=230").start();
         TimeUnit.DAYS.sleep(1);
     }
 }

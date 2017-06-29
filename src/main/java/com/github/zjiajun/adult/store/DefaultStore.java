@@ -10,7 +10,6 @@ public class DefaultStore implements Store {
 
     @Override
     public void store(StoreResult storeResult) {
-        System.out.println(storeResult);
         Map<String, String> resultMap = storeResult.getResultMap();
         if (null != resultMap && !resultMap.isEmpty()) {
             resultMap.forEach((k, v) -> {
