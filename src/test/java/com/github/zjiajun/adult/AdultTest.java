@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.config.Config;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -12,6 +13,7 @@ public class AdultTest {
 
     @Test
     public void testAdult() throws InterruptedException {
+        System.out.println(Config.getInstance().baseUrl());
         new Adult().login("http://67.220.90.4/forum/logging.php?action=login", param -> {
             param.put("referer","index.php");
             param.put("loginfield","username");
