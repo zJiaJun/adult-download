@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult.downloader;
 
+import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.cookie.DefaultCookieJar;
 import com.github.zjiajun.adult.request.Request;
 import okhttp3.OkHttpClient;
@@ -35,18 +36,18 @@ public final class RetrofitClient {
 
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://example.org/")
+                .baseUrl(Config.getInstance().baseUrl())
                 .build();
 
         api = retrofit.create(Api.class);
     }
 
     private static class SingletonHolder {
-        private static RetrofitClient retrofitClient = new RetrofitClient();
+        private static RetrofitClient instance = new RetrofitClient();
     }
 
     public static RetrofitClient getInstance() {
-        return SingletonHolder.retrofitClient;
+        return SingletonHolder.instance;
     }
 
 
@@ -88,7 +89,11 @@ public final class RetrofitClient {
         return retrofit;
     }
 
-    private interface Api {
+    public Api getApi() {
+        return api;
+    }
+
+    public interface Api {
 
         @GET
         Call<ResponseBody> get(@Url String url);

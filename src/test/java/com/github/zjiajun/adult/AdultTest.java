@@ -1,8 +1,15 @@
 package com.github.zjiajun.adult;
 
 import com.github.zjiajun.adult.config.Config;
+import com.github.zjiajun.adult.downloader.RetrofitClient;
+import okhttp3.ResponseBody;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Test;
+import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,5 +34,21 @@ public class AdultTest {
             param.put("loginsubmit","true");
         }).url("http://67.220.90.4/forum/forumdisplay.php?fid=230").start();
         TimeUnit.DAYS.sleep(1);
+    }
+
+    @Test
+    public void testRetrofit() throws IOException {
+        RetrofitClient.Api api = RetrofitClient.getInstance().getApi();
+        Response<ResponseBody> execute = api.get("forumdisplay.php?fid=230").execute();
+        String html = new String(execute.body().bytes(), "GBK");
+        Document document = Jsoup.parse(html, Config.getInstance().baseUrl());
+
+        Elements elements = document.select("table[id^=forum]:contains(版块主题) span a");
+        elements.forEach(e -> {
+            String href = e.absUrl("href");
+            System.out.println(href);
+        });
+
+
     }
 }
