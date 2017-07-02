@@ -27,6 +27,18 @@ public final class Config {
         return getString("site.sexInSex.baseUrl");
     }
 
+    public String userName() {
+        return getString("site.sexInSex.username");
+    }
+
+    public String password() {
+        return getString("site.sexInSex.password");
+    }
+
+    public String downloadPath() {
+        return getString("site.download.path");
+    }
+
 
     private  String getString(String key) {
         return getString(key, "");

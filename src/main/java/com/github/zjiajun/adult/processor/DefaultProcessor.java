@@ -43,16 +43,14 @@ public class DefaultProcessor extends AbstractProcessor {
                 Element element = attachElements.first();
                 if (null != element) {
                     String attachName = element.text();
-//                    String attachUrl = element.absUrl("href");
-                    String attachUrl = "http://67.220.90.4/forum/" + element.attr("href");
+                    String attachUrl = element.absUrl("href");
                     storeBuilder.result(attachName, attachUrl);
                 }
             }
         } else {
             Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
             elements.forEach(e -> {
-//                String detailUrl = e.absUrl("href");
-                String detailUrl = "http://67.220.90.4/forum/" + e.attr("href");
+                String detailUrl = e.absUrl("href");
                 Request subRequest = new Request.Builder().url(detailUrl).method(Method.GET).build();
                 storeBuilder.subUrl(subRequest);
             });
