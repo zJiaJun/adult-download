@@ -48,7 +48,7 @@ public class DefaultProcessor extends AbstractProcessor {
                 }
             }
         } else {
-            Elements elements = document.select("table[id^=forum]:contains(推荐主题) span a");
+            Elements elements = document.select("table[id^=forum]:contains(版块主题) span a");
             elements.forEach(e -> {
                 String detailUrl = e.absUrl("href");
                 Request subRequest = new Request.Builder().url(detailUrl).method(Method.GET).build();

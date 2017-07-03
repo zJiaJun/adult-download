@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult.processor;
 
+import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.scheduler.Scheduler;
 import com.github.zjiajun.adult.store.Store;
@@ -30,7 +31,7 @@ public abstract class AbstractProcessor implements Processor {
 
             String content = response.getContent();
 
-            Document document = Jsoup.parse(content);
+            Document document = Jsoup.parse(content, Config.getInstance().baseUrl());
 
             StoreResult storeResult = handler(document);
 
