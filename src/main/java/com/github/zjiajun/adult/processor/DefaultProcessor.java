@@ -28,9 +28,8 @@ public class DefaultProcessor extends AbstractProcessor {
     @Override
     protected StoreResult handler(Document document) {
         StoreResult.Builder storeBuilder = new StoreResult.Builder();
-
-        String baseUri = document.baseUri();//FIXME empty string
-        if (baseUri.lastIndexOf(".html") > 0) {
+        Elements elements = document.select("table[id^=forum]:contains(版块主题) span a");
+        if (elements.isEmpty()) {
             Elements imgElements = document.select("div.t_msgfont img[src^=http]");
             if (!imgElements.isEmpty() && null != imgElements.first()) {
                 String imgUrl = imgElements.first().attr("src");
@@ -48,7 +47,6 @@ public class DefaultProcessor extends AbstractProcessor {
                 }
             }
         } else {
-            Elements elements = document.select("table[id^=forum]:contains(版块主题) span a");
             elements.forEach(e -> {
                 String detailUrl = e.absUrl("href");
                 Request subRequest = new Request.Builder().url(detailUrl).method(Method.GET).build();
