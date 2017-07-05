@@ -1,5 +1,7 @@
 package com.github.zjiajun.adult.store;
 
+import com.github.zjiajun.adult.downloader.RetrofitClient;
+
 import java.util.Map;
 
 /**
@@ -8,11 +10,18 @@ import java.util.Map;
  */
 public class DefaultStore implements Store {
 
+    private final RetrofitClient retrofitClient;
+
+    public DefaultStore() {
+        this.retrofitClient = RetrofitClient.getInstance();
+    }
+
     @Override
     public void store(StoreResult storeResult) {
         Map<String, String> resultMap = storeResult.getResultMap();
         if (null != resultMap && !resultMap.isEmpty()) {
             resultMap.forEach((k, v) -> {
+                
 
             });
 
