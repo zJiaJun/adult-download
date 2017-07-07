@@ -3,6 +3,7 @@ package com.github.zjiajun.adult.store;
 import com.github.zjiajun.adult.downloader.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
+import com.github.zjiajun.adult.tool.FileUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,10 +26,11 @@ public class DefaultStore implements Store {
         if (null != resultMap && !resultMap.isEmpty()) {
             try {
                 for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    Request downloadRequest = new Request.Builder().url(value).build();
-                    Response execute = retrofitClient.execute(downloadRequest);
+                    String fileName = entry.getKey();
+                    String downloadUrl = entry.getValue();
+                    Request downloadRequest = new Request.Builder().url(downloadUrl).build();
+                    Response downloadResponse = retrofitClient.execute(downloadRequest);
+                    FileUtils.write(downloadResponse.getBytes(), fileName);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
