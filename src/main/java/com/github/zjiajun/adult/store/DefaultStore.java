@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult.store;
 
+import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
@@ -30,7 +31,7 @@ public class DefaultStore implements Store {
                     String downloadUrl = entry.getValue();
                     Request downloadRequest = new Request.Builder().url(downloadUrl).build();
                     Response downloadResponse = retrofitClient.execute(downloadRequest);
-                    FileUtils.write(downloadResponse.getBytes(), fileName);
+                    FileUtils.write(downloadResponse.getBytes(), Config.getInstance().downloadPath() + fileName);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

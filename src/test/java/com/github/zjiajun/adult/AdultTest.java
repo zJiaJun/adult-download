@@ -3,7 +3,6 @@ package com.github.zjiajun.adult;
 import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
-import com.google.common.io.Files;
 import okhttp3.ResponseBody;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,8 +10,9 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 import retrofit2.Response;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,12 +54,14 @@ public class AdultTest {
 
     @Test
     public void testWriteFile() throws IOException {
-        Request build = new Request.Builder().url("http://67.220.90.4/forum/attachment.php?aid=3105998").build();
-//        Request build = new Request.Builder().url("http://img588.net/images/2017/06/29/javcc.net_bcdp087pld7e1f.jpg").build();
+//        Request build = new Request.Builder().url("http://67.220.90.4/forum/attachment.php?aid=3105998").build();
+        Request build = new Request.Builder().url("http://img588.net/images/2017/06/29/javcc.net_bcdp087pld7e1f.jpg").build();
         com.github.zjiajun.adult.response.Response execute = RetrofitClient.getInstance().execute(build);
         byte[] bytes = execute.getBytes();
         //信息: Content-Disposition: attachment; filename="m20170629-28.torrent"
 
-        Files.write(bytes,new File("/Users/zhujiajun/Work/1.torrent"));
+        java.nio.file.Files.write(Paths.get("/Users/zhujiajun/Work/1.jpg"), bytes, StandardOpenOption.APPEND);
+
+//        Files.write(bytes,new File("/Users/zhujiajun/Work/1.torrent"));
     }
 }

@@ -39,6 +39,9 @@ public final class Config {
         return getString("site.download.path");
     }
 
+    public String cookieFile() {
+        return getString("site.cookie.file");
+    }
 
     private  String getString(String key) {
         return getString(key, "");

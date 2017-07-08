@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult.downloader.cookie;
 
+import com.github.zjiajun.adult.config.Config;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
@@ -17,12 +18,11 @@ import java.util.Map;
  * @author zhujiajun
  * @since 2017/2/3
  *
- * 这2个方法都需要优化
  */
 public class DefaultCookieStore implements CookieStore {
 
     private final Map<HttpUrl,List<Cookie>> memoryStore = new HashMap<>();
-    private final static Path COOKIE_FILE = Paths.get("/Users/zhujiajun/Documents/cookie");
+    private final static Path COOKIE_FILE = Paths.get(Config.getInstance().cookieFile());
 
     @Override
     public void store(HttpUrl httpUrl, List<Cookie> list) {
@@ -30,11 +30,13 @@ public class DefaultCookieStore implements CookieStore {
         try {
             for (Cookie ck : list) {
                 String content = ck.toString() + '\n';
-                Files.write(COOKIE_FILE, content.getBytes(),StandardOpenOption.APPEND);
+                Files.write(COOKIE_FILE, content.getBytes(), StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     @Override
@@ -47,7 +49,11 @@ public class DefaultCookieStore implements CookieStore {
                     List<String> lines = Files.readAllLines(COOKIE_FILE);
                     lines.forEach(cookie -> {
                         Cookie parse = Cookie.parse(httpUrl, cookie);
-                        fileCookie.add(parse);
+                        if (parse != null) {
+                            fileCookie.add(parse);
+                        } else {
+                            System.err.println(parse);
+                        }
                     });
                 } else {
                     COOKIE_FILE.toFile().createNewFile();

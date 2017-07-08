@@ -1,7 +1,6 @@
 package com.github.zjiajun.adult.tool;
 
 
-import com.github.zjiajun.adult.config.Config;
 import com.google.common.io.Files;
 
 import java.io.File;
@@ -14,11 +13,10 @@ import java.io.IOException;
 public final class FileUtils {
 
 
-    private static final String DOWNLOAD_PATH = Config.getInstance().downloadPath();
 
-    public static void write(byte [] bytes, String fileName) {
+    public static void write(byte [] bytes, String file) {
         try {
-            Files.write(bytes, new File(DOWNLOAD_PATH + fileName));
+            Files.write(bytes, new File(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
