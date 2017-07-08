@@ -4,7 +4,9 @@ import com.github.zjiajun.adult.config.Config;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,6 +37,14 @@ public class DefaultCookieStore implements CookieStore {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        list.forEach(cookie -> {
+            try {
+                com.google.common.io.Files.append(cookie.toString() + '\n', new File(Config.getInstance().cookieFile()), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
 
     }
