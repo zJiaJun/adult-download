@@ -1,18 +1,14 @@
 package com.github.zjiajun.adult.downloader.cookie;
 
 import com.github.zjiajun.adult.config.Config;
+import com.github.zjiajun.adult.tool.FileUtils;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.io.LineProcessor;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,58 +19,42 @@ import java.util.Map;
  */
 public class DefaultCookieStore implements CookieStore {
 
-    private final Map<HttpUrl,List<Cookie>> memoryStore = new HashMap<>();
-    private final static Path COOKIE_FILE = Paths.get(Config.getInstance().cookieFile());
+    private final Map<HttpUrl,List<Cookie>> cookieCache = Maps.newConcurrentMap();
+    private final static String COOKIE_FILE = Config.getInstance().cookieFile();
 
     @Override
     public void store(HttpUrl httpUrl, List<Cookie> list) {
-        memoryStore.put(httpUrl,list);
-        try {
-            for (Cookie ck : list) {
-                String content = ck.toString() + '\n';
-                Files.write(COOKIE_FILE, content.getBytes(), StandardOpenOption.APPEND);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        list.forEach(cookie -> {
-            try {
-                com.google.common.io.Files.append(cookie.toString() + '\n', new File(Config.getInstance().cookieFile()), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-
+        cookieCache.put(httpUrl,list);//FIXME 多url会出现重复cookie
+        list.forEach(cookie -> FileUtils.append(cookie.toString() + '\n', COOKIE_FILE));
     }
 
     @Override
     public List<Cookie> lookup(HttpUrl httpUrl) {
-        List<Cookie> cookies = memoryStore.get(httpUrl);
-        if (cookies == null) {
-            List<Cookie> fileCookie = new ArrayList<>();
-            try {
-                if (COOKIE_FILE.toFile().exists()) {
-                    List<String> lines = Files.readAllLines(COOKIE_FILE);
-                    lines.forEach(cookie -> {
-                        Cookie parse = Cookie.parse(httpUrl, cookie);
-                        if (parse != null) {
-                            fileCookie.add(parse);
-                        } else {
-                            System.err.println(parse);
-                        }
-                    });
-                } else {
-                    COOKIE_FILE.toFile().createNewFile();
-                }
-                cookies = fileCookie;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        List<Cookie> cookieList = cookieCache.get(httpUrl);
+        if (cookieList == null) {
+            cookieList = FileUtils.readLine(COOKIE_FILE, new LineProcessor<List<Cookie>>() {
+                final List<Cookie> cookieList = Lists.newArrayList();
 
+                @Override
+                public boolean processLine(String line) throws IOException {
+                    Cookie cookie = Cookie.parse(httpUrl, line);
+                    if (null != cookie) {
+                        cookieList.add(cookie);
+                    }
+                    return true;
+                }
+
+                @Override
+                public List<Cookie> getResult() {
+                    return cookieList;
+                }
+            });
+
+            if (null != cookieList && !cookieList.isEmpty()) {
+                cookieCache.put(httpUrl, cookieList);
+            }
         }
-        return cookies;
+        return cookieList;
     }
 
 }

@@ -3,6 +3,10 @@ package com.github.zjiajun.adult;
 import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
+import com.google.common.collect.Lists;
+import com.google.common.io.Files;
+import com.google.common.io.LineProcessor;
+import okhttp3.Cookie;
 import okhttp3.ResponseBody;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,9 +14,12 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 import retrofit2.Response;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -49,6 +56,26 @@ public class AdultTest {
         elements.forEach(e -> {
             String href = e.absUrl("href");
             System.out.println(href);
+        });
+    }
+
+    @Test
+    public void testReadFile() throws IOException {
+        String cookieFile = Config.getInstance().cookieFile();
+        List<Cookie> lines = Files.readLines(new File(cookieFile), StandardCharsets.UTF_8, new LineProcessor<List<Cookie>>() {
+
+            private List<Cookie> cookies = Lists.newArrayList();
+
+            @Override
+            public boolean processLine(String line) throws IOException {
+                System.out.println(line);
+                return false;
+            }
+
+            @Override
+            public List<Cookie> getResult() {
+                return cookies;
+            }
         });
     }
 
