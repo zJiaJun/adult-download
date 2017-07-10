@@ -22,9 +22,16 @@ public final class Config {
 
     private static com.typesafe.config.Config config = ConfigFactory.load("adult");
 
+    public String host() {
+        return getString("site.sexInSex.host");
+    }
 
     public String baseUrl() {
         return getString("site.sexInSex.baseUrl");
+    }
+
+    public String loginUrl() {
+        return baseUrl() + getString("site.sexInSex.loginUrl");
     }
 
     public String userName() {

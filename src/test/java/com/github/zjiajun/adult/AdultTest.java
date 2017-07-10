@@ -3,6 +3,7 @@ package com.github.zjiajun.adult;
 import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
+import com.github.zjiajun.adult.tool.FileUtils;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
@@ -30,7 +31,7 @@ public class AdultTest {
 
     @Test
     public void testAdult() throws InterruptedException {
-        new Adult().login("http://67.220.90.4/forum/logging.php?action=login", param -> {
+        new Adult().login(Config.getInstance().loginUrl(), param -> {
             param.put("referer","index.php");
             param.put("loginfield","username");
             param.put("username","leoneye");
@@ -90,5 +91,11 @@ public class AdultTest {
         java.nio.file.Files.write(Paths.get("/Users/zhujiajun/Work/1.jpg"), bytes, StandardOpenOption.APPEND);
 
 //        Files.write(bytes,new File("/Users/zhujiajun/Work/1.torrent"));
+    }
+
+    @Test
+    public void testTouchFile() throws IOException {
+        Files.createParentDirs(new File("/Users/zhujiajun/Work/data/adult/cookie"));
+        FileUtils.touch("/Users/zhujiajun/Work/data/adult/cookie");
     }
 }

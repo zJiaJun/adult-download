@@ -17,7 +17,9 @@ public final class FileUtils {
 
     public static void touch(String file) {
         try {
-            Files.touch(new File(file));
+            File f = new File(file);
+            Files.createParentDirs(f);
+            Files.touch(f);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,8 +46,10 @@ public final class FileUtils {
 
     public static void write(byte [] bytes, String file) {
         try {
+            File f = new File(file);
+            Files.createParentDirs(f);
             touch(file);
-            Files.write(bytes, new File(file));
+            Files.write(bytes, f);
         } catch (IOException e) {
             e.printStackTrace();
         }

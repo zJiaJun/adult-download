@@ -23,13 +23,13 @@ public class DefaultCookieStore implements CookieStore {
     private final Map<String,List<Cookie>> cookieCache = Maps.newConcurrentMap();
     private final static String COOKIE_FILE = Config.getInstance().cookieFile();
 
-    static {
+    public DefaultCookieStore() {
         FileUtils.touch(COOKIE_FILE);
     }
 
     @Override
     public void store(HttpUrl httpUrl, List<Cookie> list) {
-        if ("http://67.220.90.4/forum/logging.php?action=login".equals(httpUrl.toString())) {
+        if (Config.getInstance().loginUrl().equals(httpUrl.toString())) {
             cookieCache.put(httpUrl.host(), list);
             list.forEach(cookie -> FileUtils.append(cookie.toString() + '\n', COOKIE_FILE));
         }
@@ -39,7 +39,7 @@ public class DefaultCookieStore implements CookieStore {
     public List<Cookie> lookup(HttpUrl httpUrl) {
         String host = httpUrl.host();
         List<Cookie> cookieList = Collections.emptyList();
-        if ("67.220.90.4".equals(host)) {
+        if (Config.getInstance().host().equals(host)) {
             cookieList = cookieCache.get(host);
             if (cookieList == null) {
                 cookieList = FileUtils.readLine(COOKIE_FILE, new LineProcessor<List<Cookie>>() {
