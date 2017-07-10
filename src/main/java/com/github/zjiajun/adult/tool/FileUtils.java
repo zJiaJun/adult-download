@@ -15,6 +15,14 @@ import java.nio.charset.StandardCharsets;
 public final class FileUtils {
 
 
+    public static void touch(String file) {
+        try {
+            Files.touch(new File(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static <T> T readLine(String file, LineProcessor<T> callback) {
         try {
             return Files.readLines(new File(file), StandardCharsets.UTF_8, callback);

@@ -19,18 +19,24 @@ import java.util.Map;
  */
 public class DefaultCookieStore implements CookieStore {
 
-    private final Map<HttpUrl,List<Cookie>> cookieCache = Maps.newConcurrentMap();
+    private final Map<String,List<Cookie>> cookieCache = Maps.newConcurrentMap();
     private final static String COOKIE_FILE = Config.getInstance().cookieFile();
+
+    static {
+        FileUtils.touch(COOKIE_FILE);
+    }
 
     @Override
     public void store(HttpUrl httpUrl, List<Cookie> list) {
-        cookieCache.put(httpUrl,list);//FIXME 多url会出现重复cookie
-        list.forEach(cookie -> FileUtils.append(cookie.toString() + '\n', COOKIE_FILE));
+        if ("http://67.220.90.4/forum/logging.php?action=login".equals(httpUrl.toString())) {
+            cookieCache.put(httpUrl.host(), list);
+            list.forEach(cookie -> FileUtils.append(cookie.toString() + '\n', COOKIE_FILE));
+        }
     }
 
     @Override
     public List<Cookie> lookup(HttpUrl httpUrl) {
-        List<Cookie> cookieList = cookieCache.get(httpUrl);
+        List<Cookie> cookieList = cookieCache.get(httpUrl.host());
         if (cookieList == null) {
             cookieList = FileUtils.readLine(COOKIE_FILE, new LineProcessor<List<Cookie>>() {
                 final List<Cookie> cookieList = Lists.newArrayList();
@@ -51,7 +57,7 @@ public class DefaultCookieStore implements CookieStore {
             });
 
             if (null != cookieList && !cookieList.isEmpty()) {
-                cookieCache.put(httpUrl, cookieList);
+                cookieCache.put(httpUrl.host(), cookieList);
             }
         }
         return cookieList;
