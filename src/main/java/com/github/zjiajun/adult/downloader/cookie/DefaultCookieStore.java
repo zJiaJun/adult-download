@@ -9,6 +9,7 @@ import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -36,28 +37,32 @@ public class DefaultCookieStore implements CookieStore {
 
     @Override
     public List<Cookie> lookup(HttpUrl httpUrl) {
-        List<Cookie> cookieList = cookieCache.get(httpUrl.host());
-        if (cookieList == null) {
-            cookieList = FileUtils.readLine(COOKIE_FILE, new LineProcessor<List<Cookie>>() {
-                final List<Cookie> cookieList = Lists.newArrayList();
+        String host = httpUrl.host();
+        List<Cookie> cookieList = Collections.emptyList();
+        if ("67.220.90.4".equals(host)) {
+            cookieList = cookieCache.get(host);
+            if (cookieList == null) {
+                cookieList = FileUtils.readLine(COOKIE_FILE, new LineProcessor<List<Cookie>>() {
+                    final List<Cookie> cookieList = Lists.newArrayList();
 
-                @Override
-                public boolean processLine(String line) throws IOException {
-                    Cookie cookie = Cookie.parse(httpUrl, line);
-                    if (null != cookie) {
-                        cookieList.add(cookie);
+                    @Override
+                    public boolean processLine(String line) throws IOException {
+                        Cookie cookie = Cookie.parse(httpUrl, line);
+                        if (null != cookie) {
+                            cookieList.add(cookie);
+                        }
+                        return true;
                     }
-                    return true;
-                }
 
-                @Override
-                public List<Cookie> getResult() {
-                    return cookieList;
-                }
-            });
+                    @Override
+                    public List<Cookie> getResult() {
+                        return cookieList;
+                    }
+                });
 
-            if (null != cookieList && !cookieList.isEmpty()) {
-                cookieCache.put(httpUrl.host(), cookieList);
+                if (null != cookieList && !cookieList.isEmpty()) {
+                    cookieCache.put(host, cookieList);
+                }
             }
         }
         return cookieList;
