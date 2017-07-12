@@ -13,6 +13,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Response;
 
 import java.io.File;
@@ -97,5 +99,11 @@ public class AdultTest {
     public void testTouchFile() throws IOException {
         Files.createParentDirs(new File("/Users/zhujiajun/Work/data/adult/cookie"));
         FileUtils.touch("/Users/zhujiajun/Work/data/adult/cookie");
+    }
+
+    @Test
+    public void testLogger() {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("123");
     }
 }
