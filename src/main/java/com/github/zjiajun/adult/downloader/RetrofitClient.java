@@ -3,6 +3,7 @@ package com.github.zjiajun.adult.downloader;
 import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.cookie.DefaultCookieJar;
 import com.github.zjiajun.adult.request.Request;
+import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,10 +29,17 @@ public final class RetrofitClient {
 
     private RetrofitClient() {
         okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .addInterceptor(new HeaderInterceptor())
-                .connectTimeout(180, TimeUnit.SECONDS)
                 .cookieJar(new DefaultCookieJar())
+                .addInterceptor(new HeaderInterceptor())
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS).readTimeout(10,TimeUnit.SECONDS)
+                .connectionPool(new ConnectionPool(30, 10,TimeUnit.SECONDS))
+                .addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        System.out.println(message);
+                    }
+                }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
 
         retrofit = new Retrofit.Builder()
