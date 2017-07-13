@@ -7,6 +7,8 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -23,9 +25,11 @@ import java.util.concurrent.TimeUnit;
  */
 public final class RetrofitClient {
 
-    private OkHttpClient okHttpClient;
-    private Retrofit retrofit;
-    private Api api;
+    private final OkHttpClient okHttpClient;
+    private final Retrofit retrofit;
+    private final Api api;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger("http.logger");
 
     private RetrofitClient() {
         okHttpClient = new OkHttpClient.Builder()
@@ -37,7 +41,7 @@ public final class RetrofitClient {
                 .addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-                        System.out.println(message);
+                        LOGGER.info(message);
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
