@@ -1,7 +1,7 @@
-package com.github.zjiajun.adult.downloader;
+package com.github.zjiajun.adult.http;
 
 import com.github.zjiajun.adult.config.Config;
-import com.github.zjiajun.adult.downloader.cookie.DefaultCookieJar;
+import com.github.zjiajun.adult.http.cookie.DefaultCookieJar;
 import com.github.zjiajun.adult.request.Request;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
@@ -111,11 +111,11 @@ public final class RetrofitClient {
         Call<ResponseBody> get(@Url String url);
 
         @GET
-        Call<ResponseBody> get(@Url String url, @QueryMap Map<String,String> queryMap);
+        Call<ResponseBody> get(@Url String url, @QueryMap Map<String, String> queryMap);
 
         @FormUrlEncoded
         @POST
-        Call<ResponseBody> post(@Url String url, @FieldMap Map<String,String> fieldMap);
+        Call<ResponseBody> post(@Url String url, @FieldMap Map<String, String> fieldMap);
 
     }
 

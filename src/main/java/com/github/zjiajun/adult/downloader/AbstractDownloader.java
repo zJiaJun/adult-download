@@ -1,8 +1,9 @@
 package com.github.zjiajun.adult.downloader;
 
-import com.github.zjiajun.adult.scheduler.Scheduler;
+import com.github.zjiajun.adult.http.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
+import com.github.zjiajun.adult.scheduler.Scheduler;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

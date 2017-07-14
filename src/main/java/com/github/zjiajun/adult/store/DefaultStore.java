@@ -1,7 +1,7 @@
 package com.github.zjiajun.adult.store;
 
 import com.github.zjiajun.adult.config.Config;
-import com.github.zjiajun.adult.downloader.RetrofitClient;
+import com.github.zjiajun.adult.http.RetrofitClient;
 import com.github.zjiajun.adult.request.Request;
 import com.github.zjiajun.adult.response.Response;
 import com.github.zjiajun.adult.tool.FileUtils;

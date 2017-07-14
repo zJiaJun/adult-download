@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.downloader.cookie;
+package com.github.zjiajun.adult.http.cookie;
 
 import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.tool.FileUtils;
