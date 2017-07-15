@@ -7,7 +7,7 @@
     <groupId>com.github.zjiajun</groupId>
     <artifactId>adult-download</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>adult download</description>
     <inceptionYear>2015</inceptionYear>
 
