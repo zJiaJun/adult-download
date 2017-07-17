@@ -34,6 +34,10 @@ public final class Config {
         return baseUrl() + getString("site.sexInSex.loginUrl");
     }
 
+    public String asiaYouUrl() {
+        return baseUrl() + getString("site.sexInSex.asiaYouUrl");
+    }
+
     public String userName() {
         return getString("site.sexInSex.username");
     }

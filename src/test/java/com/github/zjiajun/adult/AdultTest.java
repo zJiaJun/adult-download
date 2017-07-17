@@ -44,7 +44,7 @@ public class AdultTest {
             param.put("loginmode","");
             param.put("styleid","");
             param.put("loginsubmit","true");
-        }).url("http://67.220.90.4/forum/forumdisplay.php?fid=230").start();
+        }).url(Config.getInstance().asiaYouUrl()).start();
         TimeUnit.DAYS.sleep(1);
     }
 
