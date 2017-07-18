@@ -54,6 +54,10 @@ public final class Config {
         return getString("site.cookie.file");
     }
 
+    public String charset() {
+        return getString("site.sexInSex.charset");
+    }
+
     private  String getString(String key) {
         return getString(key, "");
     }

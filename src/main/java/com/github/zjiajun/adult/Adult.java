@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult;
 
+import com.github.zjiajun.adult.config.Config;
 import com.github.zjiajun.adult.downloader.DefaultDownloader;
 import com.github.zjiajun.adult.downloader.Downloader;
 import com.github.zjiajun.adult.processor.DefaultProcessor;
@@ -38,13 +39,13 @@ public class Adult {
     public Adult login(String loginUrl, LoginParamBuild loginParamBuild) {
         Map<String,String> param = new HashMap<>(50);
         loginParamBuild.param(param);
-        this.loginRequest = new Request.Builder().url(loginUrl).charset("GBK").login().data(param).method(Method.POST).build();
+        this.loginRequest = new Request.Builder().url(loginUrl).charset(Config.getInstance().charset()).login().data(param).method(Method.POST).build();
         return this;
     }
 
 
     public Adult url(String url) {
-        requests.add(new Request.Builder().url(url).charset("GBK").build());
+        requests.add(new Request.Builder().url(url).charset(Config.getInstance().charset()).build());
         return this;
     }
 
