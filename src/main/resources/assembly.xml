@@ -18,14 +18,12 @@
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
     </dependencySets>
-    <!--后续添加 配置文件独立和启动脚本
     <fileSets>
         <fileSet>
             <directory>src/main/resources</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>*.conf</include>
-                <include>*.properties</include>
             </includes>
         </fileSet>
         <fileSet>
@@ -36,5 +34,5 @@
             </includes>
         </fileSet>
     </fileSets>
-    -->
+
 </assembly>

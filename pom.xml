@@ -115,11 +115,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
@@ -127,7 +122,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.github.zjiajun.adult.Adult</mainClass>
+                            <mainClass>com.github.zjiajun.adult.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
