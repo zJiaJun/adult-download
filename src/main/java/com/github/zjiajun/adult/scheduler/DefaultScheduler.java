@@ -27,7 +27,6 @@ public class DefaultScheduler implements Scheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -48,7 +47,6 @@ public class DefaultScheduler implements Scheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
