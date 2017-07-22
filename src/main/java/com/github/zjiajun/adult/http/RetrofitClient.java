@@ -93,13 +93,6 @@ public final class RetrofitClient {
         return responseBodyCall.execute();
     }
 
-    public OkHttpClient getOkHttpClient() {
-        return okHttpClient;
-    }
-
-    public Retrofit getRetrofit() {
-        return retrofit;
-    }
 
     public Api getApi() {
         return api;
