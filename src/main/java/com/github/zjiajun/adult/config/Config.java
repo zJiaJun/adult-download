@@ -58,7 +58,19 @@ public final class Config {
         return getString("site.sexInSex.charset");
     }
 
-    private  String getString(String key) {
+    public long connectTimeout() {
+        return config.hasPath("site.connect.timeout") ? config.getLong("site.connect.timeout") : 60L;
+    }
+
+    public long writeTimeout() {
+        return config.hasPath("site.write.timeout") ? config.getLong("site.write.timeout") : 60L;
+    }
+
+    public long readTimeout() {
+        return config.hasPath("site.read.timeout") ? config.getLong("site.read.timeout") : 60L;
+    }
+
+    private String getString(String key) {
         return getString(key, "");
     }
 

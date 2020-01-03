@@ -15,6 +15,8 @@ import retrofit2.Retrofit;
 import retrofit2.http.*;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -35,8 +37,8 @@ public final class RetrofitClient {
         okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(new DefaultCookieJar())
                 .addInterceptor(new HeaderInterceptor())
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS).readTimeout(10,TimeUnit.SECONDS)
+                .connectTimeout(Config.getInstance().connectTimeout(), TimeUnit.SECONDS)
+                .writeTimeout(Config.getInstance().writeTimeout(), TimeUnit.SECONDS).readTimeout(Config.getInstance().writeTimeout(),TimeUnit.SECONDS)
                 .connectionPool(new ConnectionPool(30, 10,TimeUnit.SECONDS))
                 .addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
@@ -44,6 +46,7 @@ public final class RetrofitClient {
                         LOGGER.info(message);
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
+                .proxy(new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.0.0.1", 1080)))
                 .build();
 
         retrofit = new Retrofit.Builder()
