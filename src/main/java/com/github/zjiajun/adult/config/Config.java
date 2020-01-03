@@ -70,6 +70,18 @@ public final class Config {
         return config.hasPath("site.read.timeout") ? config.getLong("site.read.timeout") : 60L;
     }
 
+    public boolean hasProxy() {
+        return config.hasPath("site.proxy");
+    }
+
+    public String proxyHost() {
+        return getString("site.proxy.host");
+    }
+
+    public int proxyPort() {
+        return config.getInt("site.proxy.port");
+    }
+
     private String getString(String key) {
         return getString(key, "");
     }

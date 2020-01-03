@@ -34,24 +34,26 @@ public final class RetrofitClient {
     private static final Logger LOGGER = LoggerFactory.getLogger("http.logger");
 
     private RetrofitClient() {
-        okHttpClient = new OkHttpClient.Builder()
+        Config config = Config.getInstance();
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
                 .cookieJar(new DefaultCookieJar())
                 .addInterceptor(new HeaderInterceptor())
-                .connectTimeout(Config.getInstance().connectTimeout(), TimeUnit.SECONDS)
-                .writeTimeout(Config.getInstance().writeTimeout(), TimeUnit.SECONDS).readTimeout(Config.getInstance().writeTimeout(),TimeUnit.SECONDS)
-                .connectionPool(new ConnectionPool(30, 10,TimeUnit.SECONDS))
+                .connectTimeout(config.connectTimeout(), TimeUnit.SECONDS)
+                .writeTimeout(config.writeTimeout(), TimeUnit.SECONDS).readTimeout(config.writeTimeout(), TimeUnit.SECONDS)
+                .connectionPool(new ConnectionPool(30, 10, TimeUnit.SECONDS))
                 .addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
                         LOGGER.info(message);
                     }
-                }).setLevel(HttpLoggingInterceptor.Level.BODY))
-                .proxy(new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.0.0.1", 1080)))
-                .build();
-
+                }).setLevel(HttpLoggingInterceptor.Level.BODY));
+        if (config.hasProxy()) {
+            okHttpBuilder.proxy(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(config.proxyHost(), config.proxyPort())));
+        }
+        okHttpClient = okHttpBuilder.build();
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(Config.getInstance().baseUrl())
+                .baseUrl(config.baseUrl())
                 .build();
 
         api = retrofit.create(Api.class);
