@@ -28,13 +28,16 @@ public abstract class AbstractDownloader implements Downloader {
 
     protected abstract void afterDownload(Response response);
 
+    protected abstract void downloadException(Request request, Response response, Exception exception);
+
     @Override
     public void download() {
         while (!Thread.currentThread().isInterrupted()) {
             Request request = scheduler.takeRequest();
+            Response response = null;
             beforeDownload(request);
             try {
-                Response response = retrofitClient.execute(request);
+                response = retrofitClient.execute(request);
 
                 afterDownload(response);
 
@@ -44,7 +47,7 @@ public abstract class AbstractDownloader implements Downloader {
 
                 TimeUnit.SECONDS.sleep(3);
             } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+                downloadException(request, response, e);
             }
         }
     }

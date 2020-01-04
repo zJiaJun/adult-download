@@ -36,5 +36,10 @@ public class DefaultDownloader extends AbstractDownloader {
     protected void afterDownload(Response response) {
     }
 
+    @Override
+    protected void downloadException(Request request, Response response, Exception exception) {
+
+    }
+
 
 }
