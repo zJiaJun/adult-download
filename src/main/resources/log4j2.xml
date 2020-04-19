@@ -2,7 +2,7 @@
 <Configuration status="WARN" monitorInterval="300">
 
     <Properties>
-        <Property name="LOG_HOME" value="/home/zhujiajun/data/applogs/adult"/>
+        <Property name="LOG_HOME" value="/Users/zhujiajun/data/applogs/adult"/>
         <Property name="ADULT" value="adult"/>
         <Property name="HTTP" value="http"/>
     </Properties>
