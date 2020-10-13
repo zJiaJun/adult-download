@@ -23,7 +23,7 @@
         <okhttp.logging.interceptor>3.14.7</okhttp.logging.interceptor>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j2.vesion>2.8.2</log4j2.vesion>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
