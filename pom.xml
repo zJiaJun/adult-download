@@ -22,7 +22,7 @@
         <retrofit.version>2.8.1</retrofit.version>
         <okhttp.logging.interceptor>3.14.7</okhttp.logging.interceptor>
         <slf4j.version>1.7.25</slf4j.version>
-        <log4j2.vesion>2.13.3</log4j2.vesion>
+        <log4j2.vesion>2.16.0</log4j2.vesion>
         <junit.version>4.13.1</junit.version>
     </properties>
 
