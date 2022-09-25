@@ -1,12 +1,14 @@
 package com.github.zjiajun.adult.tool;
 
 
+import com.google.common.io.FileWriteMode;
 import com.google.common.io.Files;
-import com.google.common.io.LineProcessor;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhujiajun
@@ -25,19 +27,19 @@ public final class FileUtils {
         }
     }
 
-    public static <T> T readLine(String file, LineProcessor<T> callback) {
+    public static List<String> readLine(String file) {
         try {
-            return Files.readLines(new File(file), StandardCharsets.UTF_8, callback);
+            return Files.readLines(new File(file), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 
 
     public static void append(String content, String file) {
         try {
-            Files.append(content,new File(file), StandardCharsets.UTF_8);
+            Files.asCharSink(new File(file), StandardCharsets.UTF_8, FileWriteMode.APPEND).write(content);
         } catch (IOException e) {
             e.printStackTrace();
         }
