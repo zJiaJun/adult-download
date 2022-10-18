@@ -16,6 +16,7 @@ public class AdultServer {
     public static void run() {
         log.info("Adult server begin run");
         setUp();
+        //TODO 抽象一个公共通用的定义事件的event, 由不同的子类去实现
         EventBus.post(new SexInSexEvent());
         log.info("Adult server finish");
     }
