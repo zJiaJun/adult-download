@@ -3,6 +3,7 @@ package com.github.zjiajun.adult.http;
 import com.github.zjiajun.adult.config.AppConfig;
 import com.github.zjiajun.adult.constatns.SexInSexConstant;
 import com.github.zjiajun.adult.http.cookie.DefaultCookieJar;
+import com.github.zjiajun.adult.model.Request;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
@@ -68,7 +69,7 @@ public final class RetrofitClient {
     }
 
 
-    public com.github.zjiajun.adult.http.Response execute(Request request) throws IOException {
+    public com.github.zjiajun.adult.model.Response execute(Request request) throws IOException {
         Response<ResponseBody> retrofitResponse;
         switch (request.getRequestMethod()) {
             case GET:
@@ -84,7 +85,7 @@ public final class RetrofitClient {
         ResponseBody responseBody = retrofitResponse.body();
         byte[] bytes = responseBody.bytes();
         String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
-        return com.github.zjiajun.adult.http.Response.builder().content(originalHtml).bytes(bytes).statusCode(code).build();
+        return com.github.zjiajun.adult.model.Response.builder().content(originalHtml).bytes(bytes).statusCode(code).build();
     }
 
 

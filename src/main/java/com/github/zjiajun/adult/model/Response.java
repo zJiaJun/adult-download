@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.http;
+package com.github.zjiajun.adult.model;
 
 import lombok.Builder;
 import lombok.Data;

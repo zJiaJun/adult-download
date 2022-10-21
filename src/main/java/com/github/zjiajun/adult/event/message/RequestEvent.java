@@ -1,6 +1,6 @@
 package com.github.zjiajun.adult.event.message;
 
-import com.github.zjiajun.adult.http.Request;
+import com.github.zjiajun.adult.model.Request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

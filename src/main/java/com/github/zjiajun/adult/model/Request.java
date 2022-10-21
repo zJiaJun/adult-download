@@ -1,4 +1,4 @@
-package com.github.zjiajun.adult.http;
+package com.github.zjiajun.adult.model;
 
 import com.github.zjiajun.adult.constatns.RequestMethod;
 import com.github.zjiajun.adult.constatns.RequestType;
