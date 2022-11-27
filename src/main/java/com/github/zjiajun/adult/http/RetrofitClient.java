@@ -7,6 +7,7 @@ import com.github.zjiajun.adult.model.Request;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
+import okhttp3.EventListener;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -33,9 +34,10 @@ public final class RetrofitClient {
     private final Retrofit retrofit;
     private final Api api;
 
-    public static RetrofitClient INSTANCE = new RetrofitClient();
+    public static RetrofitClient INSTANCE;
 
     public static void init() {
+        INSTANCE = new RetrofitClient();
     }
 
     private RetrofitClient() {

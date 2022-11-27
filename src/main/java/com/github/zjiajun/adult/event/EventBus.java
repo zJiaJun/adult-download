@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.event;
 
 import com.github.zjiajun.adult.event.listeners.SexInSexListener;
+import com.github.zjiajun.adult.event.message.AdultEvent;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -31,6 +32,7 @@ public final class EventBus {
 
     public static void init() {
         EventBus.register(new SexInSexListener());
+        EventBus.post(new AdultEvent());
     }
 
 }
