@@ -71,23 +71,28 @@ public final class RetrofitClient {
     }
 
 
-    public com.github.zjiajun.adult.model.Response execute(Request request) throws IOException {
+    public com.github.zjiajun.adult.model.Response execute(Request request) {
         Response<ResponseBody> retrofitResponse;
-        switch (request.getRequestMethod()) {
-            case GET:
-                retrofitResponse = get(request.getUrl(), request.getFormData());
-                break;
-            case POST:
-                retrofitResponse = post(request.getUrl(), request.getFormData());
-                break;
-            default:
-                throw new RuntimeException();
+        try {
+            switch (request.getRequestMethod()) {
+                case GET:
+                    retrofitResponse = get(request.getUrl(), request.getFormData());
+                    break;
+                case POST:
+                    retrofitResponse = post(request.getUrl(), request.getFormData());
+                    break;
+                default:
+                    throw new RuntimeException();
+            }
+            int code = retrofitResponse.code();
+            ResponseBody responseBody = retrofitResponse.body();
+            byte[] bytes = responseBody.bytes();
+            String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
+            return com.github.zjiajun.adult.model.Response.builder().content(originalHtml).bytes(bytes).statusCode(code).build();
+        } catch (IOException e) {
+            log.error("request exception", e);
+            return null;
         }
-        int code = retrofitResponse.code();
-        ResponseBody responseBody = retrofitResponse.body();
-        byte[] bytes = responseBody.bytes();
-        String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
-        return com.github.zjiajun.adult.model.Response.builder().content(originalHtml).bytes(bytes).statusCode(code).build();
     }
 
 
