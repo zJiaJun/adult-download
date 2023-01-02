@@ -1,6 +1,6 @@
 package com.github.zjiajun.adult.site;
 
-import com.github.zjiajun.adult.context.AdultContext;
+import com.github.zjiajun.adult.AdultServer;
 import com.github.zjiajun.adult.event.EventBus;
 import com.github.zjiajun.adult.event.message.AdultEvent;
 import com.github.zjiajun.adult.model.Request;
@@ -45,7 +45,7 @@ public final class Site {
     }
 
     public void start() {
-        AdultContext.setSiteData(data);
+        AdultServer.run();
         EventBus.post(new AdultEvent(data));
     }
 }

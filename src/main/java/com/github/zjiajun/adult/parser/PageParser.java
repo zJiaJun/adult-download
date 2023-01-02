@@ -1,5 +1,6 @@
 package com.github.zjiajun.adult.parser;
 
+import com.github.zjiajun.adult.model.SiteData;
 import org.jsoup.nodes.Document;
 
 /**
@@ -9,5 +10,5 @@ import org.jsoup.nodes.Document;
  */
 public interface PageParser {
 
-    void parse(Document document);
+    void parse(Document document, SiteData siteData);
 }

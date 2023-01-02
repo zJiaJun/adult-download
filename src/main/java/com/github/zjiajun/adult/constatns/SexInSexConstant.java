@@ -19,7 +19,5 @@ public interface SexInSexConstant {
 
     String WU_MA_FORUM_URL = BASE_URL + String.format(FORUM_URL, 143);
 
-    String FILE_NAME_KEY = "FILE_NAME";
-
 
 }

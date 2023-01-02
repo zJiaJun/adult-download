@@ -14,6 +14,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class AdultEvent {
 
-    private SiteData siteData;
+    private final SiteData siteData;
 
 }

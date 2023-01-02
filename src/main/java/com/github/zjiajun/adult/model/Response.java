@@ -11,11 +11,16 @@ import lombok.Data;
 @Builder
 public class Response {
 
+    private String contentType;
     private String content;
-
     private byte[] bytes;
-
     private int statusCode;
+    private String fileName;
+
+
+    public boolean isTextHtml() {
+        return "text/html".equals(contentType);
+    }
 
 
 }

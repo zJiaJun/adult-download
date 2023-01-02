@@ -1,7 +1,6 @@
 package com.github.zjiajun.adult.event.listeners;
 
 import com.github.zjiajun.adult.config.AppConfig;
-import com.github.zjiajun.adult.constatns.RequestType;
 import com.github.zjiajun.adult.constatns.SexInSexConstant;
 import com.github.zjiajun.adult.event.EventBus;
 import com.github.zjiajun.adult.event.message.*;
@@ -34,7 +33,7 @@ public class AdultListener {
         while (true) {
             try {
                 Request request = siteData.takeRequest();
-                EventBus.post(new RequestEvent(request));
+                EventBus.post(new RequestEvent(request, siteData));
 
                 if (siteData.getPauseSeconds() > 0) {
                     TimeUnit.SECONDS.sleep(siteData.getPauseSeconds());
@@ -46,43 +45,28 @@ public class AdultListener {
     }
 
     @Subscribe
-    public void sendRequest(RequestEvent requestEvent) {
+    public void handleRequest(RequestEvent requestEvent) {
         Request request = requestEvent.getRequest();
+        //TODO 为了传递siteData, request event 添加了siteData字段, 觉得不太合适, 怎样优化. 不能使用threadLocal,event bus最终是线程池异步方式运行的
+        SiteData siteData = requestEvent.getSiteData();
         Response response = RetrofitClient.INSTANCE.execute(request);
-        switch (request.getRequestType()) {
-            case WEB:
-                EventBus.post(new ResponseEvent(response));
-                break;
-            case DOWNLOAD:
-                FileUtils.write(response.getBytes(), AppConfig.downloadPath() + request.getExtraData().get(SexInSexConstant.FILE_NAME_KEY));
-                break;
-            default:
-                throw new RuntimeException();
+        EventBus.post(new ResponseEvent(response, siteData));
+    }
+
+    @Subscribe
+    public void handleResponse(ResponseEvent responseEvent) {
+        Response response = responseEvent.getResponse();
+        //TODO 为了传递siteData, response event 添加了siteData字段, 同上
+        SiteData siteData = responseEvent.getSiteData();
+        if (response.isTextHtml()) {
+            String content = response.getContent();
+            Document document = Jsoup.parse(content, SexInSexConstant.BASE_URL);
+            siteData.getPageParser().parse(document, siteData);
+        } else {
+            FileUtils.write(response.getBytes(), AppConfig.downloadPath() + response.getFileName());
         }
     }
 
-    @Subscribe
-    public void processResponse(ResponseEvent responseEvent) {
-        Response response = responseEvent.getResponse();
-        String content = response.getContent();
-        Document document = Jsoup.parse(content, SexInSexConstant.BASE_URL);
-        EventBus.post(new ParserEvent(document));
-    }
-
-
-    @Subscribe
-    public void parserContent(ParserEvent parserEvent) {
-        Document document = parserEvent.getDocument();
-//        handleContent(document);
-    }
-
-    @Subscribe
-    public void persistentContent(PersistentEvent persistentEvent) {
-        String fileName = persistentEvent.getFileName();
-        String downloadUrl = persistentEvent.getDownloadUrl();
-        Request downloadRequest = Request.builder().requestType(RequestType.DOWNLOAD).extraData(RequestType.DOWNLOAD.data(fileName)).url(downloadUrl).build();
-        EventBus.post(new RequestEvent(downloadRequest));
-    }
 
 
 }

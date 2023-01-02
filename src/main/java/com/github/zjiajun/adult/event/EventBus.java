@@ -19,7 +19,7 @@ public final class EventBus {
             new ThreadFactoryBuilder().setNameFormat("event-worker-thread-%d").setPriority(Thread.NORM_PRIORITY)
                     .setDaemon(false).build());
 
-    private static final com.google.common.eventbus.EventBus INSTANCE = new com.google.common.eventbus.EventBus();
+    private static final com.google.common.eventbus.EventBus INSTANCE = new com.google.common.eventbus.AsyncEventBus(executorService);
 
     public static void register(Object object) {
         INSTANCE.register(object);

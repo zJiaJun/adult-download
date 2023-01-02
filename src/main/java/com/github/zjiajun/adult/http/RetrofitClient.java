@@ -4,10 +4,9 @@ import com.github.zjiajun.adult.config.AppConfig;
 import com.github.zjiajun.adult.constatns.SexInSexConstant;
 import com.github.zjiajun.adult.http.cookie.DefaultCookieJar;
 import com.github.zjiajun.adult.model.Request;
-import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
-import okhttp3.EventListener;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -41,10 +40,8 @@ public final class RetrofitClient {
     }
 
     private RetrofitClient() {
-        log.info("开始初始化HTTP请求客户端");
-        Stopwatch stopwatch = Stopwatch.createStarted();
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
-                .cookieJar(new DefaultCookieJar())
+//                .cookieJar(new DefaultCookieJar())
                 .addInterceptor(new HeaderInterceptor())
                 .connectTimeout(AppConfig.connectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(AppConfig.writeTimeout(), TimeUnit.SECONDS).readTimeout(AppConfig.readTimeout(), TimeUnit.SECONDS)
@@ -54,7 +51,7 @@ public final class RetrofitClient {
                     public void log(String message) {
                         log.info(message);
                     }
-                }).setLevel(HttpLoggingInterceptor.Level.HEADERS));
+                }).setLevel(HttpLoggingInterceptor.Level.BASIC));
         if (AppConfig.hasProxy()) {
             log.info("发现代理proxy配置, proxy.host = {}, proxy.port = {}", AppConfig.proxyHost(), AppConfig.proxyPort());
             okHttpBuilder.proxy(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(AppConfig.proxyHost(), AppConfig.proxyPort())));
@@ -66,8 +63,6 @@ public final class RetrofitClient {
                 .build();
 
         api = retrofit.create(Api.class);
-        stopwatch.stop();
-        log.info("完成初始化HTTP请求客户端, 耗时 {}秒", stopwatch.elapsed(TimeUnit.SECONDS));
     }
 
 
@@ -87,8 +82,18 @@ public final class RetrofitClient {
             int code = retrofitResponse.code();
             ResponseBody responseBody = retrofitResponse.body();
             byte[] bytes = responseBody.bytes();
-            String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
-            return com.github.zjiajun.adult.model.Response.builder().content(originalHtml).bytes(bytes).statusCode(code).build();
+            String contentType = responseBody.contentType().toString();
+            com.github.zjiajun.adult.model.Response.ResponseBuilder responseBuilder = com.github.zjiajun.adult.model.Response.builder();
+            responseBuilder.contentType(contentType).statusCode(code);
+            //TODO 需要优化
+            if ("application/x-bittorrent".equals(contentType) || "image/jpeg".equals(contentType)) {
+                return responseBuilder.bytes(bytes).fileName(request.getFileName()).build();
+            } else if ("text/html".equals(contentType)) {
+                String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
+                return responseBuilder.content(originalHtml).build();
+            } else {
+                return null;
+            }
         } catch (IOException e) {
             log.error("request exception", e);
             return null;

@@ -1,6 +1,7 @@
 package com.github.zjiajun.adult.event.message;
 
 import com.github.zjiajun.adult.model.Response;
+import com.github.zjiajun.adult.model.SiteData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,4 +15,7 @@ import lombok.Data;
 public class ResponseEvent {
 
     private final Response response;
+
+    private final SiteData siteData;
+
 }
