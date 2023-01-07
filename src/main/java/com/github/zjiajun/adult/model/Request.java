@@ -22,6 +22,8 @@ public class Request {
     @Builder.Default
     private String charset = "UTF-8";
 
+    private String userAgent;
+
     @Builder.Default
     private Map<String, String> formData = new HashMap<>();
 

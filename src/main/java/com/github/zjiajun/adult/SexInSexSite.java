@@ -11,8 +11,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.Objects;
-
 
 /**
  * @author zhujiajun
@@ -20,7 +18,7 @@ import java.util.Objects;
  * @since 2022/9/15 21:56
  */
 @Slf4j
-public class SexInSexApp {
+public class SexInSexSite {
 
 
     public static void main(String[] args) {
@@ -30,6 +28,7 @@ public class SexInSexApp {
         Site site = new Site.Builder()
                 .setRequest(request)
                 .setPauseSeconds(3)
+                .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36")
                 .setPageParser(new SexInSexPageParser()).build();
         site.start();
     }

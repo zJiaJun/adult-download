@@ -49,6 +49,7 @@ public class AdultListener {
         Request request = requestEvent.getRequest();
         //TODO 为了传递siteData, request event 添加了siteData字段, 觉得不太合适, 怎样优化. 不能使用threadLocal,event bus最终是线程池异步方式运行的
         SiteData siteData = requestEvent.getSiteData();
+        request.setUserAgent(siteData.getUserAgent());
         Response response = RetrofitClient.INSTANCE.execute(request);
         EventBus.post(new ResponseEvent(response, siteData));
     }

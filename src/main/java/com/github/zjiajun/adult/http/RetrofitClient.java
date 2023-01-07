@@ -71,10 +71,10 @@ public final class RetrofitClient {
         try {
             switch (request.getRequestMethod()) {
                 case GET:
-                    retrofitResponse = get(request.getUrl(), request.getFormData());
+                    retrofitResponse = get(request.getUrl(), request.getFormData(), request.getUserAgent());
                     break;
                 case POST:
-                    retrofitResponse = post(request.getUrl(), request.getFormData());
+                    retrofitResponse = post(request.getUrl(), request.getFormData(), request.getUserAgent());
                     break;
                 default:
                     throw new RuntimeException();
@@ -101,13 +101,13 @@ public final class RetrofitClient {
     }
 
 
-    private Response<ResponseBody> post(String url, Map<String,String> fieldMap) throws IOException {
-        Call<ResponseBody> responseBodyCall = api.post(url, fieldMap);
+    private Response<ResponseBody> post(String url, Map<String, String> fieldMap, String userAgent) throws IOException {
+        Call<ResponseBody> responseBodyCall = api.post(url, fieldMap, userAgent);
         return responseBodyCall.execute();
     }
 
-    private Response<ResponseBody> get(String url, Map<String,String> queryMap) throws IOException {
-        Call<ResponseBody> responseBodyCall = queryMap == null ? api.get(url) : api.get(url, queryMap);
+    private Response<ResponseBody> get(String url, Map<String, String> queryMap, String userAgent) throws IOException {
+        Call<ResponseBody> responseBodyCall = queryMap == null ? api.get(url, userAgent) : api.get(url, queryMap, userAgent);
         return responseBodyCall.execute();
     }
 
@@ -119,14 +119,14 @@ public final class RetrofitClient {
     public interface Api {
 
         @GET
-        Call<ResponseBody> get(@Url String url);
+        Call<ResponseBody> get(@Url String url, @Header("User-Agent") String userAgent);
 
         @GET
-        Call<ResponseBody> get(@Url String url, @QueryMap Map<String, String> queryMap);
+        Call<ResponseBody> get(@Url String url, @QueryMap Map<String, String> queryMap, @Header("User-Agent") String userAgent);
 
         @FormUrlEncoded
         @POST
-        Call<ResponseBody> post(@Url String url, @FieldMap Map<String, String> fieldMap);
+        Call<ResponseBody> post(@Url String url, @FieldMap Map<String, String> fieldMap, @Header("User-Agent") String userAgent);
 
     }
 

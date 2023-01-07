@@ -19,6 +19,8 @@ public class SiteData {
 
     private int pauseSeconds;
 
+    private String userAgent;
+
     public void putRequest(Request request) {
         try {
             requestQueue.put(request);
@@ -49,5 +51,13 @@ public class SiteData {
 
     public void setPauseSeconds(int pauseSeconds) {
         this.pauseSeconds = pauseSeconds;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 }

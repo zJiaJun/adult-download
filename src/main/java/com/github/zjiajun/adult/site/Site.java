@@ -39,6 +39,11 @@ public final class Site {
             return this;
         }
 
+        public Builder setUserAgent(String userAgent) {
+            site.data.setUserAgent(userAgent);
+            return this;
+        }
+
         public Site build() {
             return site;
         }
