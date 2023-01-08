@@ -2,8 +2,10 @@ package com.github.zjiajun.adult.http;
 
 import com.github.zjiajun.adult.config.AppConfig;
 import com.github.zjiajun.adult.constatns.SexInSexConstant;
+import com.github.zjiajun.adult.exception.AdultException;
 import com.github.zjiajun.adult.http.cookie.DefaultCookieJar;
 import com.github.zjiajun.adult.model.Request;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.MediaType;
@@ -20,6 +22,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,7 +51,7 @@ public final class RetrofitClient {
                 .connectionPool(new ConnectionPool(30, 10, TimeUnit.SECONDS))
                 .addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
-                    public void log(String message) {
+                    public void log(@NonNull String message) {
                         log.info(message);
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BASIC));
@@ -80,19 +83,28 @@ public final class RetrofitClient {
                     throw new RuntimeException();
             }
             int code = retrofitResponse.code();
-            ResponseBody responseBody = retrofitResponse.body();
-            byte[] bytes = responseBody.bytes();
-            String contentType = responseBody.contentType().toString();
-            com.github.zjiajun.adult.model.Response.ResponseBuilder responseBuilder = com.github.zjiajun.adult.model.Response.builder();
-            responseBuilder.contentType(contentType).statusCode(code);
-            //TODO 需要优化
-            if ("application/x-bittorrent".equals(contentType) || "image/jpeg".equals(contentType)) {
-                return responseBuilder.bytes(bytes).fileName(request.getFileName()).build();
-            } else if ("text/html".equals(contentType)) {
-                String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
-                return responseBuilder.content(originalHtml).build();
-            } else {
-                return null;
+            try (ResponseBody errorBody = retrofitResponse.errorBody()) {
+                if (errorBody != null) {
+                    throw new AdultException(errorBody.string());
+                }
+            }
+            try (ResponseBody responseBody = retrofitResponse.body()) {
+                if (responseBody == null) {
+                    return null;
+                }
+                byte[] bytes = responseBody.bytes();
+                String contentType = Optional.ofNullable(responseBody.contentType()).map(MediaType::toString).orElse("");
+                com.github.zjiajun.adult.model.Response.ResponseBuilder responseBuilder = com.github.zjiajun.adult.model.Response.builder();
+                responseBuilder.contentType(contentType).statusCode(code);
+                //TODO 需要优化
+                if ("application/x-bittorrent".equals(contentType) || "image/jpeg".equals(contentType)) {
+                    return responseBuilder.bytes(bytes).fileName(request.getFileName()).build();
+                } else if (contentType.startsWith("text/html")) {
+                    String originalHtml = new String(bytes, Charset.forName(request.getCharset()));
+                    return responseBuilder.content(originalHtml).build();
+                } else {
+                    return null;
+                }
             }
         } catch (IOException e) {
             log.error("request exception", e);

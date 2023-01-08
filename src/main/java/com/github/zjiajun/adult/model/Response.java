@@ -19,7 +19,7 @@ public class Response {
 
 
     public boolean isTextHtml() {
-        return "text/html".equals(contentType);
+        return contentType.startsWith("text/html");
     }
 
 
