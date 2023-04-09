@@ -56,7 +56,7 @@ public final class RetrofitClient {
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BASIC));
         if (AppConfig.hasProxy()) {
-            log.info("发现代理proxy配置, proxy.host = {}, proxy.port = {}", AppConfig.proxyHost(), AppConfig.proxyPort());
+            log.info("find proxy config, proxy.host = {}, proxy.port = {}", AppConfig.proxyHost(), AppConfig.proxyPort());
             okHttpBuilder.proxy(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(AppConfig.proxyHost(), AppConfig.proxyPort())));
         }
         okHttpClient = okHttpBuilder.build();
