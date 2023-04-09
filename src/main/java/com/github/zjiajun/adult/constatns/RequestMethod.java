@@ -7,6 +7,7 @@ package com.github.zjiajun.adult.constatns;
 public enum RequestMethod {
 
     GET,
-    POST
+    POST,
+    ;
 
 }
